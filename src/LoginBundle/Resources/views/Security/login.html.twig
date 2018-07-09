@@ -1,0 +1,135 @@
+{% extends '::base.html.twig' %}
+{% block title %}Tablica Rodzica - Logowanie{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="{{ asset('assets/global/plugins/select2/select2.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('assets/admin/pages/css/login-soft.css') }}" rel="stylesheet" type="text/css">
+	<!-- END PAGE LEVEL SCRIPTS -->
+	<!-- BEGIN THEME STYLES -->
+	<link href="{{ asset('assets/global/css/components.css') }}" id="style_components" rel="stylesheet" type="text/css">
+	<link href="{{ asset('assets/global/css/plugins.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('assets/admin/layout/css/layout.css') }}" rel="stylesheet" type="text/css">
+	<link id="style_color" href="{{ asset('assets/admin/layout/css/themes/darkblue.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('assets/admin/layout/css/custom.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block bodyClass %}login{% endblock %}
+{% block body %}
+<div class="logo2" style="margin-left: 10%;">
+	<a href="index.html">
+	<img src="{{ asset('assets/admin/pages/media/bg/logo_atut.png') }}" alt="">
+	</a>
+</div>
+<!-- BEGIN LOGO -->
+<div class="logo">
+	<a href="index.html">
+	<img src="{{ asset('assets/admin/pages/media/bg/logo.png') }}" alt="">
+	</a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+	<!-- BEGIN LOGIN FORM -->
+	<form class="login-form" action="{{ path('login_check') }}"  method="post" methoactiond="post" >
+		<h3 class="form-title"><strong>Zaloguj się</strong></h3>
+		{% if error %}
+			<div class="alert alert-danger">
+				<button class="close" data-close="alert"></button>
+				<span>
+				Nieprawidłowy login lub hasło </span>
+			</div>
+		{% endif %}
+		<div class="form-group">
+			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+			<label class="control-label visible-ie8 visible-ie9">Login</label>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<input class="form-control placeholder-no-fix" value="{{ last_username }}" type="text" name="username" autocomplete="off" placeholder="Login">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Hasło</label>
+			<div class="input-icon">
+				<i class="fa fa-lock"></i>
+				<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Hasło" name="password">
+			</div>
+		</div>
+		<div class="form-actions">
+			<label class="checkbox">
+			<div class="checker"><span><input type="checkbox" name="remember" value="1"></span></div> Pamiętaj mnie </label>
+			<button type="submit" class="btn blue pull-right">
+			Login <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+		<div class="forget-password">
+			<h4>Zapomniałeś hasła ?</h4>
+			<p>
+				 bez obaw, kliknij <a href="javascript:;" id="forget-password">
+				tutaj </a>
+				by je odzyskać.
+			</p>
+		</div>
+		<div class="create-account">
+			<p>
+				 Masz problem z logowaniem ?&nbsp; <br><b id="register-btn">
+				Skontaktuj się z nami pod numerem <br>661 933 901</b>
+			</p>
+		</div>
+	</form>
+	<!-- END LOGIN FORM -->
+	<!-- BEGIN FORGOT PASSWORD FORM -->
+	<form class="forget-form" action="index.html" method="post" novalidate="novalidate">
+		<h3>Zapomniałeś hasła?</h3>
+		<p>
+			 Podaj swój numer telefonu, żeby odzyskać hasło.
+		</p>
+		<div class="form-group">
+			<div class="input-icon">
+				<i class="fa fa-phone"></i>
+				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Numer Telefonu" name="email">
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="button" id="back-btn" class="btn">
+			<i class="m-icon-swapleft"></i> Wstecz </button>
+			<button type="submit" class="btn blue pull-right">
+			Wyślij <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+	</form>
+	<!-- END FORGOT PASSWORD FORM -->
+</div>
+<!-- END LOGIN -->
+<!-- BEGIN COPYRIGHT -->
+<div class="copyright">
+	 2017 © IntraSchool
+</div>
+<!-- END COPYRIGHT -->
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		jQuery(document).ready(function() {
+			Metronic.init(); // init metronic core components
+			Layout.init(); // init current layout
+			Login.init();
+			Demo.init();
+			$.backstretch([
+				"{{ asset('assets/admin/pages/media/bg/5.jpg') }}",
+				"{{ asset('assets/admin/pages/media/bg/1.jpg') }}",
+				"{{ asset('assets/admin/pages/media/bg/2.jpg') }}",
+				"{{ asset('assets/admin/pages/media/bg/3.jpg') }}",
+				"{{ asset('assets/admin/pages/media/bg/4.jpg') }}"
+			], {
+				fade: 1000,
+				duration: 8000
+				}
+			);
+		});
+	</script>
+{% endblock %}

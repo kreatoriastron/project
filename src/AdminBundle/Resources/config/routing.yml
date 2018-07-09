@@ -1,0 +1,105 @@
+add_user:
+    path:     /admin/addUser
+    defaults: { _controller: AdminBundle:User:addUser }
+
+add_lector:
+    path:     /admin/user/lector/add
+    defaults: { _controller: AdminBundle:User\Lector:add }
+
+update_lector:
+    path:     /admin/user/lector/update/profile
+    defaults: { _controller: AdminBundle:User\Lector:update}
+
+show_lector:
+    path:     /admin/user/lector/show
+    defaults: { _controller: AdminBundle:User\Lector:show}
+
+show_profile_lector:
+    path:     /admin/user/lector/show/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Lector:showProfile}
+
+edit_profile_lector:
+    path:     /admin/user/lector/edit/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Lector:editProfile}
+
+filter_lector:
+    path:     /admin/user/lector/filter
+    defaults: { _controller: AdminBundle:User\Lector:filter}
+
+
+add_dr:
+    path:     /admin/user/dr/add
+    defaults: { _controller: AdminBundle:User\Dr:add }
+
+update_dr:
+    path:     /admin/user/dr/update/profile
+    defaults: { _controller: AdminBundle:User\Dr:update}
+
+show_dr:
+    path:     /admin/user/dr/show
+    defaults: { _controller: AdminBundle:User\Dr:show}
+
+show_profile_dr:
+    path:     /admin/user/dr/show/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Dr:showProfile}
+
+edit_profile_dr:
+    path:     /admin/user/dr/edit/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Dr:editProfile}
+
+filter_dr:
+    path:     /admin/user/dr/filter
+    defaults: { _controller: AdminBundle:User\Dr:filter}
+
+
+
+
+add_fiche:
+    path:     /admin/fiche/add
+    defaults: { _controller: AdminBundle:Fiche:add }
+
+update_fiche:
+    path:     /admin/fiche/update/profile
+    defaults: { _controller: AdminBundle:Fiche:update}
+
+show_fiche:
+    path:     /admin/fiche/show
+    defaults: { _controller: AdminBundle:Fiche:show}
+
+show_profile_fiche:
+    path:     /admin/fiche/show/profile/{userId}
+    defaults: { _controller: AdminBundle:Fiche:showProfile}
+
+edit_profile_fiche:
+    path:     /admin/fiche/edit/profile/{userId}
+    defaults: { _controller: AdminBundle:Fiche:editProfile}
+
+filter_fiche:
+    path:     /admin/fiche/filter
+    defaults: { _controller: AdminBundle:Fiche:filter}
+
+
+
+add_parent:
+    path:     /admin/user/parent/add
+    defaults: { _controller: AdminBundle:User\Parent:add }
+
+update_parent:
+    path:     /admin/user/parent/update/profile
+    defaults: { _controller: AdminBundle:User\Parent:update}
+
+show_parent:
+    path:     /admin/user/parent/show
+    defaults: { _controller: AdminBundle:User\Parent:show}
+
+show_profile_parent:
+    path:     /admin/user/parent/show/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Parent:showProfile}
+
+edit_profile_parent:
+    path:     /admin/user/parent/edit/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Parent:editProfile}
+
+filter_parent:
+    path:     /admin/user/parent/filter
+    defaults: { _controller: AdminBundle:User\Parent:filter}

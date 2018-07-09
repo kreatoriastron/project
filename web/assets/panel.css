@@ -1,0 +1,197 @@
+@font-face {
+    font-family: cinzelBold;
+    src: url(fonts/cinzel/Cinzel-Bold.otf);
+}
+@font-face {
+    font-family: cinzel;
+    src: url(fonts/cinzel/Cinzel-Regular.otf);
+}
+@font-face {
+    font-family: cinzelDecorativeRegular;
+    src: url(fonts/cinzel/CinzelDecorative-Regular.otf);
+}
+@font-face {
+    font-family: aparajitaItalic;
+    src: url(fonts/aparaj/aparaji.ttf);
+}
+
+@font-face {
+    font-family: whatever;
+    src: url(fonts/whatever/whatever-it-takes-bold.ttf);
+}
+
+.cinzelBold
+{
+	font-family: cinzelBold;	
+}
+
+.cinzelDecorativeRegular
+{
+	font-family: cinzelDecorativeRegular;	
+}
+.aparajitaItalic
+{
+	font-family: aparajitaItalic;	
+}
+body
+{
+	background-color: #f8f8f8;
+}
+
+#panel-title 
+{
+	display:block;
+	font-family: cinzelBold;
+	color: #c0af96;
+	font-size:26px;
+	margin-bottom: 5%;
+}
+
+#beam 
+{
+	background-image: url('images/beam.png');
+    background-size: 100% 100%;
+	margin-top:40px;	
+}
+
+#blackboard
+{
+	display:block;
+	background-image: url('images/blackboard2.png');
+	background-size: 100% 100%;
+}
+
+#blackboard > #bb-title
+{
+	font-family: whatever;
+	color:#ffffff;
+	margin-top:8%;
+}
+
+#blackboard > #bb-text
+{
+	font-family: whatever;
+	color:#ffffff;
+    margin-top: 5%;
+    margin-bottom: 12%;
+}
+#blackboard > #bb-text > div
+{
+	margin-bottom:3%;
+}
+#blackboard > #bb-text > div > h3,
+#blackboard > #bb-text > div > h2
+{
+	display:inline;
+}
+
+#div-title
+{
+	padding:2% 0;
+	color:#323232;	
+	font-family: cinzelBold;	
+}
+
+#div-title h1
+{
+	margin-bottom:0 !important;
+}
+
+#div-text
+{
+	padding:2% 0;
+	color:#000;	
+	font-family: cinzel;	
+}
+
+#contact-box > #position
+{
+	margin-bottom:10px;
+	font-family: cinzelDecorativeRegular;
+}
+
+.form-control {
+    font-size: 14px;
+    font-weight: normal;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: none;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#contact-form
+{
+ margin:7% 0;	
+}
+
+#contact-form > #textarea
+{
+	margin-top:5%;	
+}
+
+html body .btn-primary {
+    color: #fff;
+    background-color: #c0af96;
+    border-color: #c0af96;
+}
+
+html body .btn-primary:hover {
+    color: #c0af96;
+    background-color: #fff;
+    border-color: #c0af96;
+}
+
+.btn-md {
+    padding: 18px 35px;
+    font-size: 20px;
+    line-height: 20px;
+    border-radius: 0;
+    min-width: 247px;
+}
+
+#footer
+{
+	min-height: 10%;
+	background-color: #f7ea78;
+	margin-top:10px;
+}
+
+#timetable
+{
+    border-radius: 12px;
+    margin: 0px auto;
+    float: none;	
+}
+
+@media screen and (max-width: 360px) {
+	#blackboard
+	{
+		min-height:360px;
+	}
+	
+	#blackboard > #bb-title
+	{
+		margin-top: 25%;
+	}
+}
+
+.logo2 img
+{
+	max-height: 150px;;		
+}
+
+@media screen and (max-width: 768px) {
+    .logo2
+	{
+		text-align: center;		
+	}
+}
+
+@media screen and (min-width: 769px) {
+}

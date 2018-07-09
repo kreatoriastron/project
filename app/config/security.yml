@@ -1,0 +1,37 @@
+security:
+    encoders:
+        LoginBundle\Entity\Parents:
+            algorithm: bcrypt
+
+    providers:
+        our_db_provider:
+            entity:
+                class: LoginBundle:Parents
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
+
+    role_hierarchy:
+        ROLE_PARENT:  ROLE_USER
+        ROLE_TEACHER: ROLE_USER
+        ROLE_DR: [ROLE_USER, ROLE_TEACHER]
+        ROLE_ZDO: [ROLE_USER, ROLE_DR]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ZDO]
+
+    firewalls:
+        default:
+            anonymous: ~
+            http_basic: ~
+            form_login:
+                login_path: login
+                check_path: login_check
+                default_target_path: /userPanel
+                always_use_default_target_path: true
+                username_parameter: username
+                password_parameter: password
+            logout:
+                path: /logout
+                target: /
+    access_control:
+      - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/, roles: ROLE_USER }

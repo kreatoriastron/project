@@ -1,0 +1,3 @@
+panel_homepage:
+    path:     /
+    defaults: { _controller: PanelBundle:Default:index }

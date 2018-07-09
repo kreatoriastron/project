@@ -1,0 +1,3 @@
+lessons_homepage:
+    path:     /
+    defaults: { _controller: LessonsBundle:Default:index }
