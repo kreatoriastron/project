@@ -4,6 +4,7 @@ namespace AdminBundle\Controller\User;
 
 use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\AppUsers;
+use AppBundle\Entity\Child;
 use FOS\UserBundle\Model\User;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +43,7 @@ class ParentController extends UserController
             $appUser->setUsername($data->get('phone'));
             $appUser->setPassword($pass);
             $appUser->setEmail($data->get('email'));
-            $appUser->setRole(2);
+            $appUser->setRole(1);
             $appUser->setName($data->get('name'));
             $appUser->setIsActive(1);
             $appUser->setSurname($data->get('surname'));
@@ -61,22 +62,34 @@ class ParentController extends UserController
 
             $user = new UserParent();
             $user->setUser($appUser);
-            $user->setSalary($data->get('salary'));
-            $user->setContract($data->get('contract'));
-            //$user->setBonus($data->get('bonus'));
-            $user->setEmployeeType($data->get('employee_type'));
-            $user->setLanguageLevel($data->get('language_level'));
-            $user->setContractEndingDate($time);
-            $newFileName = $this->uploadFile('contract', 'contract');
-            $user->setContract($newFileName);
+            $newFileName = $this->uploadFile('parent_contract', 'contract');
+            $user->setContractFile($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
+            $newParentId = $user->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
             return $e->getMessage();
         }
 
+        try {
+            $time = strtotime($data->get('ending_date'));
+
+            $child = new Child();
+            $child->setName($data->get('name'));
+            $child->setSurname($data->get('surname'));
+            $child->setParentId($newParentId);
+            $child->setSchoolId($data->get('school'));
+            $child->setClassDigit($data->get('class_digit'));
+            $child->setClassLetter($data->get('class_letter'));
+            $entityManager->persist($child);
+            $entityManager->flush();
+        } catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+            return $e->getMessage();
+        }
         return $newUserId;
     }
 
@@ -114,15 +127,8 @@ class ParentController extends UserController
         }
 
         try {
-            $time = strtotime($data->get('ending_date'));
-            $user->setSalary($data->get('salary'));
-            $user->setContract($data->get('contract'));
-            //$user->setBonus($data->get('bonus'));
-            $user->setEmployeeType($data->get('employee_type'));
-            $user->setLanguageLevel($data->get('language_level'));
-            $user->setContractEndingDate($time);
-            $newFileName = $this->uploadFile('contract', 'contract');
-            $user->setContract($newFileName);
+            $newFileName = $this->uploadFile('parent_contract', 'contract');
+            $user->setContractFile($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -143,19 +149,12 @@ class ParentController extends UserController
             ->getRepository(AppUsers::class)
             ->findById($userId);
 
-        $timestamp = $parent[0]->getContractEndingDate();
-        $formManager = new FormManager();
-        $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
             'name' => $user[0]->getName(),
             'surname' => $user[0]->getSurname(),
             'email' => $user[0]->getEmail(),
             'phone' => $user[0]->getPhone(),
-            'salary' => $parent[0]->getSalary(),
-            'type' => $parent[0]->getEmployeeType(),
-            'lanLevel' => $parent[0]->getLanguageLevel(),
-            'endDate' => $date,
-            'contract' => $parent[0]->getContract(),
+            'contract' => $parent[0]->getContractFile(),
             'id' => $user[0]->getId(),
         );
 
@@ -173,19 +172,12 @@ class ParentController extends UserController
             ->getRepository(AppUsers::class)
             ->findById($userId);
 
-        $timestamp = $parent[0]->getContractEndingDate();
-        $formManager = new FormManager();
-        $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
             'name' => $user[0]->getName(),
             'surname' => $user[0]->getSurname(),
             'email' => $user[0]->getEmail(),
             'phone' => $user[0]->getPhone(),
-            'salary' => $parent[0]->getSalary(),
-            'type' => $parent[0]->getEmployeeType(),
-            'lanLevel' => $parent[0]->getLanguageLevel(),
-            'endDate' => $date,
-            'contract' => $parent[0]->getContract(),
+            'contract' => $parent[0]->getContractFile(),
             'id' => $user[0]->getId(),
         );
 
@@ -238,7 +230,7 @@ class ParentController extends UserController
 
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
-            'fullName' =>'AppBundle\Entity\UserDr',
+            'fullName' =>'AppBundle\Entity\UserParent',
             'shortName' => 'ul'));
         $filterManager->setJoin(array(
             'ul.user' => 'au'));

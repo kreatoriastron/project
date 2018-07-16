@@ -5,7 +5,7 @@ var FormValidation = function (url) {
         // for more info visit the official plugin documentation:
         // http://docs.jquery.com/Plugins/Validation
 
-        var form1 = $('#add');
+        var form1 = $('#edit');
         var error1 = $('.alert-danger', form1);
         var url =url;
 
@@ -30,14 +30,6 @@ var FormValidation = function (url) {
                     minlength: 2,
                     required: true
                 },
-                child_name: {
-                    minlength: 2,
-                    required: true
-                },
-                child_surname: {
-                    minlength: 2,
-                    required: true
-                },
                 email: {
                     required: true,
                     email: true
@@ -46,16 +38,16 @@ var FormValidation = function (url) {
                     required: true,
                     number: true
                 },
-                school: {
-                    required: true,
-                },
-                class_letter: {
-                    required: true,
-                    lettersonly: true
-                },
-                class_digit: {
+                salary: {
                     required: true,
                     digits: true
+                },
+                bonus: {
+                    required: true,
+                    digits: true
+                },
+                ending_date: {
+                    required: true,
                 },
                 select: {
                     required: true
@@ -124,7 +116,21 @@ var FormValidation = function (url) {
                 data: fd,
                 success: function ($data) {
                     error1.hide();
-                    $('#mainBox').html($data);
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-top-center",
+                        "onclick": null,
+                        "showDuration": "1000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr['success']('Dane zostały poprawnie zmienione', 'Zaktualizowano użytkownika');
 
                 }
             });

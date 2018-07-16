@@ -30,14 +30,6 @@ var FormValidation = function (url) {
                     minlength: 2,
                     required: true
                 },
-                child_name: {
-                    minlength: 2,
-                    required: true
-                },
-                child_surname: {
-                    minlength: 2,
-                    required: true
-                },
                 email: {
                     required: true,
                     email: true
@@ -46,8 +38,20 @@ var FormValidation = function (url) {
                     required: true,
                     number: true
                 },
-                school: {
+                cost: {
                     required: true,
+                    digits: true
+                },
+                child_name: {
+                    minlength: 2,
+                    required: true
+                },
+                child_surname: {
+                    minlength: 2,
+                    required: true
+                },
+                school: {
+                    required: true
                 },
                 class_letter: {
                     required: true,

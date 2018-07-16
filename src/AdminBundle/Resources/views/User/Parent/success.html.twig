@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-user-plus font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">Użytkownik został dodany do systemu</span>
+            <span class="caption-subject font-green-sharp bold uppercase">Rodzic został dodany do systemu</span>
         </div>
     </div>
     <div class="portlet-body">
@@ -26,10 +26,10 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    toastr['success']('Nowy lektor pojawił się w systemie', 'Dodano użytkownika');
+    toastr['success']('Nowy rodzic pojawił się w systemie', 'Dodano użytkownika');
 
     $('#showProfile').click(function(){
-        window.location ="{{ path('show_profile_lector', {'userId': userId}) }}";
+        window.location ="{{ path('show_profile_parent', {'userId': userId}) }}";
     });
 
     $('#addUser').click(function(){

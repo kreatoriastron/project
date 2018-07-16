@@ -8,7 +8,7 @@
                  <div class="page-head">
                      <!-- BEGIN PAGE TITLE -->
                      <div class="page-title">
-                         <h1>Administracja <small>Lektorzy</small></h1>
+                         <h1>Administracja <small>Rodzice</small></h1>
                      </div>
                      <!-- END PAGE TITLE -->
                  </div>
@@ -19,7 +19,7 @@
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
                      <li class="active">
-                         Lektorzy
+                         Rodzice
                      </li>
                  </ul>
                  <!-- END PAGE BREADCRUMB -->
@@ -31,7 +31,7 @@
                                  <div class="portlet-title">
                                      <div class="caption">
                                          <i class="fa fa-gift font-green-sharp"></i>
-                                         <span class="caption-subject font-green-sharp bold uppercase">Lista Lektorów</span>
+                                         <span class="caption-subject font-green-sharp bold uppercase">Lista Rodziców</span>
                                      </div>
                                  </div>
                                  <div class="portlet-body">
@@ -106,43 +106,30 @@
              </div>
          </div>
  {% endblock %}
- {%  block stylesheets %}
-     {{  parent () }}
-     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/datepicker.css') }}">
- {% endblock %}
  {% block javascripts %}
      {{  parent() }}
-     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
      <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
-     <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('bundles/admin/js/User/Lector/validation/add-validation.js') }}" type="text/javascript"></script>
      <script>
          $(document).ready(function(){
-             var date_input=$('input[name*="date"]'); //our date input has the name "date"
-             var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-             date_input.datepicker({
-                 format: 'dd/mm/yyyy',
-                 container: container,
-                 todayHighlight: true,
-                 autoclose: true,
-             })
-         FormValidation.init('{{ path('add_lector') }}');
-
-             jQuery.extend(jQuery.validator.messages, {
-                 required: "To pole jest wymagane",
-                 email: "Proszę podać poprawny adres mailowy",
-                 number: "Proszę podać poprawny numer telefonu",
-                 digits: "Proszę podać cyfrę"
-             });
-
              $('#search').click(function() {
                  $.ajax({
                      type: "POST",
-                     url: '{{ path('filter_lector') }}',
+                     url: '{{ path('filter_parent') }}',
                      data: $( ".form-filter" ).serialize(),
                      success: function ($data) {
-                         $('#mainBox').html($data);
+                         var response= JSON.parse($data);
+                         $('#datatable_ajax > tbody tr').remove();
+                         $.each(response, function(i, row) {
+                             $('<tr>').append(
+                                     $('<td>').html('<input type="checkbox" name="id[]" value="' + row.id + '">'),
+                                     $('<td>').text(row.name),
+                                     $('<td>').text(row.surname),
+                                     $('<td>').text(row.email),
+                                     $('<td>').text(row.phone),
+                                     $('<td>').text(row.is_active)
+                             ).appendTo('#datatable_ajax > tbody');
+
+                         });
 
                      }
                  });

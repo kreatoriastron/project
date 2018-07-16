@@ -10,7 +10,7 @@ class UserParent
     /**
      * @var string|null
      */
-    private $agreementFile;
+    private $contractFile;
 
     /**
      * @var int
@@ -24,27 +24,27 @@ class UserParent
 
 
     /**
-     * Set agreementFile.
+     * Set contractFile.
      *
-     * @param string|null $agreementFile
+     * @param string|null $contractFile
      *
      * @return UserParent
      */
-    public function setAgreementFile($agreementFile = null)
+    public function setContractFile($contractFile = null)
     {
-        $this->agreementFile = $agreementFile;
+        $this->contractFile = $contractFile;
 
         return $this;
     }
 
     /**
-     * Get agreementFile.
+     * Get contractFile.
      *
      * @return string|null
      */
-    public function getAgreementFile()
+    public function getContractFile()
     {
-        return $this->agreementFile;
+        return $this->contractFile;
     }
 
     /**

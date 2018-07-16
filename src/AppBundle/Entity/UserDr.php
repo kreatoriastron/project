@@ -23,7 +23,7 @@ class UserDr
     private $contract;
 
     /**
-     * @var \float|null
+     * @var float|null
      */
     private $contractEndingDate;
 
@@ -113,7 +113,7 @@ class UserDr
     /**
      * Set contractEndingDate.
      *
-     * @param \float|null $contractEndingDate
+     * @param float|null $contractEndingDate
      *
      * @return UserDr
      */
@@ -127,7 +127,7 @@ class UserDr
     /**
      * Get contractEndingDate.
      *
-     * @return \float|null
+     * @return float|null
      */
     public function getContractEndingDate()
     {

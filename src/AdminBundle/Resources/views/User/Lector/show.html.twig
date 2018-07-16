@@ -119,23 +119,6 @@
      <script src="{{ asset('bundles/admin/js/User/Lector/validation/add-validation.js') }}" type="text/javascript"></script>
      <script>
          $(document).ready(function(){
-             var date_input=$('input[name*="date"]'); //our date input has the name "date"
-             var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-             date_input.datepicker({
-                 format: 'dd/mm/yyyy',
-                 container: container,
-                 todayHighlight: true,
-                 autoclose: true,
-             })
-         FormValidation.init('{{ path('add_lector') }}');
-
-             jQuery.extend(jQuery.validator.messages, {
-                 required: "To pole jest wymagane",
-                 email: "Proszę podać poprawny adres mailowy",
-                 number: "Proszę podać poprawny numer telefonu",
-                 digits: "Proszę podać cyfrę"
-             });
-
              $('#search').click(function() {
                  $.ajax({
                      type: "POST",

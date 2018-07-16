@@ -19,9 +19,24 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="classId" type="integer" column="class_id" nullable="true">
+    <field name="groupId" type="integer" column="group_id" nullable="true">
       <options>
         <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="schoolId" type="integer" column="school_id" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="classDigit" type="integer" column="class_digit" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="classLetter" type="string" column="class_letter" length="11" nullable="true">
+      <options>
+        <option name="fixed"/>
       </options>
     </field>
   </entity>
