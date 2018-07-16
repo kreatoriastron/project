@@ -84,8 +84,41 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="layout_blank_page.html">
-                        Lista szkół</a>
+                    <a href="layout_sidbar_reversed.html">
+                        <span class="title">Szkoły</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu" style="display: none;">
+                        <li>
+                            <a href="{{ path('show_school') }}"><i class="icon-list"></i> Lista Szkół</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('import_school') }}"><i class="icon-list"></i> Importuj Szkoły</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('add_school') }}"><i class="icon-plus"></i> Dodaj Szkołę</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('assign_dr_to_school') }}"><i class="icon-plus"></i> Przypisz DR</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="layout_sidbar_reversed.html">
+                        <span class="title">Grupy</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu" style="display: none;">
+                        <li>
+                            <a href="{{ path('show_group') }}"><i class="icon-list"></i> Lista Grup</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('add_group') }}"><i class="icon-plus"></i> Dodaj Grupę</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('assign_lector_to_group') }}"><i class="icon-plus"></i> Przypisz Lektora</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </li>

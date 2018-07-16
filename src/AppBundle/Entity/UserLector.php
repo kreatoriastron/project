@@ -39,6 +39,8 @@ class UserLector
 
     /**
      * @var \AppBundle\Entity\AppUsers
+     * @ORM\OneToOne(targetEntity="AppUsers", inversedBy="id")
+     * @ORM\JoinColumn(name="appuser_id", referencedColumnName="id")
      */
     private $user;
 

@@ -219,43 +219,37 @@ class DrController extends UserController
 
     public function filterAction(Request $request)
     {
-        $data = array();
-        $keys = $request->request->keys();
+        $data['au.name'] = $request->request->get('name');
+        $data['au.surname'] = $request->request->get('surname');
+        $data['au.email'] = $request->request->get('email');
+        $data['au.phone'] = $request->request->get('phone');
+        $data['au.isActive'] = $request->request->get('is_active');
 
-        foreach($keys as $id => $key)
-        {
-            $value = $request->request->get($key);
-            if(!is_null($value) && strlen($value)) {
-                $data['user.'.$key] = $value;
-            }
-        }
-        var_dump($data);
-        $user = $this->getDoctrine()
-            ->getRepository(UserDr::class)
-            ->findBy($data);exit();
-        var_dump($user); exit();
         $filterManager = new FilterManager($this->getDoctrine());
-        $repository = $this->doctrine
-            ->getRepository($table);
+        $filterManager->setTable(array(
+            'fullName' =>'AppBundle\Entity\UserDr',
+            'shortName' => 'ul'));
+        $filterManager->setJoin(array(
+            'ul.user' => 'au'));
+        $filterManager->setCondition($data);
+        $filterManager->setSelect(array('ul'));
+        $filteredData = $filterManager->getfilteredData();
 
-        $query = $repository->createQueryBuilder('u');
-        $query->leftJoin(AppUsers::class, "au", "WITH", "u.user=au.id");
-        $query->select('u, au');
-        foreach($data as $column => $value)
+        $rows = array();
+        foreach($filteredData as $id => $row)
         {
-            if(!is_null($value) && strlen($value))
-                $query->andWhere("$column LIKE :value");
-            $query->setParameter('value', '%'.$value.'%');
+            $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
+            $rows[] = array(
+                'id' => $row->getUser()->getId(),
+                'name' => $row->getUser()->getName(),
+                'surname' => $row->getUser()->getSurname(),
+                'email' => $row->getUser()->getEmail(),
+                'is_active' => $is_active,
+                'phone' => $row->getUser()->getPhone(),
+            );
         }
-        $aa = $query->getQuery();
-        var_dump($aa->getResult()); exit('dddd');
-        return $query->getResult();
+        $jsonData = json_encode($rows);
 
-
-        $date = $filterManager->findByFilteredData(UserDr::class, $data);
-
-        $products = $this->getDoctrine()
-            ->getRepository(UserDr::class)
-            ->findByFilteredData($data);
+        return new Response($jsonData);
     }
 }

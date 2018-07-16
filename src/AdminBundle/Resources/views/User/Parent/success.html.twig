@@ -1,0 +1,38 @@
+<div id="resultBox" class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-user-plus font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">Użytkownik został dodany do systemu</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <button id="showProfile" type="button" class="btn btn-primary btn-lg">Zobacz stworzony profil</button>
+        <button id="addUser" type="button" class="btn btn-secondary btn-lg">Dodaj nowe konto</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-center",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+    toastr['success']('Nowy lektor pojawił się w systemie', 'Dodano użytkownika');
+
+    $('#showProfile').click(function(){
+        window.location ="{{ path('show_profile_lector', {'userId': userId}) }}";
+    });
+
+    $('#addUser').click(function(){
+        location.reload();
+    });
+</script>

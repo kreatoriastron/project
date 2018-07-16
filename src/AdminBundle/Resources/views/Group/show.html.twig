@@ -142,19 +142,7 @@
                      url: '{{ path('filter_lector') }}',
                      data: $( ".form-filter" ).serialize(),
                      success: function ($data) {
-                         var response= JSON.parse($data);
-                         $('#datatable_ajax > tbody tr').remove();
-                         $.each(response, function(i, row) {
-                             $('<tr>').append(
-                                     $('<td>').html('<input type="checkbox" name="id[]" value="' + row.id + '">'),
-                                     $('<td>').text(row.name),
-                                     $('<td>').text(row.surname),
-                                     $('<td>').text(row.email),
-                                     $('<td>').text(row.phone),
-                                     $('<td>').text(row.is_active)
-                             ).appendTo('#datatable_ajax > tbody');
-
-                         });
+                         $('#mainBox').html($data);
 
                      }
                  });

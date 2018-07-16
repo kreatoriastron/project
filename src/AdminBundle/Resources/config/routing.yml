@@ -67,11 +67,11 @@ show_fiche:
     defaults: { _controller: AdminBundle:Fiche:show}
 
 show_profile_fiche:
-    path:     /admin/fiche/show/profile/{userId}
+    path:     /admin/fiche/show/profile/{ficheId}
     defaults: { _controller: AdminBundle:Fiche:showProfile}
 
 edit_profile_fiche:
-    path:     /admin/fiche/edit/profile/{userId}
+    path:     /admin/fiche/edit/profile/{ficheId}
     defaults: { _controller: AdminBundle:Fiche:editProfile}
 
 filter_fiche:
@@ -81,25 +81,88 @@ filter_fiche:
 
 
 add_parent:
-    path:     /admin/user/parent/add
+    path:     /admin/parent/add
     defaults: { _controller: AdminBundle:User\Parent:add }
 
 update_parent:
-    path:     /admin/user/parent/update/profile
+    path:     /admin/parent/update/profile
     defaults: { _controller: AdminBundle:User\Parent:update}
 
 show_parent:
-    path:     /admin/user/parent/show
+    path:     /admin/parent/show
     defaults: { _controller: AdminBundle:User\Parent:show}
 
 show_profile_parent:
-    path:     /admin/user/parent/show/profile/{userId}
+    path:     /admin/parent/show/profile/{userId}
     defaults: { _controller: AdminBundle:User\Parent:showProfile}
 
 edit_profile_parent:
-    path:     /admin/user/parent/edit/profile/{userId}
+    path:     /admin/parent/edit/profile/{userId}
     defaults: { _controller: AdminBundle:User\Parent:editProfile}
 
 filter_parent:
-    path:     /admin/user/parent/filter
+    path:     /admin/parent/filter
     defaults: { _controller: AdminBundle:User\Parent:filter}
+
+add_school:
+    path:     /admin/school/add
+    defaults: { _controller: AdminBundle:School:add }
+
+update_school:
+    path:     /admin/school/update/profile
+    defaults: { _controller: AdminBundle:School:update}
+
+import_school:
+    path:     /admin/school/import
+    defaults: { _controller: AdminBundle:School:import }
+
+assign_dr_to_school:
+    path:     /admin/school/assign_dr
+    defaults: { _controller: AdminBundle:School:assignDR }
+
+show_school:
+    path:     /admin/school/show
+    defaults: { _controller: AdminBundle:School:show}
+
+show_profile_school:
+    path:     /admin/school/show/profile/{userId}
+    defaults: { _controller: AdminBundle:School:showProfile}
+
+edit_profile_school:
+    path:     /admin/school/edit/profile/{userId}
+    defaults: { _controller: AdminBundle:School:editProfile}
+
+filter_school:
+    path:     /admin/school/filter
+    defaults: { _controller: AdminBundle:School:filter}
+
+
+add_group:
+    path:     /admin/user/group/add
+    defaults: { _controller: AdminBundle:User\Group:add }
+
+update_group:
+    path:     /admin/user/group/update/profile
+    defaults: { _controller: AdminBundle:Group:update}
+
+show_group:
+    path:     /admin/user/group/show
+    defaults: { _controller: AdminBundle:Group:show}
+
+show_profile_group:
+    path:     /admin/group/show/profile/{groupId}
+    defaults: { _controller: AdminBundle:Group:showProfile}
+
+edit_profile_group:
+    path:     /admin/group/edit/profile/{groupId}
+    defaults: { _controller: AdminBundle:Group:editProfile}
+
+filter_group:
+    path:     /admin/group/filter
+    defaults: { _controller: AdminBundle:Group:filter}
+
+assign_lector_to_group:
+    path:     /admin/group/assign_lector
+    defaults: { _controller: AdminBundle:Group:assignLector}
+    
+    

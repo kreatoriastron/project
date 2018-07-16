@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use AppBundle\Entity\UserLector;
+use AppBundle\Entity\UserParent;
 use AppBundle\Service\FormManager\FormManager;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Service\DBManager\FilterManager;
 
-class LectorController extends UserController
+class ParentController extends UserController
 {
     public function addAction(Request $request)
     {
@@ -24,11 +24,11 @@ class LectorController extends UserController
         if ($name)
         {
             $userId = $this->save($request->request);
-            return $this->render('AdminBundle:User\Lector:success.html.twig', array(
+            return $this->render('AdminBundle:User\Parent:success.html.twig', array(
                 'userId' => $userId));
         }
-        return $this->render('AdminBundle:User\Lector:add.html.twig', array(
-                'action_url' => 'add_lector'));
+        return $this->render('AdminBundle:User\Parent:add.html.twig', array(
+                'action_url' => 'add_parent'));
     }
 
     private function save($data)
@@ -59,7 +59,7 @@ class LectorController extends UserController
         try {
             $time = strtotime($data->get('ending_date'));
 
-            $user = new UserLector();
+            $user = new UserParent();
             $user->setUser($appUser);
             $user->setSalary($data->get('salary'));
             $user->setContract($data->get('contract'));
@@ -87,7 +87,7 @@ class LectorController extends UserController
         $userId = $data->get('userId');
 
         $user = $this->getDoctrine()
-            ->getRepository(UserLector::class)
+            ->getRepository(UserParent::class)
             ->findOneByUser($userId);
         $appUser = $this->getDoctrine()
             ->getRepository(AppUsers::class)
@@ -136,14 +136,14 @@ class LectorController extends UserController
 
     public function editProfileAction($userId)
     {
-        $lector = $this->getDoctrine()
-            ->getRepository(UserLector::class)
+        $parent = $this->getDoctrine()
+            ->getRepository(UserParent::class)
             ->findByUser($userId);
         $user = $this->getDoctrine()
             ->getRepository(AppUsers::class)
             ->findById($userId);
 
-        $timestamp = $lector[0]->getContractEndingDate();
+        $timestamp = $parent[0]->getContractEndingDate();
         $formManager = new FormManager();
         $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
@@ -151,29 +151,29 @@ class LectorController extends UserController
             'surname' => $user[0]->getSurname(),
             'email' => $user[0]->getEmail(),
             'phone' => $user[0]->getPhone(),
-            'salary' => $lector[0]->getSalary(),
-            'type' => $lector[0]->getEmployeeType(),
-            'lanLevel' => $lector[0]->getLanguageLevel(),
+            'salary' => $parent[0]->getSalary(),
+            'type' => $parent[0]->getEmployeeType(),
+            'lanLevel' => $parent[0]->getLanguageLevel(),
             'endDate' => $date,
-            'contract' => $lector[0]->getContract(),
+            'contract' => $parent[0]->getContract(),
             'id' => $user[0]->getId(),
         );
 
-        return $this->render('AdminBundle:User\Lector:edit.html.twig', array(
-            'action_url' => 'update_lector',
+        return $this->render('AdminBundle:User\Parent:edit.html.twig', array(
+            'action_url' => 'update_parent',
             'userArr' => $userArr));
     }
 
     public function showProfileAction($userId)
     {
-        $lector = $this->getDoctrine()
-            ->getRepository(UserLector::class)
+        $parent = $this->getDoctrine()
+            ->getRepository(UserParent::class)
             ->findByUser($userId);
         $user = $this->getDoctrine()
             ->getRepository(AppUsers::class)
             ->findById($userId);
 
-        $timestamp = $lector[0]->getContractEndingDate();
+        $timestamp = $parent[0]->getContractEndingDate();
         $formManager = new FormManager();
         $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
@@ -181,22 +181,22 @@ class LectorController extends UserController
             'surname' => $user[0]->getSurname(),
             'email' => $user[0]->getEmail(),
             'phone' => $user[0]->getPhone(),
-            'salary' => $lector[0]->getSalary(),
-            'type' => $lector[0]->getEmployeeType(),
-            'lanLevel' => $lector[0]->getLanguageLevel(),
+            'salary' => $parent[0]->getSalary(),
+            'type' => $parent[0]->getEmployeeType(),
+            'lanLevel' => $parent[0]->getLanguageLevel(),
             'endDate' => $date,
-            'contract' => $lector[0]->getContract(),
+            'contract' => $parent[0]->getContract(),
             'id' => $user[0]->getId(),
         );
 
-        return $this->render('AdminBundle:User\Lector:showProfile.html.twig', array(
+        return $this->render('AdminBundle:User\Parent:showProfile.html.twig', array(
             'userArr' => $userArr));
     }
 
     public function showAction()
     {
         $result = $this->getDoctrine()
-            ->getRepository(UserLector::class)
+            ->getRepository(UserParent::class)
             ->createQueryBuilder('u')
             ->select('u')
             ->getQuery()
@@ -223,7 +223,7 @@ class LectorController extends UserController
             );
         }
 
-        return $this->render('AdminBundle:User\Lector:show.html.twig', array(
+        return $this->render('AdminBundle:User\Parent:show.html.twig', array(
             'users' => $rows,
             'columns' => $columns));
     }
@@ -238,10 +238,10 @@ class LectorController extends UserController
 
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
-                             'fullName' =>'AppBundle\Entity\UserLector',
-                             'shortName' => 'ul'));
+            'fullName' =>'AppBundle\Entity\UserDr',
+            'shortName' => 'ul'));
         $filterManager->setJoin(array(
-                            'ul.user' => 'au'));
+            'ul.user' => 'au'));
         $filterManager->setCondition($data);
         $filterManager->setSelect(array('ul'));
         $filteredData = $filterManager->getfilteredData();

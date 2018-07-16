@@ -1,0 +1,158 @@
+{% extends "base.html.twig" %}
+ {% block body %}
+     {{ parent() }}
+     <!-- BEGIN CONTENT -->
+     <div class="page-content-wrapper">
+         <div class="page-content">
+             <!-- BEGIN PAGE HEAD -->
+             <div class="page-head">
+                 <!-- BEGIN PAGE TITLE -->
+                 <div class="page-title">
+                     <h1>Administracja <small>Lektorzy</small></h1>
+                 </div>
+                 <!-- END PAGE TITLE -->
+             </div>
+             <!-- END PAGE HEAD -->
+             <!-- BEGIN PAGE BREADCRUMB -->
+             <ul class="page-breadcrumb breadcrumb">
+                 <li>
+                     <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
+                 </li>
+                 <li class="active">
+                     Lektorzy
+                 </li>
+             </ul>
+             <!-- END PAGE BREADCRUMB -->
+             <!-- BEGIN PAGE CONTENT INNER -->
+             <div id="mainBox">
+                 <div id="addUser" class="portlet box green">
+                     <div class="portlet-title">
+                         <div class="caption">
+                             <i class="fa fa-user-plus"></i>Edycja lektora
+                         </div>
+                     </div>
+                     <div class="portlet-body form">
+                         <!-- BEGIN FORM-->
+                         <form action="" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="edit">
+                             <div class="alert alert-danger display-hide">
+                                 <button class="close" data-close="alert"></button>
+                                 Proszę poprawić błędy w formularzu!
+                             </div>
+                             <div class="form-body">
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Imię</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ userArr.name  }}" class="form-control input-circle" name="name" placeholder="Wprowadź imię" disabled>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Nazwisko</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ userArr.surname  }}" class="form-control input-circle" name="surname" placeholder="Wprowadź Nazwisko" disabled>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Adres Email</label>
+                                     <div class="col-md-4">
+                                         <div class="input-group">
+                                                                <span class="input-group-addon input-circle-left">
+                                                                <i class="fa fa-envelope"></i>
+                                                                </span>
+                                             <input type="email" value="{{ userArr.email  }}" class="form-control input-circle-right" name="email" placeholder="Adres Mailowy" disabled>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Telefon</label>
+                                     <div class="col-md-4">
+                                         <div class="input-group">
+                                                 <span class="input-group-addon input-circle-left">
+                                                                <i class="fa fa-phone"></i>
+                                                 </span>
+                                             <input type="text" value="{{ userArr.phone  }}" class="form-control input-circle-right" name="phone" placeholder="Telefon" disabled>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Stawka</label>
+                                     <div class="col-md-4">
+                                         <div class="input-group">
+                                                 <span class="input-group-addon input-circle-left">
+                                                                <i class="fa fa-dollar"></i>
+                                                 </span>
+                                             <input type="text" value="{{ userArr.salary  }}" class="form-control input-circle-right" name="salary" placeholder="Stawka" disabled>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Premia</label>
+                                     <div class="col-md-4">
+                                         <div class="input-group">
+                                                 <span class="input-group-addon input-circle-left">
+                                                                <i class="fa fa-plus-square"></i>
+                                                 </span>
+                                             <input type="text" class="form-control input-circle-right" name="bonus" placeholder="Premia" disabled>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Składki</label>
+                                     <div class="col-md-4">
+                                         <select class="form-control" name="employee_type" disabled>
+                                             <option value="1" {%  if (userArr.type == 1) %}selected {% endif %}>Student</option>
+                                             <option value="2" {%  if (userArr.type == 2) %}selected {% endif %}>Zdrowotne</option>
+                                             <option value="3" {%  if (userArr.type == 3) %}selected {% endif %}>Wszystkie stawki</option>
+                                         </select>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Poziom języka</label>
+                                     <div class="col-md-4">
+                                         <select class="form-control" name="language_level" disabled>
+                                             <option value="1" {%  if (userArr.type == 1) %}selected {% endif %}>B1</option>
+                                             <option value="2" {%  if (userArr.type == 2) %}selected {% endif %}>B2</option>
+                                             <option value="3" {%  if (userArr.type == 3) %}selected {% endif %}>A1</option>
+                                             <option value="4" {%  if (userArr.type == 4) %}selected {% endif %}>A2</option>
+                                         </select>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Koniec umowy</label>
+                                     <div class="col-md-4">
+                                         <div class="input-icon">
+                                             <i class="fa fa-calendar"></i>
+                                             <input class="form-control date-picker" value="{{ userArr.endDate  }}" size="16" id="date" name="ending_date" placeholder="DD-MM/YYYY" type="text" data-date-format="dd-mm-yyyy" data-date-viewmode="years"  disabled/>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 {% if userArr.contract != 0 %}
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Aktualna umowa</label>
+                                         <div class="col-md-4">
+                                             <a target="_blank" href="/upload/contract/{{ userArr.contract }}">Plik</a>
+                                         </div>
+                                     </div>
+                                 {% endif %}
+                                 <div>
+                                     <div class="row">
+                                         <div class="col-md-offset-3 col-md-9">
+                                            <a href="{{ path('edit_profile_lector', {'userId': userArr.id}) }}">
+                                                <button type="button" class="btn btn-circle blue" id="edit_user">Edytuj użytkownika</button>
+                                             </a>
+                                         </div>
+                                     </div>
+                                 </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ {% endblock %}
+ {%  block stylesheets %}
+     {{  parent () }}
+ {% endblock %}
+ {% block javascripts %}
+     {{  parent() }}
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
+ {% endblock %}
