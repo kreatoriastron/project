@@ -109,7 +109,7 @@ add_school:
     defaults: { _controller: AdminBundle:School:add }
 
 update_school:
-    path:     /admin/school/update/profile
+    path:     /admin/school/update/
     defaults: { _controller: AdminBundle:School:update}
 
 import_school:
@@ -125,12 +125,12 @@ show_school:
     defaults: { _controller: AdminBundle:School:show}
 
 show_profile_school:
-    path:     /admin/school/show/profile/{userId}
+    path:     /admin/school/show/profile/{schoolId}
     defaults: { _controller: AdminBundle:School:showProfile}
 
-edit_profile_school:
-    path:     /admin/school/edit/profile/{userId}
-    defaults: { _controller: AdminBundle:School:editProfile}
+edit_school:
+    path:     /admin/school/edit/{schoolId}
+    defaults: { _controller: AdminBundle:School:editSchool}
 
 filter_school:
     path:     /admin/school/filter

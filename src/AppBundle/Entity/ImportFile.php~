@@ -1,0 +1,67 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ImportFile
+ *
+ * @ORM\Table(name="import_file")
+ * @ORM\Entity
+ */
+class ImportFile
+{
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="dir", type="string", length=30, nullable=true)
+     */
+    private $dir;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="filename", type="string", length=30, nullable=true)
+     */
+    private $filename;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="in_progress", type="integer", nullable=true)
+     */
+    private $inProgress = '0';
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="imported", type="integer", nullable=true)
+     */
+    private $imported = '0';
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="type", type="integer", nullable=true, options={"comment"="1- import szkół"})
+     */
+    private $type;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="error", type="string", length=50, nullable=true)
+     */
+    private $error;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}

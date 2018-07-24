@@ -1,18 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="AppBundle\Entity\School" table="school">
+    <indexes>
+      <index name="wojewodztwo" columns="wojewodztwo"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="UNIQUE_RSPO" columns="rspo"/>
+    </unique-constraints>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="city" type="string" column="city" length="10" nullable="true">
+    <field name="rspo" type="string" column="rspo" length="11" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="number" type="string" column="number" length="10" nullable="true">
+    <field name="powiat" type="integer" column="powiat" nullable="true">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
+        <option name="comment">d</option>
       </options>
     </field>
+    <field name="gmina" type="integer" column="gmina" nullable="true">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">e</option>
+      </options>
+    </field>
+    <field name="city" type="string" column="city" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">f</option>
+      </options>
+    </field>
+    <field name="type" type="string" column="type" length="11" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">h</option>
+      </options>
+    </field>
+    <field name="name" type="string" column="name" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">j</option>
+      </options>
+    </field>
+    <field name="address" type="string" column="address" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">l, m</option>
+      </options>
+    </field>
+    <field name="zipcode" type="string" column="zipcode" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">n</option>
+      </options>
+    </field>
+    <field name="post" type="string" column="post" length="15" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">o</option>
+      </options>
+    </field>
+    <field name="phone" type="string" column="phone" length="12" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">p</option>
+      </options>
+    </field>
+    <field name="www" type="string" column="www" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">r</option>
+      </options>
+    </field>
+    <field name="publicznosc" type="string" column="publicznosc" length="15" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">s</option>
+      </options>
+    </field>
+    <field name="studentCount" type="integer" column="student_count" nullable="true">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">ai</option>
+      </options>
+    </field>
+    <field name="classCount" type="integer" column="class_count" nullable="true">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">am</option>
+      </options>
+    </field>
+    <many-to-one field="wojewodztwo" target-entity="Wojewodztwo" fetch="LAZY">
+      <join-columns>
+        <join-column name="wojewodztwo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

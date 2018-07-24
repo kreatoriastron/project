@@ -83,14 +83,18 @@
                                                      </thead>
                                                      <tbody>
 
-                                                         {% for user in users %}
+                                                         {% for fiche in ficheArr %}
                                                          <tr>
                                                              <td><input type="checkbox" name="id[]" value="{{ user.id }}"></td>
                                                              <td>{{ user.name }}</td>
                                                              <td>{{ user.surname }}</td>
                                                              <td>{{ user.email }}</td>
                                                              <td>{{ user.phone }}</td>
-                                                             <td>{{ user.is_active }}</td>
+                                                             <td>{{ user.child_name }}</td>
+                                                             <td>{{ user.child_surname }}</td>
+                                                             <td>{{ user.school }}</td>
+                                                             <td>{{ user.class_digit }}</td>
+                                                             <td>{{ user.class_letter }}</td>
                                                          </tr>
                                                          {% endfor %}
                                                      </tbody>

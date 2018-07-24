@@ -113,7 +113,6 @@ var FormValidation = function (url) {
         function addFile(url)
         {
             var fd = new FormData(form1[0]);
-            fd.append( 'contract', $('#file-upload').prop('files')[0] );
             $.ajax({
                 type: "POST",
                 url: url,
@@ -123,9 +122,27 @@ var FormValidation = function (url) {
                 cache: false,
                 data: fd,
                 success: function ($data) {
-                    error1.hide();
-                    $('#mainBox').html($data);
-
+                    try {
+                        var response= JSON.parse($data);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-top-center",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr['success']('Dane zostały poprawnie zmienione', 'Zaktualizowano użytkownika');
+                    } catch (e) {
+                        error1.hide();
+                        $('#mainBox').html($data);
+                    }
                 }
             });
         }

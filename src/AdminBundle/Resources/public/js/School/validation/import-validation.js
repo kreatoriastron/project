@@ -5,7 +5,7 @@ var FormValidation = function (url) {
         // for more info visit the official plugin documentation:
         // http://docs.jquery.com/Plugins/Validation
 
-        var form1 = $('#add');
+        var form1 = $('#import');
         var error1 = $('.alert-danger', form1);
         var url =url;
 
@@ -23,7 +23,8 @@ var FormValidation = function (url) {
             },
             rules: {
                 school_file: {
-                    required: true
+                    required: true,
+                    extension: "xls"
                 },
             },
 
@@ -67,13 +68,14 @@ var FormValidation = function (url) {
 
             submitHandler: function (form) {
                 addFile(url);
+                return false;
             }
         });
 
         function addFile(url)
         {
             var fd = new FormData(form1[0]);
-            fd.append( 'contract', $('#file-upload').prop('files')[0] );
+            fd.append( 'school_file', $('#file-upload').prop('files')[0] );
             $.ajax({
                 type: "POST",
                 url: url,
@@ -84,7 +86,7 @@ var FormValidation = function (url) {
                 data: fd,
                 success: function ($data) {
                     error1.hide();
-                    $('#mainBox').html($data);
+                    toastr['success']('Niebawem zostanie on przetworzony', 'Plik został zaimportowany');
 
                 }
             });

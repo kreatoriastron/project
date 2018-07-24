@@ -1,0 +1,39 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EmployeeToRegion
+ *
+ * @ORM\Table(name="employee_to_region")
+ * @ORM\Entity
+ */
+class EmployeeToRegion
+{
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=true)
+     */
+    private $userId;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="region_id", type="integer", nullable=true)
+     */
+    private $regionId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}

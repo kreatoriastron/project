@@ -7,6 +7,7 @@ use AppBundle\Entity\AppUsers;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Fiche;
+use AppBundle\Entity\School;
 use AppBundle\Service\FormManager\FormManager;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Service\DBManager\FilterManager;
@@ -20,8 +21,18 @@ class FicheController extends Controller
         if ($name)
         {
             $ficheId = $this->save($request->request);
-            return $this->render('AdminBundle:Fiche:success.html.twig', array(
-                'ficheId' => $ficheId));
+            if($ficheId) {
+                return $this->render('AdminBundle:Fiche:success.html.twig', array(
+                    'ficheId' => $ficheId));
+            } else {
+                $response = json_encode(
+                    array(
+                        'type' => 'error',
+                        'title' =>'Wystąpił błąd',
+                        'content' => 'Nie znaleziono takiej szkoły'
+                    ));
+                return new Response($response);
+            }
         }
         return $this->render('AdminBundle:Fiche:add.html.twig', array(
             'action_url' => 'add_fiche'));
@@ -29,13 +40,22 @@ class FicheController extends Controller
 
     private function save($data)
     {
+        $school = $this->getDoctrine()
+            ->getRepository(School::class)
+            ->findByRspo($data->get('school'));
+
+        if(!count($school))
+        {
+            return 0;
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
 
         try {
             $fiche = new Fiche();
             $fiche->setName($data->get('name'));
             $fiche->setSurname($data->get('surname'));
-            $fiche->setSchool($data->get('school'));
+            $fiche->setSchool($school[0]);
             $fiche->setClassDigit($data->get('class_digit'));
             $fiche->setClassLetter($data->get('class_letter'));
             $fiche->setPhone($data->get('phone'));
@@ -104,7 +124,7 @@ class FicheController extends Controller
             'phone' => $fiche[0]->getPhone(),
             'child_name' => $fiche[0]->getChildName(),
             'child_surname' => $fiche[0]->getChildSurname(),
-            'school' => $fiche[0]->getSchool(),
+            'school' => $fiche[0]->getSchool()->getName(),
             'class_digit' => $fiche[0]->getClassDigit(),
             'class_letter' => $fiche[0]->getClassLetter(),
             'id' => $fiche[0]->getId(),
@@ -128,7 +148,7 @@ class FicheController extends Controller
             'phone' => $fiche[0]->getPhone(),
             'child_name' => $fiche[0]->getChildName(),
             'child_surname' => $fiche[0]->getChildSurname(),
-            'school' => $fiche[0]->getSchool(),
+            'school' => $fiche[0]->getSchool()->getName(),
             'class_digit' => $fiche[0]->getClassDigit(),
             'class_letter' => $fiche[0]->getClassLetter(),
             'id' => $fiche[0]->getId(),
@@ -167,7 +187,7 @@ class FicheController extends Controller
                 'surname' => $row->getSurname(),
                 'email' => $row->getEmail(),
                 'phone' => $row->getPhone(),
-                'school' => $row->getSchool(),
+                'school' => $row->getSchool()->getName(),
                 'class_digit' => $row->getClassDigit(),
                 'class_letter' => $row->getClassLetter(),
                 'child_name' => $row->getChildName(),
@@ -176,7 +196,7 @@ class FicheController extends Controller
         }
 
         return $this->render('AdminBundle:Fiche:show.html.twig', array(
-            'fiches' => $rows,
+            'ficheArr' => $rows,
             'columns' => $columns));
     }
 

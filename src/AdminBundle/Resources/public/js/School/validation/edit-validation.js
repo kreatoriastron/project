@@ -26,37 +26,21 @@ var FormValidation = function (url) {
                     minlength: 2,
                     required: true
                 },
-                surname: {
-                    minlength: 2,
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
                 phone: {
-                    required: true,
-                    number: true
-                },
-                salary: {
-                    required: true,
-                    digits: true
-                },
-                bonus: {
-                    required: true,
-                    digits: true
-                },
-                ending_date: {
-                    required: true,
-                },
-                select: {
+                    minlength: 9,
                     required: true
                 },
-                select_multi: {
+                www: {
                     required: true,
-                    minlength: 1,
-                    maxlength: 3
-                }
+                },
+                student_count: {
+                    required: true,
+                    digits: true
+                },
+                class_count: {
+                    required: true,
+                    digits: true
+                },
             },
 
             errorPlacement: function (error, element) { // render error placement for each input type
@@ -105,7 +89,6 @@ var FormValidation = function (url) {
         function addFile(url)
         {
             var fd = new FormData(form1[0]);
-            fd.append( 'contract', $('#file-upload').prop('files')[0] );
             $.ajax({
                 type: "POST",
                 url: url,
@@ -130,7 +113,7 @@ var FormValidation = function (url) {
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut"
                     }
-                    toastr['success']('Dane zostały poprawnie zmienione', 'Zaktualizowano użytkownika');
+                    toastr['success']('Dane zostały poprawnie zmienione', 'Zaktualizowano szkołę');
 
                 }
             });

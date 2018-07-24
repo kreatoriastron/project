@@ -29,11 +29,12 @@ abstract class UserController extends Controller
         return $this->render('AdminBundle:Default:index.html.twig');
     }
 
-    public function uploadFile($dir, $file)
+    public function uploadFile($dir, $file, $type = array('image'))
     {
-        if(isset($_FILES[$file]['tmp_name']) && is_uploaded_file($_FILES[$file]['tmp_name'])) {
+        if(isset($_FILES[$file]['tmp_name']) && is_uploaded_file($_FILES[$file]['tmp_name']))
+        {
             $uploader = new Uploader();
-            $uploader->setAllowedType(array('image'));
+            $uploader->setAllowedType($type);
             $uploader->setDestinationDir($dir);
             $uploader->addFile($_FILES[$file]);
             return $uploader->upload();

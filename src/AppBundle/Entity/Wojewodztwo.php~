@@ -1,0 +1,32 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Wojewodztwo
+ *
+ * @ORM\Table(name="wojewodztwo")
+ * @ORM\Entity
+ */
+class Wojewodztwo
+{
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="name", type="string", length=20, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
