@@ -138,7 +138,7 @@ var FormValidation = function (url) {
                             "showMethod": "fadeIn",
                             "hideMethod": "fadeOut"
                         }
-                        toastr['success']('Dane zostały poprawnie zmienione', 'Zaktualizowano użytkownika');
+                        toastr[response['type']](response['content'], response['title']);
                     } catch (e) {
                         error1.hide();
                         $('#mainBox').html($data);

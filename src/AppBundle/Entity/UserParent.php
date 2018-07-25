@@ -2,42 +2,25 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * UserParent
- *
- * @ORM\Table(name="user_parent", indexes={@ORM\Index(name="parent_user_id", columns={"user_id"})})
- * @ORM\Entity
  */
 class UserParent
 {
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="contract_file", type="string", length=30, nullable=true)
      */
     private $contractFile;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var \AppBundle\Entity\AppUsers
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AppUsers")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
      */
     private $user;
-
 
 
     /**

@@ -59,7 +59,7 @@ class FicheController extends Controller
             $fiche->setClassDigit($data->get('class_digit'));
             $fiche->setClassLetter($data->get('class_letter'));
             $fiche->setPhone($data->get('phone'));
-            $fiche->setMail($data->get('mail'));
+            $fiche->setMail($data->get('email'));
             $fiche->setChildName($data->get('child_name'));
             $fiche->setChildSurname($data->get('child_surname'));
             $entityManager->persist($fiche);
@@ -144,7 +144,7 @@ class FicheController extends Controller
         $ficheArr = array(
             'name' => $fiche[0]->getName(),
             'surname' => $fiche[0]->getSurname(),
-            'email' => $fiche[0]->getEmail(),
+            'email' => $fiche[0]->getMail(),
             'phone' => $fiche[0]->getPhone(),
             'child_name' => $fiche[0]->getChildName(),
             'child_surname' => $fiche[0]->getChildSurname(),
@@ -185,7 +185,7 @@ class FicheController extends Controller
                 'id' => $row->getId(),
                 'name' => $row->getName(),
                 'surname' => $row->getSurname(),
-                'email' => $row->getEmail(),
+                'email' => $row->getMail(),
                 'phone' => $row->getPhone(),
                 'school' => $row->getSchool()->getName(),
                 'class_digit' => $row->getClassDigit(),

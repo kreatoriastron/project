@@ -14,12 +14,17 @@ class FilterManager
 {
     const SPACE = ' ';
 
+    const EQUAL = 'EQUAL';
+    const LIKE = 'LIKE';
+
     private $doctrine;
     private $table = array();
     private $join = array();
     private $condition = array();
     private $select = array();
-
+    private $limit = 0;
+    private $query;
+    
     public function __construct($doctrine)
     {
         $this->doctrine = $doctrine;
@@ -42,14 +47,25 @@ class FilterManager
         }
     }
 
-    public function setCondition($condition)
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+    }
+
+    public function setCondition($condition, $table, $conditionType = array())
     {
         foreach ($condition as $field => $value) {
             if(!is_null($value) && strlen($value))
             {
+                $condition = 'LIKE';
+                if(isset($conditionType[$field]))
+                {
+                    $condition = $conditionType;
+                }
                 $this->condition[] = array(
-                    'field' => $field,
-                    'value' => $value
+                    'field' => $table . '.' . $field,
+                    'value' => $value,
+                    'type' => $condition
                 );
             }
         }
@@ -62,22 +78,45 @@ class FilterManager
 
     public function getfilteredData()
     {
-        $q = $this->doctrine->getEntityManager()->createQueryBuilder();
-        $q->select($this->select);
-        $q->from($this->table['fullName'], $this->table['shortName']);
+        $this->query = $this->doctrine->getEntityManager()->createQueryBuilder();
+        $this->query->select($this->select);
+        $this->query->from($this->table['fullName'], $this->table['shortName']);
+        $this->join();
+        $this->where();
+        $this->limit();
 
-        foreach($this->join as $id => $join)
-        {
-            $q->leftJoin($join['field'],$join['alias']);
-        }
-
-        foreach($this->condition as $id => $condition)
-        {
-            $q->andWhere($condition['field'] . " LIKE '%" . $condition['value'] . "%'");
-        }
-
-        $result = $q->getQuery()->getResult();
+        $result = $this->query->getQuery()->getResult();
 
         return $result;
+    }
+
+    private function join()
+    {
+        foreach($this->join as $id => $join)
+        {
+            $this->query->leftJoin($join['field'],$join['alias']);
+        }
+    }
+
+    private function where()
+    {
+        foreach($this->condition as $id => $condition)
+        {
+            switch($condition['type']) {
+                case FilterManager::EQUAL:
+                    $this->query->andWhere($condition['field'] . " = " . $condition['value']);
+                    break;
+                case FilterManager::LIKE:
+                    $this->query->andWhere($condition['field'] . " LIKE '%" . $condition['value'] . "%'");
+                    break;
+            }
+        }
+    }
+
+    private function limit()
+    {
+        if ($this->limit) {
+            $this->query->setMaxResults($this->limit);
+        }
     }
 }

@@ -222,20 +222,6 @@ class GroupController extends Controller
             ->findByFilteredData($data);
     }
 
-    public function importAction(Request $request)
-    {
-        $file = $request->request->get('file-upload');
-
-        if ($file)
-        {
-            $groupId = $this->save($request->request);
-            return $this->render('AdminBundle:Group:success.html.twig', array(
-                'groupId' => $groupId));
-        }
-        return $this->render('AdminBundle:Group:import.html.twig', array(
-            'action_url' => 'add_group'));
-    }
-
     public function assignLectorAction(Request $request)
     {
         $file = $request->request->get('file-upload');

@@ -1,45 +1,65 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace LoginBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface as UserInterface;
 /**
  * Parents
+ *
+ * @ORM\Table(name="parents", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_880E0D76F85E0677", columns={"username"}), @ORM\UniqueConstraint(name="UNIQ_880E0D76E7927C74", columns={"email"})})
+ * @ORM\Entity
  */
-class Parents
+class Parents implements UserInterface
 {
     /**
      * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=25, nullable=false)
      */
     private $username;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=64, nullable=false)
      */
     private $password;
 
     /**
-     * @var string|null
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=60, nullable=true)
      */
     private $email;
 
     /**
-     * @var bool|null
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
     private $isActive;
 
     /**
-     * @var string|null
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=4, nullable=true)
      */
     private $class;
 
     /**
-     * @var int
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
 
+
     /**
-     * Set username.
+     * Set username
      *
      * @param string $username
      *
@@ -53,7 +73,7 @@ class Parents
     }
 
     /**
-     * Get username.
+     * Get username
      *
      * @return string
      */
@@ -63,7 +83,7 @@ class Parents
     }
 
     /**
-     * Set password.
+     * Set password
      *
      * @param string $password
      *
@@ -77,7 +97,7 @@ class Parents
     }
 
     /**
-     * Get password.
+     * Get password
      *
      * @return string
      */
@@ -87,13 +107,13 @@ class Parents
     }
 
     /**
-     * Set email.
+     * Set email
      *
-     * @param string|null $email
+     * @param string $email
      *
      * @return Parents
      */
-    public function setEmail($email = null)
+    public function setEmail($email)
     {
         $this->email = $email;
 
@@ -101,9 +121,9 @@ class Parents
     }
 
     /**
-     * Get email.
+     * Get email
      *
-     * @return string|null
+     * @return string
      */
     public function getEmail()
     {
@@ -111,13 +131,13 @@ class Parents
     }
 
     /**
-     * Set isActive.
+     * Set isActive
      *
-     * @param bool|null $isActive
+     * @param boolean $isActive
      *
      * @return Parents
      */
-    public function setIsActive($isActive = null)
+    public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
 
@@ -125,9 +145,9 @@ class Parents
     }
 
     /**
-     * Get isActive.
+     * Get isActive
      *
-     * @return bool|null
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -135,13 +155,13 @@ class Parents
     }
 
     /**
-     * Set class.
+     * Set class
      *
-     * @param string|null $class
+     * @param string $class
      *
      * @return Parents
      */
-    public function setClass($class = null)
+    public function setClass($class)
     {
         $this->class = $class;
 
@@ -149,9 +169,9 @@ class Parents
     }
 
     /**
-     * Get class.
+     * Get class
      *
-     * @return string|null
+     * @return string
      */
     public function getClass()
     {
@@ -159,12 +179,27 @@ class Parents
     }
 
     /**
-     * Get id.
+     * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
+	
+	public function getRoles()
+	 {
+		return array('ROLE_USER');
+	 }	
+	 
+    public function eraseCredentials()
+	{
+		
+	}	
+
+    public function getSalt()
+	{
+		
+	}		
 }

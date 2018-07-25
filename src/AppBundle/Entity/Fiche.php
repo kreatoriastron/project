@@ -2,94 +2,60 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Fiche
- *
- * @ORM\Table(name="fiche", indexes={@ORM\Index(name="fiche_school_id", columns={"school"}), @ORM\Index(name="fiche_class_id", columns={"class_digit"})})
- * @ORM\Entity
  */
 class Fiche
 {
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="name", type="string", length=30, nullable=true)
      */
     private $name;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="surname", type="string", length=30, nullable=true)
      */
     private $surname;
 
     /**
+     * @var int|null
+     */
+    private $classDigit;
+
+    /**
      * @var string|null
-     *
-     * @ORM\Column(name="class_letter", type="string", length=1, nullable=true)
      */
     private $classLetter;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="phone", type="string", length=10, nullable=true)
      */
     private $phone;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="mail", type="string", length=30, nullable=true)
      */
     private $mail;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="child_name", type="string", length=15, nullable=true)
      */
     private $childName;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="child_surname", type="string", length=15, nullable=true)
      */
     private $childSurname;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var \AppBundle\Entity\Classlist
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Classlist")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="class_digit", referencedColumnName="id")
-     * })
-     */
-    private $classDigit;
-
-    /**
      * @var \AppBundle\Entity\School
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="school", referencedColumnName="id")
-     * })
      */
     private $school;
-
 
 
     /**
@@ -138,6 +104,30 @@ class Fiche
     public function getSurname()
     {
         return $this->surname;
+    }
+
+    /**
+     * Set classDigit.
+     *
+     * @param int|null $classDigit
+     *
+     * @return Fiche
+     */
+    public function setClassDigit($classDigit = null)
+    {
+        $this->classDigit = $classDigit;
+
+        return $this;
+    }
+
+    /**
+     * Get classDigit.
+     *
+     * @return int|null
+     */
+    public function getClassDigit()
+    {
+        return $this->classDigit;
     }
 
     /**
@@ -268,30 +258,6 @@ class Fiche
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set classDigit.
-     *
-     * @param \AppBundle\Entity\Classlist|null $classDigit
-     *
-     * @return Fiche
-     */
-    public function setClassDigit(\AppBundle\Entity\Classlist $classDigit = null)
-    {
-        $this->classDigit = $classDigit;
-
-        return $this;
-    }
-
-    /**
-     * Get classDigit.
-     *
-     * @return \AppBundle\Entity\Classlist|null
-     */
-    public function getClassDigit()
-    {
-        return $this->classDigit;
     }
 
     /**

@@ -18,6 +18,11 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="classDigit" type="integer" column="class_digit" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="classLetter" type="string" column="class_letter" length="1" nullable="true">
       <options>
         <option name="fixed"/>
@@ -43,11 +48,6 @@
         <option name="fixed"/>
       </options>
     </field>
-    <many-to-one field="classDigit" target-entity="Classlist" fetch="LAZY">
-      <join-columns>
-        <join-column name="class_digit" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
     <many-to-one field="school" target-entity="School" fetch="LAZY">
       <join-columns>
         <join-column name="school" referenced-column-name="id"/>

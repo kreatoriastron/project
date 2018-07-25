@@ -230,11 +230,7 @@ class LectorController extends UserController
 
     public function filterAction(Request $request)
     {
-        $data['au.name'] = $request->request->get('name');
-        $data['au.surname'] = $request->request->get('surname');
-        $data['au.email'] = $request->request->get('email');
-        $data['au.phone'] = $request->request->get('phone');
-        $data['au.isActive'] = $request->request->get('is_active');
+        $data = $request->request->all();
 
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
@@ -242,7 +238,7 @@ class LectorController extends UserController
                              'shortName' => 'ul'));
         $filterManager->setJoin(array(
                             'ul.user' => 'au'));
-        $filterManager->setCondition($data);
+        $filterManager->setCondition($data, 'au');
         $filterManager->setSelect(array('ul'));
         $filteredData = $filterManager->getfilteredData();
 

@@ -39,7 +39,7 @@
         <option name="comment">h</option>
       </options>
     </field>
-    <field name="name" type="string" column="name" length="50" nullable="true">
+    <field name="name" type="string" column="name" length="150" nullable="true">
       <options>
         <option name="fixed"/>
         <option name="comment">j</option>

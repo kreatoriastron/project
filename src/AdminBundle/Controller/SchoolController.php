@@ -211,26 +211,16 @@ class SchoolController extends UserController
 
     public function filterAction(Request $request)
     {
-        $data['school.wojewodztwo'] = $request->request->get('wojewodztwo');
-        $data['school.powiat'] = $request->request->get('powiat');
-        $data['school.gmina'] = $request->request->get('gmina');
-        $data['school.city'] = $request->request->get('city');
-        $data['school.name'] = $request->request->get('name');
-        $data['school.address'] = $request->request->get('address');
-        $data['school.zipcode'] = $request->request->get('zipcode');
-        $data['school.post'] = $request->request->get('post');
-        $data['school.phone'] = $request->request->get('phone');
-        $data['school.www'] = $request->request->get('www');
-        $data['school.publicznosc'] = $request->request->get('publicznosc');
-        $data['school.student_count'] = $request->request->get('student_count');
-        $data['school.class_count'] = $request->request->get('class_count');
+        $data = $request->request->all();
+        $conditionType['wojewodztwo'] = 'EQUAL';
 
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
             'fullName' =>'AppBundle\Entity\School',
             'shortName' => 'school'));
-        $filterManager->setCondition($data);
+        $filterManager->setCondition($data, 'school', $conditionType);
         $filterManager->setSelect(array('school'));
+        $filterManager->setLimit(100);
         $filteredData = $filterManager->getfilteredData();
 
         $rows = array();
@@ -270,5 +260,19 @@ class SchoolController extends UserController
         }
         return $this->render('AdminBundle:School:assignDR.html.twig', array(
             'action_url' => 'add_school'));
+    }
+
+    public function importAction(Request $request)
+    {
+        $file = $request->request->get('file-upload');
+
+        if ($file)
+        {
+            $groupId = $this->save($request->request);
+            return $this->render('AdminBundle:School:success.html.twig', array(
+                'groupId' => $groupId));
+        }
+        return $this->render('AdminBundle:School:import.html.twig', array(
+            'action_url' => 'add_group'));
     }
 }

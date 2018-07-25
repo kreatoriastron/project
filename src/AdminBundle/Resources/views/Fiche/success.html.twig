@@ -2,12 +2,12 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-user-plus font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">Użytkownik został dodany do systemu</span>
+            <span class="caption-subject font-green-sharp bold uppercase">Fiszka została dodana do systemu</span>
         </div>
     </div>
     <div class="portlet-body">
-        <button id="showProfile" type="button" class="btn btn-primary btn-lg">Zobacz stworzony profil</button>
-        <button id="addUser" type="button" class="btn btn-secondary btn-lg">Dodaj nowe konto</button>
+        <button id="showFiche" type="button" class="btn btn-primary btn-lg">Zobacz fiszkę</button>
+        <button id="addUFiche" type="button" class="btn btn-secondary btn-lg">Dodaj następną</button>
     </div>
 </div>
 
@@ -26,13 +26,13 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    toastr['success']('Nowy lektor pojawił się w systemie', 'Dodano użytkownika');
+    toastr['success']('Fiszka pojawiła się w systemie', 'Dodano Fiszkę');
 
-    $('#showProfile').click(function(){
-        window.location ="{{ path('show_profile_lector', {'userId': userId}) }}";
+    $('#showFiche').click(function(){
+        window.location ="{{ path('show_profile_fiche', {'ficheId': ficheId}) }}";
     });
 
-    $('#addUser').click(function(){
+    $('#addFiche').click(function(){
         location.reload();
     });
 </script>
