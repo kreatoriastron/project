@@ -5,6 +5,7 @@ namespace AdminBundle\Controller\User;
 use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\AppUsers;
 use AppBundle\Entity\Child;
+use AppBundle\Entity\City;
 use FOS\UserBundle\Model\User;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +29,17 @@ class ParentController extends UserController
             return $this->render('AdminBundle:User\Parent:success.html.twig', array(
                 'userId' => $userId));
         }
+
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->createQueryBuilder('c')
+            ->select('c')
+            ->getQuery()
+            ->getResult();
+
         return $this->render('AdminBundle:User\Parent:add.html.twig', array(
-                'action_url' => 'add_parent'));
+                'action_url' => 'add_parent',
+                'cities' => $cities));
     }
 
     private function save($data)

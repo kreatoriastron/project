@@ -50,7 +50,7 @@ class School
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true, options={"comment"="j"})
+     * @ORM\Column(name="name", type="string", length=150, nullable=true, options={"comment"="j"})
      */
     private $name;
 

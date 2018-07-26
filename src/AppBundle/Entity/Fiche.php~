@@ -27,6 +27,13 @@ class Fiche
     private $surname;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="class_digit", type="integer", nullable=true)
+     */
+    private $classDigit;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="class_letter", type="string", length=1, nullable=true)
@@ -69,16 +76,6 @@ class Fiche
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var \AppBundle\Entity\Classlist
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Classlist")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="class_digit", referencedColumnName="id")
-     * })
-     */
-    private $classDigit;
 
     /**
      * @var \AppBundle\Entity\School

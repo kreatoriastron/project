@@ -136,6 +136,10 @@ filter_school:
     path:     /admin/school/filter
     defaults: { _controller: AdminBundle:School:filter}
 
+generate_city:
+    path:     /admin/city/generateList
+    defaults: { _controller: AdminBundle:City:generateList}
+
 
 add_group:
     path:     /admin/user/group/add

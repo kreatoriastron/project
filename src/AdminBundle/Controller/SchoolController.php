@@ -16,6 +16,8 @@ use AppBundle\Service\DBManager\FilterManager;
 
 class SchoolController extends UserController
 {
+    const LIMIT_PER_PAGE = 30;
+
     public function addAction(Request $request)
     {
         $name = $request->request->get('name');
@@ -149,6 +151,7 @@ class SchoolController extends UserController
             ->select('s')
             ->where('s.type=:type')
             ->setParameter('type','00003')
+            ->setMaxResults(SchoolController::LIMIT_PER_PAGE)
             ->getQuery()
             ->getResult();
 
@@ -220,7 +223,7 @@ class SchoolController extends UserController
             'shortName' => 'school'));
         $filterManager->setCondition($data, 'school', $conditionType);
         $filterManager->setSelect(array('school'));
-        $filterManager->setLimit(100);
+        $filterManager->setLimit(SchoolController::LIMIT_PER_PAGE);
         $filteredData = $filterManager->getfilteredData();
 
         $rows = array();
