@@ -1,0 +1,220 @@
+{% extends "base.html.twig" %}
+ {% block body %}
+     {{ parent() }}
+         <!-- BEGIN CONTENT -->
+         <div class="page-content-wrapper">
+             <div class="page-content">
+                 <!-- BEGIN PAGE HEAD -->
+                 <div class="page-head">
+                     <!-- BEGIN PAGE TITLE -->
+                     <div class="page-title">
+                         <h1>Administracja <small>Grupy</small></h1>
+                     </div>
+                     <!-- END PAGE TITLE -->
+                 </div>
+                 <!-- END PAGE HEAD -->
+                 <!-- BEGIN PAGE BREADCRUMB -->
+                 <ul class="page-breadcrumb breadcrumb">
+                     <li>
+                         <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
+                     </li>
+                     <li>
+                         <a href="javascript:;">Grupy</a><i class="fa fa-circle"></i>
+                     </li>
+                     <li class="active">
+                         {{ group_name }}
+                     </li>
+                 </ul>
+                 <!-- END PAGE BREADCRUMB -->
+                 <!-- BEGIN PAGE CONTENT INNER -->
+                 <div id="mainBox">
+                     <div class="row">
+                         <div class="col-md-12">
+                             <div class="portlet light">
+                                 <div class="portlet-title">
+                                     <div class="caption">
+                                         <i class="fa fa-gift font-green-sharp"></i>
+                                         <span class="caption-subject font-green-sharp bold uppercase">Przypisz dzieci do grupy {{ group_name }}</span>
+                                     </div>
+                                 </div>
+                                 <div class="portlet-body">
+                                     <div class="table-container" style="">
+
+                                         <div id="datatable_ajax_wrapper" class="dataTables_wrapper dataTables_extended_wrapper no-footer">
+                                             <td rowspan="1" colspan="1">
+                                                 <div class="margin-bottom-5">
+                                                     <button class="btn btn-sm yellow filter-submit margin-bottom" id="search" style="display: inline; float: left; padding-right: 15px;"><i class="fa fa-search"></i> Szukaj</button>
+                                                 </div>
+                                                 <div class="margin-bottom-5">
+                                                     <button class="btn btn-sm green filter-submit margin-bottom" id="addToGroup" style="margin-left:15px;"><i class="fa fa-user"></i> Przypisz do Grupy</button>
+                                                 </div>
+                                             </td>
+
+                                             <div class="table-scrollable"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
+                                                     <thead>
+                                                     <tr role="row" class="heading">
+                                                         <th width="2%" class="sorting_disabled" rowspan="1" colspan="1">
+                                                             <div class="form-check">
+                                                                 <input class="form-check-input group-checkable" type="checkbox">
+                                                             </div>                                                         </th>
+                                                         <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Imię
+                                                         </th>
+                                                         <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Nazwisko
+                                                         </th>
+                                                         </th>
+                                                         <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Klasa cyfra
+                                                         </th>
+                                                         </th>
+                                                         <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Klasa litera
+                                                         </th>
+                                                         <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Imię rodzica
+                                                         </th>
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Nazwisko rodzica
+                                                         </th>
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Telefon
+                                                         </th>
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Email
+                                                         </th>
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Grupa
+                                                         </th>
+                                                     </tr>
+                                                     <tr role="row" class="filter"><td rowspan="1" colspan="1">
+                                                         </td><td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="name">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="surname">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="classDigit">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="classLetter">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="parentName">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="parentSurname">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="phone">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="email">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="group">
+                                                         </td>
+                                                     </tr>
+                                                     </thead>
+                                                     <tbody>
+
+                                                     {% for child in childs %}
+                                                         <tr>
+                                                             <td><input type="checkbox" name="id[]" value="{{ child.id }}"></td>
+                                                             <td>{{ child.name }}</td>
+                                                             <td>{{ child.surname }}</td>
+                                                             <td>{{ child.class_digit }}</td>
+                                                             <td>{{ child.class_letter }}</td>
+                                                             <td>{{ child.parent_name }}</td>
+                                                             <td>{{ child.parent_surname }}</td>
+                                                             <td>{{ child.parent_phone }}</td>
+                                                             <td>{{ child.parent_mail }}</td>
+                                                             <td>{{ child.group }}</td>
+                                                         </tr>
+                                                     {% endfor %}
+                                                     </tbody>
+                                                 </table></div>
+
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <!-- End: life time stats -->
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+ {% endblock %}
+ {%  block stylesheets %}
+     {{  parent () }}
+ {% endblock %}
+ {% block javascripts %}
+     {{  parent() }}
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
+
+     <script>
+         $(document).ready(function(){
+             $('#search').click(function() {
+                 $.ajax({
+                     type: "POST",
+                     url: '{{ path('filter_child_to_group', {'groupId': group_id}) }}',
+                     data: $( ".form-filter" ).serialize(),
+                     success: function ($data) {
+                         var response= JSON.parse($data);
+                         $('#datatable_ajax > tbody tr').remove();
+                         $.each(response, function(i, row) {
+                             $('<tr>').append(
+                                     $('<td>').html('<input type="checkbox" name="id[]" value="' + row.id + '">'),
+                                     $('<td>').text(row.name),
+                                     $('<td>').text(row.surname),
+                                     $('<td>').text(row.class_digit),
+                                     $('<td>').text(row.class_letter),
+                                     $('<td>').text(row.parent_name),
+                                     $('<td>').text(row.parent_surname),
+                                     $('<td>').text(row.parent_phone),
+                                     $('<td>').text(row.parent_mail),
+                                     $('<td>').text(row.group),
+                             ).appendTo('#datatable_ajax > tbody');
+
+                         });
+
+                     }
+                 });
+             });
+             $('#addToGroup').click(function(){
+                 var fields = $('#mainBox tbody input:checked').serializeArray();
+                 $.ajax({
+                     type: "POST",
+                     url: '{{ path('assign_child_to_group', {'groupId': group_id}) }}',
+                     data: fields,
+                     success: function ($response) {
+                         toastr.options = {
+                             "closeButton": true,
+                             "debug": false,
+                             "positionClass": "toast-top-center",
+                             "onclick": null,
+                             "showDuration": "1000",
+                             "hideDuration": "1000",
+                             "timeOut": "5000",
+                             "extendedTimeOut": "1000",
+                             "showEasing": "swing",
+                             "hideEasing": "linear",
+                             "showMethod": "fadeIn",
+                             "hideMethod": "fadeOut"
+                         }
+                         if($response == 'correct') {
+                             toastr['success']('Wybrane dzieci zostały poprawnie przypisane do grupy', 'Przypisano uczniów');
+                             $('#search').click();
+                             $('.group-checkable').prop('checked', false).change();
+                         } else {
+                             toastr['error']('Wybrane dzieci nie zostały przypisane do grupy', 'Wystaił błąd');
+                         }
+                     }
+                 });
+             });
+         })
+     </script>
+ {% endblock %}
+

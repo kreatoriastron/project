@@ -128,8 +128,8 @@ var FormValidation = function (url) {
                 data: fd,
                 success: function ($data) {
                     error1.hide();
-                    $('#mainBox').html($data);
-
+                    $('#addUser').hide();
+                    $($data).appendTo('#mainBox');
                 }
             });
         }

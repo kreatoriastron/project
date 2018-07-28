@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+ {% block body %}
+     {{ parent() }}
+     <!-- BEGIN CONTENT -->
+     <div class="page-content-wrapper">
+         <div class="page-content">
+             <!-- BEGIN PAGE HEAD -->
+             <div class="page-head">
+                 <!-- BEGIN PAGE TITLE -->
+                 <div class="page-title">
+                     <h1>Administracja <small>Grupy</small></h1>
+                 </div>
+                 <!-- END PAGE TITLE -->
+             </div>
+             <!-- END PAGE HEAD -->
+             <!-- BEGIN PAGE BREADCRUMB -->
+             <ul class="page-breadcrumb breadcrumb">
+                 <li>
+                     <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
+                 </li>
+                 <li class="active">
+                     Grupy
+                 </li>
+             </ul>
+             <!-- END PAGE BREADCRUMB -->
+             <!-- BEGIN PAGE CONTENT INNER -->
+             <div id="mainBox">
+                 <div id="addUser" class="portlet box green">
+                     <div class="portlet-title">
+                         <div class="caption">
+                             <i class="fa fa-user-plus"></i>Edycja Grupy
+                         </div>
+                     </div>
+                     <div class="portlet-body form">
+                         <!-- BEGIN FORM-->
+                         <form action="" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="edit">
+                             <div class="alert alert-danger display-hide">
+                                 <button class="close" data-close="alert"></button>
+                                 Proszę poprawić błędy w formularzu!
+                             </div>
+                             <div class="form-body">
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Nazwa</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ groupArr.name  }}" class="form-control input-circle" name="name" placeholder="Wprowadź nazwę" disabled>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Szkoła</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ groupArr.school  }}" class="form-control input-circle" name="school" placeholder="Wprowadź Szkołę" disabled>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Lektor</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ groupArr.lector  }}" class="form-control input-circle" name="lector" placeholder="Wprowadź Lektora" disabled>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Klasa</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ groupArr.room }}" class="form-control input-circle" name="room" placeholder="Wprowadź Salę" disabled>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Dzień</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ groupArr.day }}" class="form-control input-circle" name="day" placeholder="Wprowadź Dzień" disabled>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Godzina</label>
+                                     <div class="col-md-4">
+                                         <input type="text" value="{{ groupArr.hour }}" class="form-control input-circle" name="hour" placeholder="Wprowadź Godzinę" disabled>
+                                     </div>
+                                 </div>
+                                 <div>
+                                     <div class="row">
+                                         <div class="col-md-offset-3 col-md-9">
+                                            <a href="{{ path('edit_group', {'groupId': groupArr.id}) }}">
+                                                <button type="button" class="btn btn-circle blue" id="edit_user">Edytuj grupę</button>
+                                             </a>
+                                         </div>
+                                     </div>
+                                 </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ {% endblock %}
+ {% block javascripts %}
+     {{  parent() }}
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
+ {% endblock %}

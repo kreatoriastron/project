@@ -2,74 +2,45 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Child
- *
- * @ORM\Table(name="child")
- * @ORM\Entity
  */
 class Child
 {
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="name", type="string", length=30, nullable=true)
      */
     private $name;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="surname", type="string", length=30, nullable=true)
      */
     private $surname;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="parent_id", type="integer", nullable=true)
-     */
-    private $parentId;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="group_id", type="integer", nullable=true)
-     */
-    private $groupId;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="school_id", type="integer", nullable=true)
-     */
-    private $schoolId;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="class_digit", type="integer", nullable=true)
      */
     private $classDigit;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="class_letter", type="string", length=11, nullable=true)
      */
     private $classLetter;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
+    /**
+     * @var \AppBundle\Entity\UserParent
+     */
+    private $parent;
+
+    /**
+     * @var \AppBundle\Entity\School
+     */
+    private $school;
 
 
     /**
@@ -118,78 +89,6 @@ class Child
     public function getSurname()
     {
         return $this->surname;
-    }
-
-    /**
-     * Set parentId.
-     *
-     * @param int|null $parentId
-     *
-     * @return Child
-     */
-    public function setParentId($parentId = null)
-    {
-        $this->parentId = $parentId;
-
-        return $this;
-    }
-
-    /**
-     * Get parentId.
-     *
-     * @return int|null
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * Set groupId.
-     *
-     * @param int|null $groupId
-     *
-     * @return Child
-     */
-    public function setGroupId($groupId = null)
-    {
-        $this->groupId = $groupId;
-
-        return $this;
-    }
-
-    /**
-     * Get groupId.
-     *
-     * @return int|null
-     */
-    public function getGroupId()
-    {
-        return $this->groupId;
-    }
-
-    /**
-     * Set schoolId.
-     *
-     * @param int|null $schoolId
-     *
-     * @return Child
-     */
-    public function setSchoolId($schoolId = null)
-    {
-        $this->schoolId = $schoolId;
-
-        return $this;
-    }
-
-    /**
-     * Get schoolId.
-     *
-     * @return int|null
-     */
-    public function getSchoolId()
-    {
-        return $this->schoolId;
     }
 
     /**
@@ -248,5 +147,53 @@ class Child
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set parent.
+     *
+     * @param \AppBundle\Entity\UserParent|null $parent
+     *
+     * @return Child
+     */
+    public function setParent(\AppBundle\Entity\UserParent $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent.
+     *
+     * @return \AppBundle\Entity\UserParent|null
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set school.
+     *
+     * @param \AppBundle\Entity\School|null $school
+     *
+     * @return Child
+     */
+    public function setSchool(\AppBundle\Entity\School $school = null)
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    /**
+     * Get school.
+     *
+     * @return \AppBundle\Entity\School|null
+     */
+    public function getSchool()
+    {
+        return $this->school;
     }
 }

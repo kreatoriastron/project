@@ -5,16 +5,20 @@ namespace AdminBundle\Controller;
 use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\City;
 use AppBundle\Entity\School;
+use AppBundle\Entity\Wojewodztwo;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Query;
 
 class CityController extends UserController
 {
     private $em;
+    private $wojewodztwa;
 
     public function generateListAction()
     {
         $this->em = $this->getDoctrine()->getManager();
+        $this->generateWojewodztwa();
         $this->removeCities();
         $this->generateCities();
 
@@ -53,7 +57,8 @@ class CityController extends UserController
             foreach($results as $id => $result)
             {
                 $city = new City();
-                $city->setWojewodztwo($result['wojewodztwo']);
+                $wojObj = $this->wojewodztwa[$result['wojewodztwo']];
+                $city->setWojewodztwo($wojObj);
                 $city->setPowiat($result['powiat']);
                 $city->setGmina($result['gmina']);
                 $city->setCity($result['city']);
@@ -66,4 +71,19 @@ class CityController extends UserController
             return $e->getMessage();
         }
     }
+
+    private function generateWojewodztwa()
+    {
+        $results = $this->getDoctrine()
+            ->getRepository(Wojewodztwo::class)
+            ->createQueryBuilder('w')
+            ->select('w')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_OBJECT);
+
+        foreach ($results as $result){
+            $this->wojewodztwa[$result->getId()] = $result;
+        }
+    }
+
 }

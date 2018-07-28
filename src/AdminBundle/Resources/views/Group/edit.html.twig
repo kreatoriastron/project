@@ -8,7 +8,7 @@
                  <div class="page-head">
                      <!-- BEGIN PAGE TITLE -->
                      <div class="page-title">
-                         <h1>Administracja <small>Lektorzy</small></h1>
+                         <h1>Administracja <small>Grupy</small></h1>
                      </div>
                      <!-- END PAGE TITLE -->
                  </div>
@@ -18,8 +18,11 @@
                      <li>
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
+                     <li>
+                         <a href="javascript:;">Grupy</a><i class="fa fa-circle"></i>
+                     </li>
                      <li class="active">
-                         Lektorzy
+                         {{ group_name }}
                      </li>
                  </ul>
                  <!-- END PAGE BREADCRUMB -->
@@ -28,131 +31,182 @@
                      <div id="addUser" class="portlet box green">
                          <div class="portlet-title">
                              <div class="caption">
-                                 <i class="fa fa-user-plus"></i>Edycja lektora
+                                 <i class="fa fa-user-plus"></i>Edycja Grupy {{ group_name }}
                              </div>
                          </div>
                          <div class="portlet-body form">
                              <!-- BEGIN FORM-->
-                             <form action="{{ path('update_lector') }}" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="edit">
+                             <form action="{{ path('update_group') }}" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="edit">
                                  <div class="alert alert-danger display-hide">
                                      <button class="close" data-close="alert"></button>
                                      Proszę poprawić błędy w formularzu!
                                  </div>
                                  <div class="form-body">
                                      <div class="form-group">
-                                         <label class="col-md-3 control-label">Imię</label>
+                                         <label class="col-md-3 control-label">Nazwa</label>
                                          <div class="col-md-4">
-                                             <input type="text" value="{{ userArr.name  }}" class="form-control input-circle" name="name" placeholder="Wprowadź imię">
+                                             <input type="text" value="{{ groupArr.name  }}" class="form-control input-circle" name="name" placeholder="Wprowadź nazwę" >
                                          </div>
                                      </div>
                                      <div class="form-group">
-                                         <label class="col-md-3 control-label">Nazwisko</label>
+                                         <label class="col-md-3 control-label">Szkoła</label>
                                          <div class="col-md-4">
-                                             <input type="text" value="{{ userArr.surname  }}" class="form-control input-circle" name="surname" placeholder="Wprowadź Nazwisko">
+                                             <input type="text" value="{{ groupArr.school  }}" class="form-control input-circle" id="school_name" placeholder="Wprowadź Szkołę" disabled >
                                          </div>
                                      </div>
                                      <div class="form-group">
-                                         <label class="col-md-3 control-label">Adres Email</label>
+                                         <label class="col-md-3 control-label">Nowa Szkoła</label>
                                          <div class="col-md-4">
-                                             <div class="input-group">
-                                                                <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-envelope"></i>
-                                                                </span>
-                                                 <input type="email" value="{{ userArr.email  }}" class="form-control input-circle-right" name="email" placeholder="Adres Mailowy">
-                                             </div>
+                                             <a class="btn default" data-target="#selectSchool" data-toggle="modal">
+                                                 Zmień Szkołę </a>
+                                             <input type="hidden" class="form-control input-circle" id="school" name="school" placeholder="Szkoła" value="{{ groupArr.school_id }}">
                                          </div>
                                      </div>
                                      <div class="form-group">
-                                         <label class="col-md-3 control-label">Telefon</label>
+                                         <label class="col-md-3 control-label">Lektor</label>
                                          <div class="col-md-4">
-                                             <div class="input-group">
-                                                 <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-phone"></i>
-                                                 </span>
-                                                 <input type="text" value="{{ userArr.phone  }}" class="form-control input-circle-right" name="phone" placeholder="Telefon">
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Stawka</label>
-                                         <div class="col-md-4">
-                                             <div class="input-group">
-                                                 <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-dollar"></i>
-                                                 </span>
-                                                 <input type="text" value="{{ userArr.salary  }}" class="form-control input-circle-right" name="salary" placeholder="Stawka">
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Premia</label>
-                                         <div class="col-md-4">
-                                             <div class="input-group">
-                                                 <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-plus-square"></i>
-                                                 </span>
-                                                 <input type="text" class="form-control input-circle-right" name="bonus" placeholder="Premia">
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Składki</label>
-                                         <div class="col-md-4">
-                                             <select class="form-control" name="employee_type">
-                                                 <option value="1" {%  if (userArr.type == 1) %}selected {% endif %}>Student</option>
-                                                 <option value="2" {%  if (userArr.type == 2) %}selected {% endif %}>Zdrowotne</option>
-                                                 <option value="3" {%  if (userArr.type == 3) %}selected {% endif %}>Wszystkie stawki</option>
+                                             <select id="select_lector" name="lector" placeholder="Lektor">
+                                                 <option></option>
+                                                 {% for lector in lectors %}
+                                                     <option value="{{ lector.id }}">{{ lector.name  }}</option>
+                                                 {%  endfor %}
                                              </select>
                                          </div>
                                      </div>
                                      <div class="form-group">
-                                         <label class="col-md-3 control-label">Poziom języka</label>
+                                         <label class="col-md-3 control-label">Klasa</label>
                                          <div class="col-md-4">
-                                             <select class="form-control" name="language_level">
-                                                 <option value="1" {%  if (userArr.type == 1) %}selected {% endif %}>B1</option>
-                                                 <option value="2" {%  if (userArr.type == 2) %}selected {% endif %}>B2</option>
-                                                 <option value="3" {%  if (userArr.type == 3) %}selected {% endif %}>A1</option>
-                                                 <option value="4" {%  if (userArr.type == 4) %}selected {% endif %}>A2</option>
+                                             <input type="text" value="{{ groupArr.room }}" class="form-control input-circle" name="room" placeholder="Wprowadź Salę" >
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Dzień</label>
+                                         <div class="col-md-4">
+                                             <select id="select_day" name="day" placeholder="Dzień">
+                                                 <option></option>
+                                                 {% for day in days %}
+                                                     <option value="{{ day.id }}">{{ day.name  }}</option>
+                                                 {%  endfor %}
                                              </select>
                                          </div>
                                      </div>
                                      <div class="form-group">
-                                         <label class="col-md-3 control-label">Koniec umowy</label>
+                                         <label class="col-md-3 control-label">Godzina</label>
                                          <div class="col-md-4">
-                                             <div class="input-icon">
-                                                 <i class="fa fa-calendar"></i>
-                                                 <input class="form-control date-picker" value="{{ userArr.endDate  }}" size="16" id="date" name="ending_date" placeholder="DD-MM/YYYY" type="text" data-date-format="dd-mm-yyyy" data-date-viewmode="years"/>
-                                             </div>
+                                             <input type="text" value="{{ groupArr.hour }}" class="form-control input-circle" name="hour" placeholder="Wprowadź Godzinę" >
                                          </div>
                                      </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Umowa</label>
-                                         <div class="col-md-4">
-                                             <div class="custom-file-upload">
-                                                 <label for="file-upload" class="custom-file-upload">
-                                                     <i class="fa fa-cloud-upload"></i> Aktualizuj umowę
-                                                 </label>
-                                                 <input id="file-upload" name="contract" type="file"/>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     {% if userArr.contract != 0 %}
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Aktualna umowa</label>
-                                         <div class="col-md-4">
-                                             <a target="_blank" href="/upload/contract/{{ userArr.contract }}">Plik</a>
-                                         </div>
-                                     </div>
-                                     {% endif %}
                                      <div>
                                          <div class="row">
                                              <div class="col-md-offset-3 col-md-9">
-                                                 <input type="hidden"  name="userId" value="{{ userArr.id }}">
-                                                 <button type="submit" class="btn btn-circle blue" id="add_user">Edytuj użytkownika</button>
+                                                 <input type="hidden"  name="groupId" value="{{ groupArr.id }}">
+                                                 <button type="submit" class="btn btn-circle blue" id="add_user">Edytuj Grupę</button>
                                              </div>
                                           </div>
                                      </div>
+                                 </div>
                              </form>
+                         </div>
+                     </div>
+                     <div id="childList" class="portlet box">
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <div class="portlet light">
+                                     <div class="portlet-title">
+                                         <div class="caption">
+                                             <i class="fa fa-user-plus"></i>Dzieci przypisane do grupy {{ group_name }}
+                                         </div>
+                                     </div>
+                                     <div class="portlet-body">
+                                         <div class="table-container" style="">
+
+                                             <div id="datatable_ajax_wrapper" class="dataTables_wrapper dataTables_extended_wrapper no-footer">
+                                                 <div class="table-scrollable"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
+                                                         <thead>
+                                                         <tr role="row" class="heading">
+                                                             <th width="2%" class="sorting_disabled" rowspan="1" colspan="1">
+                                                                 <div class="form-check">
+                                                                     <input class="form-check-input group-checkable" type="checkbox">
+                                                                 </div>                                                         </th>
+                                                             <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Imię
+                                                             </th>
+                                                             <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Nazwisko
+                                                             </th>
+                                                             </th>
+                                                             <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Klasa cyfra
+                                                             </th>
+                                                             </th>
+                                                             <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Klasa litera
+                                                             </th>
+                                                             <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Imię rodzica
+                                                             </th>
+                                                             <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Nazwisko rodzica
+                                                             </th>
+                                                             <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Telefon
+                                                             </th>
+                                                             <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Email
+                                                             </th>
+                                                         </tr>
+                                                         </thead>
+                                                         <tbody>
+
+                                                         {% for child in childs %}
+                                                             <tr>
+                                                                 <td><input type="checkbox" name="id[]" value="{{ child.id }}"></td>
+                                                                 <td>{{ child.name }}</td>
+                                                                 <td>{{ child.surname }}</td>
+                                                                 <td>{{ child.class_digit }}</td>
+                                                                 <td>{{ child.class_letter }}</td>
+                                                                 <td>{{ child.parent_name }}</td>
+                                                                 <td>{{ child.parent_surname }}</td>
+                                                                 <td>{{ child.parent_phone }}</td>
+                                                                 <td>{{ child.parent_mail }}</td>
+                                                             </tr>
+                                                         {% endfor %}
+                                                         </tbody>
+                                                     </table></div>
+
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <!-- End: life time stats -->
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div id="modalContainer">
+                     <div id="selectSchool" class="modal fade" tabindex="-1" aria-hidden="true">
+                         <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                             <h4 class="modal-title">Wybór szkoły</h4>
+                         </div>
+                         <div class="modal-body">
+                             <label>Wybierz miasto</label>
+                             <p>
+                                 <select id="select_city" name="city" placeholder="Miasto">
+                                     <option></option>
+                                     {% for city in cities %}
+                                         <option value="{{ city.id }}">{{ city.city  }} <small>[{{ city.wojewodztwo  }}]</small></option>
+                                     {%  endfor %}
+                                 </select>
+                             </p>
+                             <label>Wybierz szkołę</label>
+                             <p>
+                                 <select id="select_school" placeholder="Wybierz szkołę..."></select>
+                             </p>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
+                             <button type="button" data-dismiss="modal" id="selectSchoolSubmit" class="btn btn-primary">Wybierz</button>
                          </div>
                      </div>
                  </div>
@@ -161,32 +215,82 @@
  {% endblock %}
  {%  block stylesheets %}
      {{  parent () }}
-     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/datepicker.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/selectize/selectize.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}">
  {% endblock %}
  {% block javascripts %}
      {{  parent() }}
-     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
      <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('bundles/admin/js/User/Lector/validation/edit-validation.js') }}" type="text/javascript"></script>
+     <script src="{{ asset('bundles/admin/js/Group/validation/edit-validation.js') }}" type="text/javascript"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/selectize/selectize.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}"></script>
      <script>
          $(document).ready(function(){
-             var date_input=$('input[name*="date"]'); //our date input has the name "date"
-             var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-             date_input.datepicker({
-                 format: 'dd/mm/yyyy',
-                 container: container,
-                 todayHighlight: true,
-                 autoclose: true,
-             })
-         FormValidation.init('{{ path(action_url) }}');
+             var xhr;
+             var select_city, $select_city;
+             var select_school, $select_school;
+             var select_lector, $select_lector;
+             var select_day, $select_day;
 
+             $select_city = $('#select_city').selectize({
+                 onChange: function(value) {
+                     if (!value.length) return;
+                     select_school.disable();
+                     select_school.clearOptions();
+                     select_school.load(function(callback) {
+                         xhr && xhr.abort();
+                         xhr = $.ajax({
+                             type: "POST",
+                             url: '{{ path('get_school_by_city') }}',
+                             data: $( "#select_city" ).serialize(),
+                             success: function($data) {
+                                 select_school.enable();
+                                 var response= JSON.parse($data);
+                                 var collection = [];
+                                 $.each(response, function(i, row) {
+                                     collection.push({
+                                         text : row.name,
+                                         value: row.id
+                                     });
+                                 });
+                                 callback(collection);
+                             },
+                             error: function() {
+                                 callback();
+                             }
+                         })
+                     });
+                 }
+             });
+             $select_day = $('#select_day').selectize();
+             select_day  = $select_day[0].selectize;
+             select_day.setValue('{{ groupArr.day }}', false);
+
+             $select_lector = $('#select_lector').selectize();
+             select_lector  = $select_lector[0].selectize;
+             select_lector.setValue({{ groupArr.lector_id }}, false);
+
+             $select_school = $('#select_school').selectize();
+             select_school  = $select_school[0].selectize;
+             select_school.disable();
+
+             $('#selectSchoolSubmit').click(function(){
+                 $selectedSchoolId = $('#select_school').val();
+                 $selectedSchoolName = $('#select_school').text();
+                 $('#school').val($selectedSchoolId);
+                 $('#school_name').val($selectedSchoolName);
+             });
+             FormValidation.init('{{ path(action_url) }}');
              jQuery.extend(jQuery.validator.messages, {
                  required: "To pole jest wymagane",
                  email: "Proszę podać poprawny adres mailowy",
                  number: "Proszę podać poprawny numer telefonu",
-                 digits: "Proszę podać cyfrę"
+                 digits: "Proszę podać cyfrę",
+                 lettersonly: "Proszę podać literę"
              });
          })
      </script>

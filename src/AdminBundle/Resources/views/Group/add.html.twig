@@ -1,156 +1,202 @@
 {% extends "base.html.twig" %}
  {% block body %}
      {{ parent() }}
-         <!-- BEGIN CONTENT -->
-         <div class="page-content-wrapper">
-             <div class="page-content">
-                 <!-- BEGIN PAGE HEAD -->
-                 <div class="page-head">
-                     <!-- BEGIN PAGE TITLE -->
-                     <div class="page-title">
-                         <h1>Administracja <small>Fiszki</small></h1>
-                     </div>
-                     <!-- END PAGE TITLE -->
+     <!-- BEGIN CONTENT -->
+     <div class="page-content-wrapper">
+         <div class="page-content">
+             <!-- BEGIN PAGE HEAD -->
+             <div class="page-head">
+                 <!-- BEGIN PAGE TITLE -->
+                 <div class="page-title">
+                     <h1>Administracja <small>Grupy</small></h1>
                  </div>
-                 <!-- END PAGE HEAD -->
-                 <!-- BEGIN PAGE BREADCRUMB -->
-                 <ul class="page-breadcrumb breadcrumb">
-                     <li>
-                         <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
-                     </li>
-                     <li class="active">
-                         Fiszki
-                     </li>
-                 </ul>
-                 <!-- END PAGE BREADCRUMB -->
-                 <!-- BEGIN PAGE CONTENT INNER -->
-                 <div id="mainBox">
-                     <div id="addUser" class="portlet box green">
-                         <div class="portlet-title">
-                             <div class="caption">
-                                 <i class="fa fa-user-plus"></i>Dodawanie Fiszki
+                 <!-- END PAGE TITLE -->
+             </div>
+             <!-- END PAGE HEAD -->
+             <!-- BEGIN PAGE BREADCRUMB -->
+             <ul class="page-breadcrumb breadcrumb">
+                 <li>
+                     <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
+                 </li>
+                 <li class="active">
+                     Grupy
+                 </li>
+             </ul>
+             <!-- END PAGE BREADCRUMB -->
+             <!-- BEGIN PAGE CONTENT INNER -->
+             <div id="mainBox">
+                 <div id="addUser" class="portlet box green">
+                     <div class="portlet-title">
+                         <div class="caption">
+                             <i class="fa fa-user-plus"></i>Dodawanie grupy
+                         </div>
+                     </div>
+                     <div class="portlet-body form">
+                         <!-- BEGIN FORM-->
+                         <form action="{{ path('add_group') }}" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="add">
+                             <div class="alert alert-danger display-hide">
+                                 <button class="close" data-close="alert"></button>
+                                 Proszę poprawić błędy w formularzu!
                              </div>
-                         </div>
-                         <div class="portlet-body form">
-                             <!-- BEGIN FORM-->
-                             <form action="{{ path('add_fiche') }}" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="add">
-                                 <div class="alert alert-danger display-hide">
-                                     <button class="close" data-close="alert"></button>
-                                     Proszę poprawić błędy w formularzu!
+                             <div class="form-body">
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Nazwa</label>
+                                     <div class="col-md-4">
+                                         <input type="text" class="form-control input-circle" name="name" placeholder="Nazwa grupy">
+                                     </div>
                                  </div>
-                                 <div class="form-body">
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Imię Rodzica</label>
-                                         <div class="col-md-4">
-                                             <input type="text" class="form-control input-circle" name="name" placeholder="Wprowadź imię">
-                                         </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Szkoła</label>
+                                     <div class="col-md-4">
+                                         <a class="btn default" data-target="#selectSchool" data-toggle="modal">
+                                             Wybierz szkołę </a>
+                                         <input type="hidden" class="form-control input-circle" id="school" name="school" placeholder="Szkoła">
                                      </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Nazwisko Rodzica</label>
-                                         <div class="col-md-4">
-                                             <input type="text" class="form-control input-circle" name="surname" placeholder="Wprowadź Nazwisko">
-                                         </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Lektor</label>
+                                     <div class="col-md-4">
+                                         <select id="select_lector" name="lector" placeholder="Lektor">
+                                             <option></option>
+                                             {% for lector in lectors %}
+                                                 <option value="{{ lector.id }}">{{ lector.name  }}</option>
+                                             {%  endfor %}
+                                         </select>
                                      </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Imię Dziecka</label>
-                                         <div class="col-md-4">
-                                             <input type="text" class="form-control input-circle" name="child_name" placeholder="Wprowadź imię">
-                                         </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Numer Sali</label>
+                                     <div class="col-md-4">
+                                         <input type="text" class="form-control input-circle" name="room" placeholder="Sala">
                                      </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Nazwisko Dziecka</label>
-                                         <div class="col-md-4">
-                                             <input type="text" class="form-control input-circle" name="child_surname" placeholder="Wprowadź Nazwisko">
-                                         </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Dzień</label>
+                                     <div class="col-md-4">
+                                         <select id="select_day" name="day" placeholder="Dzień">
+                                             <option></option>
+                                             {% for day in days %}
+                                                 <option value="{{ day.id }}">{{ day.name  }}</option>
+                                             {%  endfor %}
+                                         </select>
                                      </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Adres Email</label>
-                                         <div class="col-md-4">
-                                             <div class="input-group">
-                                                                <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-envelope"></i>
-                                                                </span>
-                                                 <input type="email" class="form-control input-circle-right" name="email" placeholder="Adres Mailowy">
-                                             </div>
-                                         </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Godzina</label>
+                                     <div class="col-md-4">
+                                         <input type="text" class="form-control input-circle" name="hour" placeholder="Godzina">
                                      </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Telefon</label>
-                                         <div class="col-md-4">
-                                             <div class="input-group">
-                                                 <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-phone"></i>
-                                                 </span>
-                                                 <input type="text" class="form-control input-circle-right" name="phone" placeholder="Telefon">
-                                             </div>
-                                         </div>
+                                 </div>
+                             <div>
+                                 <div class="row" style="padding-bottom:10px;">
+                                     <div class="col-md-offset-3 col-md-9 p-xl">
+                                         <button type="submit" class="btn btn-circle blue" id="add_user">Stwórz grupę</button>
                                      </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Szkoła</label>
-                                         <div class="col-md-4">
-                                             <div class="input-group">
-                                                 <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-dollar"></i>
-                                                 </span>
-                                                 <input type="text" class="form-control input-circle-right" name="school" placeholder="Szkoła">
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Klasa (cyfra)</label>
-                                         <div class="col-md-4">
-                                             <div class="input-group">
-                                                 <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-plus-square"></i>
-                                                 </span>
-                                                 <input type="text" class="form-control input-circle-right" name="class_digit" placeholder="3">
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div class="form-group">
-                                         <label class="col-md-3 control-label">Klasa (litera)</label>
-                                         <div class="col-md-4">
-                                             <div class="input-group">
-                                                 <span class="input-group-addon input-circle-left">
-                                                                <i class="fa fa-plus-square"></i>
-                                                 </span>
-                                                 <input type="text" class="form-control input-circle-right" name="class_letter" placeholder="A">
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div>
-                                         <div class="row">
-                                             <div class="col-md-offset-3 col-md-9">
-                                                 <button type="submit" class="btn btn-circle blue" id="add_user">Dodaj Fiszkę</button>
-                                             </div>
-                                          </div>
-                                      </div>
-                             </form>
-                         </div>
+                                 </div>
+                             </div>
+                           </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+             <div id="modalContainer">
+                 <div id="selectSchool" class="modal fade" tabindex="-1" aria-hidden="true">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                         <h4 class="modal-title">Wybór szkoły</h4>
+                     </div>
+                     <div class="modal-body">
+                         <label>Wybierz miasto</label>
+                         <p>
+                             <select id="select_city" name="city" placeholder="Miasto">
+                                 <option></option>
+                                 {% for city in cities %}
+                                     <option value="{{ city.id }}">{{ city.city  }} <small>[{{ city.wojewodztwo  }}]</small></option>
+                                 {%  endfor %}
+                             </select>
+                         </p>
+                         <label>Wybierz szkołę</label>
+                         <p>
+                             <select id="select_school" placeholder="Wybierz szkołę..."></select>
+                         </p>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
+                         <button type="button" data-dismiss="modal" id="selectSchoolSubmit" class="btn btn-primary">Wybierz</button>
                      </div>
                  </div>
              </div>
          </div>
+     </div>
  {% endblock %}
  {%  block stylesheets %}
      {{  parent () }}
-     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/datepicker.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/selectize/selectize.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}">
  {% endblock %}
  {% block javascripts %}
      {{  parent() }}
-     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
      <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('bundles/admin/js/Fiche/validation/add-validation.js') }}" type="text/javascript"></script>
+     <script src="{{ asset('bundles/admin/js/Group/validation/add-validation.js') }}" type="text/javascript"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/selectize/selectize.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}"></script>
      <script>
-         FormValidation.init('{{ path('add_fiche') }}');
+         $(document).ready(function(){
+             var xhr;
+             var select_city, $select_city;
+             var select_school, $select_school;
 
+             $select_city = $('#select_city').selectize({
+                 onChange: function(value) {
+                     if (!value.length) return;
+                     select_school.disable();
+                     select_school.clearOptions();
+                     select_school.load(function(callback) {
+                         xhr && xhr.abort();
+                         xhr = $.ajax({
+                             type: "POST",
+                             url: '{{ path('get_school_by_city') }}',
+                             data: $( "#select_city" ).serialize(),
+                             success: function($data) {
+                                 select_school.enable();
+                                 var response= JSON.parse($data);
+                                 var collection = [];
+                                 $.each(response, function(i, row) {
+                                     collection.push({
+                                         text : row.name,
+                                         value: row.id
+                                     });
+                                 });
+                                 callback(collection);
+                             },
+                             error: function() {
+                                 callback();
+                             }
+                         })
+                     });
+                 }
+             });
+             $select_day = $('#select_day').selectize();
+             $select_school = $('#select_lector').selectize();
+             $select_school = $('#select_school').selectize();
+             select_school  = $select_school[0].selectize;
+             select_school.disable();
+
+             $('#selectSchoolSubmit').click(function(){
+                 $selectedSchool = $('#select_school').val();
+                 $('#school').val($selectedSchool);
+             });
+             FormValidation.init('{{ path('add_group') }}');
              jQuery.extend(jQuery.validator.messages, {
                  required: "To pole jest wymagane",
                  email: "Proszę podać poprawny adres mailowy",
                  number: "Proszę podać poprawny numer telefonu",
-                 digits: "Proszę podać cyfrę"
+                 digits: "Proszę podać cyfrę",
+                 lettersonly: "Proszę podać literę"
              });
          })
      </script>

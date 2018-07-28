@@ -6,6 +6,8 @@ use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\AppUsers;
 use AppBundle\Entity\Child;
 use AppBundle\Entity\City;
+use AppBundle\Entity\School;
+use AppBundle\Entity\UserLector;
 use FOS\UserBundle\Model\User;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,17 +32,36 @@ class ParentController extends UserController
                 'userId' => $userId));
         }
 
-        $cities = $this->getDoctrine()
-            ->getRepository(City::class)
-            ->createQueryBuilder('c')
-            ->select('c')
-            ->getQuery()
-            ->getResult();
+        $cities = $this->getCities();
+
 
         return $this->render('AdminBundle:User\Parent:add.html.twig', array(
                 'action_url' => 'add_parent',
                 'cities' => $cities));
     }
+
+    private function getCities()
+    {
+        $results = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->createQueryBuilder('c')
+            ->select('c')
+            ->getQuery()
+            ->getResult();
+        $cities = array();
+
+        foreach($results as $id => $city)
+        {
+            $cities[] = array(
+                'id' => $city->getId(),
+                'city' => $city->getCity(),
+                'wojewodztwo' => $city->getWojewodztwo()->getName()
+            );
+        }
+
+        return $cities;
+    }
+
 
     private function save($data)
     {
@@ -76,7 +97,6 @@ class ParentController extends UserController
             $user->setContractFile($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
-            $newParentId = $user->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -84,13 +104,17 @@ class ParentController extends UserController
         }
 
         try {
+            $schoolId = $data->get('school');
+            $school = $this->getDoctrine()
+                ->getRepository(School::class)
+                ->findOneById($schoolId);
             $time = strtotime($data->get('ending_date'));
 
             $child = new Child();
-            $child->setName($data->get('name'));
-            $child->setSurname($data->get('surname'));
-            $child->setParentId($newParentId);
-            $child->setSchoolId($data->get('school'));
+            $child->setName($data->get('child_name'));
+            $child->setSurname($data->get('child_surname'));
+            $child->setParent($user);
+            $child->setSchool($school);
             $child->setClassDigit($data->get('class_digit'));
             $child->setClassLetter($data->get('class_letter'));
             $entityManager->persist($child);
@@ -138,7 +162,7 @@ class ParentController extends UserController
 
         try {
             $newFileName = $this->uploadFile('parent_contract', 'contract');
-            $user->setContractFile($newFileName);
+            if($newFileName)  $user->setContractFile($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -234,13 +258,15 @@ class ParentController extends UserController
     {
         $data = $request->request->all();
 
+        $condition['isActive'] = 'EQUAL';
+
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
             'fullName' =>'AppBundle\Entity\UserParent',
             'shortName' => 'ul'));
         $filterManager->setJoin(array(
             'ul.user' => 'au'));
-        $filterManager->setCondition($data, 'au');
+        $filterManager->setCondition($data, 'au', $condition);
         $filterManager->setSelect(array('ul'));
         $filteredData = $filterManager->getfilteredData();
 

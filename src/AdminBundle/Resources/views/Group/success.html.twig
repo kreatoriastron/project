@@ -2,12 +2,12 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-user-plus font-green-sharp"></i>
-            <span class="caption-subject font-green-sharp bold uppercase">Użytkownik został dodany do systemu</span>
+            <span class="caption-subject font-green-sharp bold uppercase">Grupa została utworzona</span>
         </div>
     </div>
     <div class="portlet-body">
-        <button id="showProfile" type="button" class="btn btn-primary btn-lg">Zobacz stworzony profil</button>
-        <button id="addUser" type="button" class="btn btn-secondary btn-lg">Dodaj nowe konto</button>
+        <button id="showProfile" type="button" class="btn btn-primary btn-lg">Zobacz grupę</button>
+        <button id="addUser" type="button" class="btn btn-secondary btn-lg">Dodaj nową grupę</button>
     </div>
 </div>
 
@@ -26,10 +26,10 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    toastr['success']('Nowy lektor pojawił się w systemie', 'Dodano użytkownika');
+    toastr['success']('Nowa grupa pojawiła się w systemie', 'Dodano grupę');
 
     $('#showProfile').click(function(){
-        window.location ="{{ path('show_profile_lector', {'userId': userId}) }}";
+        window.location ="{{ path('show_profile_group', {'groupId': groupId}) }}";
     });
 
     $('#addUser').click(function(){

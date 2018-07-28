@@ -5,12 +5,14 @@ namespace AdminBundle\Controller\User;
 use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\AppUsers;
 use FOS\UserBundle\Model\User;
+use AppBundle\Entity\UserDr;
+use AppBundle\Entity\UserLector;
+use AppBundle\Entity\LectorToDr;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use AppBundle\Entity\UserLector;
 use AppBundle\Service\FormManager\FormManager;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Service\DBManager\FilterManager;
@@ -122,7 +124,7 @@ class LectorController extends UserController
             $user->setLanguageLevel($data->get('language_level'));
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
-            $user->setContract($newFileName);
+            if($newFileName) $user->setContract($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -214,7 +216,7 @@ class LectorController extends UserController
         {
             $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
             $rows[] = array(
-                'id' => $row->getUser()->getId(),
+                'id' => $row->getId(),
                 'name' => $row->getUser()->getName(),
                 'surname' => $row->getUser()->getSurname(),
                 'email' => $row->getUser()->getEmail(),
@@ -223,22 +225,48 @@ class LectorController extends UserController
             );
         }
 
+        $drArr = $this->getDr();
+
         return $this->render('AdminBundle:User\Lector:show.html.twig', array(
             'users' => $rows,
-            'columns' => $columns));
+            'columns' => $columns,
+            'drList' => $drArr));
+    }
+
+    private function getDr()
+    {
+        $drs = $this->getDoctrine()
+            ->getRepository(UserDr::class)
+            ->createQueryBuilder('dr')
+            ->select('dr')
+            ->getQuery()
+            ->getResult();
+
+        $drArr = array();
+        foreach($drs as $id => $dr)
+        {
+            $drArr[] = array(
+                'id' => $dr->getId(),
+                'name' => $dr->getUser()->getName(),
+                'surname' => $dr->getUser()->getSurname(),
+            );
+        }
+
+        return $drArr;
     }
 
     public function filterAction(Request $request)
     {
         $data = $request->request->all();
 
+        $condition['isActive'] = 'EQUAL';
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
                              'fullName' =>'AppBundle\Entity\UserLector',
                              'shortName' => 'ul'));
         $filterManager->setJoin(array(
                             'ul.user' => 'au'));
-        $filterManager->setCondition($data, 'au');
+        $filterManager->setCondition($data, 'au', $condition);
         $filterManager->setSelect(array('ul'));
         $filteredData = $filterManager->getfilteredData();
 
@@ -258,5 +286,39 @@ class LectorController extends UserController
         $jsonData = json_encode($rows);
 
         return new Response($jsonData);
+    }
+
+    public function assignDrAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $lectors = $request->request->get('id');
+        $dr = $request->request->get('dr');
+
+        if(is_null($lectors) || is_null($dr))
+        {
+            return new Response('error');
+        }
+
+        try {
+            $userDr = $em->getRepository(UserDr::class)->findOneById($dr);
+
+            foreach($lectors as $id => $lectorId) {
+                $lector = $em->getRepository(UserLector::class)->findOneById($lectorId);
+                $lectorToDr = $em->getRepository(LectorToDr::class)->findOneByUserLector($lectorId);
+
+                if ($lectorToDr === null) {
+                    $lectorToDr = new LectorToDr();
+                }
+
+                $lectorToDr->setUserLector($lector);
+                $lectorToDr->setUserDr($userDr);
+                $em->persist($lectorToDr);
+            }
+            $em->flush();
+        }catch(Exception $e) {
+            return new Response($e->getMessage());
+        }
+
+        return new Response('correct');
     }
 }

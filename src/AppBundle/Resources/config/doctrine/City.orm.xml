@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="AppBundle\Entity\City" table="city">
+    <indexes>
+      <index name="city_wojewodztwo" columns="wojewodztwo"/>
+    </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="wojewodztwo" type="string" column="wojewodztwo" length="30" nullable="true">
+    <field name="powiat" type="integer" column="powiat" nullable="true">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
-    <field name="powiat" type="string" column="powiat" length="30" nullable="true">
+    <field name="gmina" type="integer" column="gmina" nullable="true">
       <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="gmina" type="string" column="gmina" length="30" nullable="true">
-      <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
     <field name="city" type="string" column="city" length="30" nullable="true">
@@ -24,5 +22,10 @@
         <option name="fixed"/>
       </options>
     </field>
+    <many-to-one field="wojewodztwo" target-entity="Wojewodztwo" fetch="LAZY">
+      <join-columns>
+        <join-column name="wojewodztwo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

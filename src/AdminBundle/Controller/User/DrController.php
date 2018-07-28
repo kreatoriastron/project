@@ -58,10 +58,9 @@ class DrController extends UserController
 
         try {
             $time = strtotime($data->get('ending_date'));
-
             $user = new UserDr();
             $user->setUser($appUser);
-            $user->setAgreementType($data->get('aggrement_type'));
+            $user->setEmployeeType($data->get('employee_type'));
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
             $user->setContract($newFileName);
@@ -115,7 +114,7 @@ class DrController extends UserController
             $user->setEmployeeType($data->get('employee_type'));
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
-            $user->setContract($newFileName);
+            if($newFileName) $user->setContract($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -221,13 +220,14 @@ class DrController extends UserController
     {
         $data = $request->request->all();
 
+        $condition['isActive'] = 'EQUAL';
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
             'fullName' =>'AppBundle\Entity\UserDr',
             'shortName' => 'ul'));
         $filterManager->setJoin(array(
             'ul.user' => 'au'));
-        $filterManager->setCondition($data, 'au');
+        $filterManager->setCondition($data, 'au', $condition);
         $filterManager->setSelect(array('ul'));
         $filteredData = $filterManager->getfilteredData();
 

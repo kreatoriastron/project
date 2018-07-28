@@ -2,83 +2,41 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * City
- *
- * @ORM\Table(name="city")
- * @ORM\Entity
  */
 class City
 {
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="wojewodztwo", type="string", length=30, nullable=true)
-     */
-    private $wojewodztwo;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="powiat", type="string", length=30, nullable=true)
+     * @var int|null
      */
     private $powiat;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="gmina", type="string", length=30, nullable=true)
+     * @var int|null
      */
     private $gmina;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="city", type="string", length=30, nullable=true)
      */
     private $city;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-
-
     /**
-     * Set wojewodztwo.
-     *
-     * @param string|null $wojewodztwo
-     *
-     * @return City
+     * @var \AppBundle\Entity\Wojewodztwo
      */
-    public function setWojewodztwo($wojewodztwo = null)
-    {
-        $this->wojewodztwo = $wojewodztwo;
+    private $wojewodztwo;
 
-        return $this;
-    }
-
-    /**
-     * Get wojewodztwo.
-     *
-     * @return string|null
-     */
-    public function getWojewodztwo()
-    {
-        return $this->wojewodztwo;
-    }
 
     /**
      * Set powiat.
      *
-     * @param string|null $powiat
+     * @param int|null $powiat
      *
      * @return City
      */
@@ -92,7 +50,7 @@ class City
     /**
      * Get powiat.
      *
-     * @return string|null
+     * @return int|null
      */
     public function getPowiat()
     {
@@ -102,7 +60,7 @@ class City
     /**
      * Set gmina.
      *
-     * @param string|null $gmina
+     * @param int|null $gmina
      *
      * @return City
      */
@@ -116,7 +74,7 @@ class City
     /**
      * Get gmina.
      *
-     * @return string|null
+     * @return int|null
      */
     public function getGmina()
     {
@@ -155,5 +113,29 @@ class City
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set wojewodztwo.
+     *
+     * @param \AppBundle\Entity\Wojewodztwo|null $wojewodztwo
+     *
+     * @return City
+     */
+    public function setWojewodztwo(\AppBundle\Entity\Wojewodztwo $wojewodztwo = null)
+    {
+        $this->wojewodztwo = $wojewodztwo;
+
+        return $this;
+    }
+
+    /**
+     * Get wojewodztwo.
+     *
+     * @return \AppBundle\Entity\Wojewodztwo|null
+     */
+    public function getWojewodztwo()
+    {
+        return $this->wojewodztwo;
     }
 }

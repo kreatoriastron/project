@@ -99,17 +99,12 @@
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Szkoła</label>
                                             <div class="col-md-4">
-                                                 <input type="text" class="form-control input-circle" name="school" placeholder="Szkoła">
+                                                <a class="btn default" data-target="#selectSchool" data-toggle="modal">
+                                                    Wybierz szkołę </a>
+                                                 <input type="hidden" class="form-control input-circle" id="school" name="school" placeholder="Szkoła">
                                             </div>
                                          </div>
                                      </div>
-                                    <div class="form-group">
-                                         <label class="col-md-3 control-label">Szkoła select</label>
-                                        <div class="col-md-4">
-                                            <a class="btn default" data-target="#selectSchool" data-toggle="modal">
-                                                Wybierz szkołę </a>
-                                        </div>
-                                    </div>
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Klasa cyfra</label>
                                          <div class="col-md-4">
@@ -145,7 +140,7 @@
                      </div>
                  </div>
                  <div id="modalContainer">
-                     <div id="selectSchool" class="modal fade" tabindex="-1" data-focus-on="input:first" aria-hidden="true">
+                     <div id="selectSchool" class="modal fade" tabindex="-1" aria-hidden="true">
                          <div class="modal-header">
                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                              <h4 class="modal-title">Wybór szkoły</h4>
@@ -153,21 +148,21 @@
                          <div class="modal-body">
                              <label>Wybierz miasto</label>
                              <p>
-                                 <select id="select_city" placeholder="Miasto">
+                                 <select id="select_city" name="city" placeholder="Miasto">
+                                     <option></option>
                                     {% for city in cities %}
-                                        <option value="{{ city.id }}">{{  }}</option>
+                                        <option value="{{ city.id }}">{{ city.city  }} <small>[{{ city.wojewodztwo  }}]</small></option>
                                      {%  endfor %}
                                  </select>
                              </p>
+                             <label>Wybierz szkołę</label>
+                             <p>
+                                 <select id="select_school" placeholder="Wybierz szkołę..."></select>
+                             </p>
                          </div>
-                         <label>Wybierz szkołę</label>
-                         <p>
-                             <select id="select_school" name="school" placeholder="Szkoła"></select>
-                         </p>
-                     </div>
                          <div class="modal-footer">
                              <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
-                             <button type="button" class="btn btn-primary">Wybierz</button>
+                             <button type="button" data-dismiss="modal" id="selectSchoolSubmit" class="btn btn-primary">Wybierz</button>
                          </div>
                      </div>
                  </div>
@@ -182,7 +177,6 @@
  {% endblock %}
  {% block javascripts %}
      {{  parent() }}
-     <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
      <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
@@ -194,19 +188,30 @@
          $(document).ready(function(){
              var xhr;
              var select_city, $select_city;
+             var select_school, $select_school;
 
              $select_city = $('#select_city').selectize({
                  onChange: function(value) {
                      if (!value.length) return;
-                     select_city.disable();
-                     select_city.clearOptions();
-                     select_city.load(function(callback) {
+                     select_school.disable();
+                     select_school.clearOptions();
+                     select_school.load(function(callback) {
                          xhr && xhr.abort();
                          xhr = $.ajax({
-                             url: 'http://www.corsproxy.com/api.sba.gov/geodata/primary_city_links_for_state_of/' + value + '.json',
-                             success: function(results) {
-                                 select_city.enable();
-                                 callback(results);
+                             type: "POST",
+                             url: '{{ path('get_school_by_city') }}',
+                             data: $( "#select_city" ).serialize(),
+                             success: function($data) {
+                                 select_school.enable();
+                                 var response= JSON.parse($data);
+                                 var collection = [];
+                                 $.each(response, function(i, row) {
+                                     collection.push({
+                                         text : row.name,
+                                         value: row.id
+                                     });
+                                 });
+                                 callback(collection);
                              },
                              error: function() {
                                  callback();
@@ -214,6 +219,14 @@
                          })
                      });
                  }
+             });
+             $select_school = $('#select_school').selectize();
+             select_school  = $select_school[0].selectize;
+             select_school.disable();
+
+             $('#selectSchoolSubmit').click(function(){
+                 $selectedSchool = $('#select_school').val();
+                $('#school').val($selectedSchool);
              });
             FormValidation.init('{{ path('add_parent') }}');
              jQuery.extend(jQuery.validator.messages, {

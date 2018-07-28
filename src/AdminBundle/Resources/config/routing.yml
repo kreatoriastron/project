@@ -26,6 +26,9 @@ filter_lector:
     path:     /admin/user/lector/filter
     defaults: { _controller: AdminBundle:User\Lector:filter}
 
+assign_lector_to_dr:
+    path:     /admin/user/lector/assign_to_dr
+    defaults: { _controller: AdminBundle:User\Lector:assignDr}
 
 add_dr:
     path:     /admin/user/dr/add
@@ -136,37 +139,60 @@ filter_school:
     path:     /admin/school/filter
     defaults: { _controller: AdminBundle:School:filter}
 
+get_school_by_city:
+    path:     /admin/school/getByCity
+    defaults: { _controller: AdminBundle:School:getByCity}
+
 generate_city:
     path:     /admin/city/generateList
     defaults: { _controller: AdminBundle:City:generateList}
 
 
 add_group:
-    path:     /admin/user/group/add
-    defaults: { _controller: AdminBundle:User\Group:add }
+    path:     /admin/group/add
+    defaults: { _controller: AdminBundle:Group:add }
 
 update_group:
-    path:     /admin/user/group/update/profile
+    path:     /admin/group/update/profile
     defaults: { _controller: AdminBundle:Group:update}
 
 show_group:
-    path:     /admin/user/group/show
+    path:     /admin/group/show
     defaults: { _controller: AdminBundle:Group:show}
 
 show_profile_group:
     path:     /admin/group/show/profile/{groupId}
-    defaults: { _controller: AdminBundle:Group:showProfile}
+    defaults: { _controller: AdminBundle:Group:showGroup}
 
-edit_profile_group:
-    path:     /admin/group/edit/profile/{groupId}
-    defaults: { _controller: AdminBundle:Group:editProfile}
+edit_group:
+    path:     /admin/group/edit/{groupId}
+    defaults: { _controller: AdminBundle:Group:editGroup}
 
 filter_group:
     path:     /admin/group/filter
     defaults: { _controller: AdminBundle:Group:filter}
 
+filter_child_to_group:
+    path:     /admin/group/{groupId}/filter
+    defaults: { _controller: AdminBundle:Group:filterChildToGroup}
+
 assign_lector_to_group:
     path:     /admin/group/assign_lector
     defaults: { _controller: AdminBundle:Group:assignLector}
+    defaults: { _controller: AdminBundle:Group:assignLector}
+
+assign_child_to_group:
+    path:     /admin/group/assign_child/{groupId}
+    defaults: { _controller: AdminBundle:Group:assignChild}
+
+assign_lector_to_school:
+    path:     /admin/school/assign_lector
+    defaults: { _controller: AdminBundle:School:assignLector}
+
+assign_lector_to_school:
+    path:     /admin/school/assign_lector
+    defaults: { _controller: AdminBundle:School:assignLector}
+
+
     
     

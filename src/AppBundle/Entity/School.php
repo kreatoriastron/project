@@ -2,133 +2,95 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * School
- *
- * @ORM\Table(name="school", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_RSPO", columns={"rspo"})}, indexes={@ORM\Index(name="wojewodztwo", columns={"wojewodztwo"})})
- * @ORM\Entity
  */
 class School
 {
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="rspo", type="string", length=11, nullable=true)
      */
     private $rspo;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="powiat", type="integer", nullable=true, options={"comment"="d"})
      */
     private $powiat;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="gmina", type="integer", nullable=true, options={"comment"="e"})
      */
     private $gmina;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="city", type="string", length=20, nullable=true, options={"comment"="f"})
      */
     private $city;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="type", type="string", length=11, nullable=true, options={"comment"="h"})
      */
     private $type;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="name", type="string", length=150, nullable=true, options={"comment"="j"})
      */
     private $name;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="address", type="string", length=30, nullable=true, options={"comment"="l, m"})
+     */
+    private $nameOwn = '-';
+
+    /**
+     * @var string|null
      */
     private $address;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="zipcode", type="string", length=10, nullable=true, options={"comment"="n"})
      */
     private $zipcode;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="post", type="string", length=15, nullable=true, options={"comment"="o"})
      */
     private $post;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="phone", type="string", length=12, nullable=true, options={"comment"="p"})
      */
     private $phone;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="www", type="string", length=30, nullable=true, options={"comment"="r"})
      */
     private $www;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="publicznosc", type="string", length=15, nullable=true, options={"comment"="s"})
      */
     private $publicznosc;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="student_count", type="integer", nullable=true, options={"comment"="ai"})
      */
     private $studentCount;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(name="class_count", type="integer", nullable=true, options={"comment"="am"})
      */
     private $classCount;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var \AppBundle\Entity\Wojewodztwo
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Wojewodztwo")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="wojewodztwo", referencedColumnName="id")
-     * })
      */
     private $wojewodztwo;
-
 
 
     /**
@@ -273,6 +235,30 @@ class School
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set nameOwn.
+     *
+     * @param string|null $nameOwn
+     *
+     * @return School
+     */
+    public function setNameOwn($nameOwn = null)
+    {
+        $this->nameOwn = $nameOwn;
+
+        return $this;
+    }
+
+    /**
+     * Get nameOwn.
+     *
+     * @return string|null
+     */
+    public function getNameOwn()
+    {
+        return $this->nameOwn;
     }
 
     /**

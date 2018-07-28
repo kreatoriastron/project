@@ -7,7 +7,7 @@
     </div>
     <div class="portlet-body">
         <button id="showProfile" type="button" class="btn btn-primary btn-lg">Zobacz stworzony profil</button>
-        <button id="addUser" type="button" class="btn btn-secondary btn-lg">Dodaj nowe konto</button>
+        <button id="addNextUser" type="button" class="btn btn-secondary btn-lg">Dodaj nowe konto dla tej szkoły</button>
     </div>
 </div>
 
@@ -32,7 +32,9 @@
         window.location ="{{ path('show_profile_parent', {'userId': userId}) }}";
     });
 
-    $('#addUser').click(function(){
-        location.reload();
+    $('#addNextUser').click(function(){
+        $('#addUser input').not('#school').val('');
+        $('#addUser').show();
+        $('#resultBox').remove();
     });
 </script>

@@ -45,6 +45,12 @@
         <option name="comment">j</option>
       </options>
     </field>
+    <field name="nameOwn" type="string" column="name_own" length="150" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="default">-</option>
+      </options>
+    </field>
     <field name="address" type="string" column="address" length="30" nullable="true">
       <options>
         <option name="fixed"/>

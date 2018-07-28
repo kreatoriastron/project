@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="LoginBundle\Entity\AppUsers" table="app_users">
+    <unique-constraints>
+      <unique-constraint name="UNIQ_C2502824F85E0677" columns="username"/>
+      <unique-constraint name="UNIQ_C2502824E7927C74" columns="email"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="username" type="string" column="username" length="25" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="password" type="string" column="password" length="64" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="email" type="string" column="email" length="254" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="isActive" type="boolean" column="is_active" nullable="true">
+      <options>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="role" type="string" column="role" length="10" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">1-rodzic, 2-lektor, 2-DR, 3-admin</option>
+      </options>
+    </field>
+    <field name="name" type="string" column="name" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="surname" type="string" column="surname" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="phone" type="string" column="phone" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
