@@ -49,7 +49,6 @@ class DrController extends UserController
             $appUser->setPhone($data->get('phone'));
             $entityManager->persist($appUser);
             $entityManager->flush();
-            $newUserId = $appUser->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -66,6 +65,7 @@ class DrController extends UserController
             $user->setContract($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
+            $newUserId = $user->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -110,11 +110,10 @@ class DrController extends UserController
 
         try {
             $time = strtotime($data->get('ending_date'));
-            $user->setContract($data->get('contract'));
             $user->setEmployeeType($data->get('employee_type'));
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
-            if($newFileName) $user->setContract($newFileName);
+            if($newFileName != 0) $user->setContract($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -130,23 +129,29 @@ class DrController extends UserController
     {
         $dr = $this->getDoctrine()
             ->getRepository(UserDr::class)
-            ->findByUser($userId);
+            ->findOneById($userId);
+        if (!$dr) {
+            throw $this->createNotFoundException(
+                'No user found'
+            );
+        }
         $user = $this->getDoctrine()
             ->getRepository(AppUsers::class)
-            ->findById($userId);
+            ->findOneById($dr->getUser());
 
-        $timestamp = $dr[0]->getContractEndingDate();
+
+        $timestamp = $dr->getContractEndingDate();
         $formManager = new FormManager();
         $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
-            'name' => $user[0]->getName(),
-            'surname' => $user[0]->getSurname(),
-            'email' => $user[0]->getEmail(),
-            'phone' => $user[0]->getPhone(),
-            'type' => $dr[0]->getEmployeeType(),
+            'name' => $user->getName(),
+            'surname' => $user->getSurname(),
+            'email' => $user->getEmail(),
+            'phone' => $user->getPhone(),
+            'type' => $dr->getEmployeeType(),
             'endDate' => $date,
-            'contract' => $dr[0]->getContract(),
-            'id' => $user[0]->getId(),
+            'contract' => $dr->getContract(),
+            'id' => $user->getId(),
         );
 
         return $this->render('AdminBundle:User\Dr:edit.html.twig', array(
@@ -158,23 +163,20 @@ class DrController extends UserController
     {
         $dr = $this->getDoctrine()
             ->getRepository(UserDr::class)
-            ->findByUser($userId);
-        $user = $this->getDoctrine()
-            ->getRepository(AppUsers::class)
-            ->findById($userId);
+            ->findOneById($userId);
 
-        $timestamp = $dr[0]->getContractEndingDate();
+        $timestamp = $dr->getContractEndingDate();
         $formManager = new FormManager();
         $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
-            'name' => $user[0]->getName(),
-            'surname' => $user[0]->getSurname(),
-            'email' => $user[0]->getEmail(),
-            'phone' => $user[0]->getPhone(),
+            'name' => $dr->getUser()->getName(),
+            'surname' => $dr->getUser()->getSurname(),
+            'email' => $dr->getUser()->getEmail(),
+            'phone' => $dr->getUser()->getPhone(),
             'endDate' => $date,
-            'contract' => $dr[0]->getContract(),
-            'id' => $user[0]->getId(),
-            'type' => $dr[0]->getEmployeeType(),
+            'contract' => $dr->getContract(),
+            'id' => $dr->getId(),
+            'type' => $dr->getEmployeeType(),
         );
 
         return $this->render('AdminBundle:User\Dr:showProfile.html.twig', array(
@@ -202,7 +204,7 @@ class DrController extends UserController
         {
             $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
             $rows[] = array(
-                'id' => $row->getUser()->getId(),
+                'id' => $row->getId(),
                 'name' => $row->getUser()->getName(),
                 'surname' => $row->getUser()->getSurname(),
                 'email' => $row->getUser()->getEmail(),
@@ -236,7 +238,7 @@ class DrController extends UserController
         {
             $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
             $rows[] = array(
-                'id' => $row->getUser()->getId(),
+                'id' => $row->getId(),
                 'name' => $row->getUser()->getName(),
                 'surname' => $row->getUser()->getSurname(),
                 'email' => $row->getUser()->getEmail(),

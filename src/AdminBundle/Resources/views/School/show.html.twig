@@ -54,10 +54,10 @@
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Województwo
                                                          </th>
-                                                         <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="2%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Powiat
                                                          </th>
-                                                         <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="2%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Gmina
                                                          </th>
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
@@ -72,7 +72,7 @@
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Adres
                                                          </th>
-                                                         <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="2%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Kod pocztowy
                                                          </th>
                                                          <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
@@ -81,17 +81,20 @@
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Telefon
                                                          </th>
-                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="2%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              WWW
                                                          </th>
-                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="2%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Publiczność
                                                          </th>
-                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="2%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Liczba uczniów
                                                          </th>
-                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="2%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Liczba klas
+                                                         </th>
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Dr
                                                          </th>
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Akcje
@@ -152,6 +155,9 @@
                                                              </div>
                                                              <input type="text" class="form-control form-filter input-sm" name="classCount_to" placeholder="Do">
                                                          </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="dr">
+                                                         </td>
                                                      </tr>
                                                 </thead>
                                                      <tbody>
@@ -172,6 +178,7 @@
                                                              <td>{{ school.publicznosc }}</td>
                                                              <td>{{ school.student_count }}</td>
                                                              <td>{{ school.class_count }}</td>
+                                                             <td>{{ school.dr }}</td>
                                                              <td>
                                                                  <button class="btn btn-sm blue filter-submit margin-bottom edit" data-url="{{ path('edit_school', {'schoolId': school.id}) }}">Edytuj</button>
                                                              </td>
@@ -252,7 +259,8 @@
                                      $('<td>').text(row.publicznosc),
                                      $('<td>').text(row.student_count),
                                      $('<td>').text(row.class_count),
-                                     $('<td>').html('<button class="btn btn-sm blue filter-submit margin-bottom edit" data-url="school/edit/' + row.id + '">Edytuj</button>')
+                                     $('<td>').text(row.dr),
+                                     $('<td>').html('<button class="btn btn-sm blue filter-submit margin-bottom edit" data-url="edit/' + row.id + '">Edytuj</button>')
                              ).appendTo('#datatable_ajax > tbody');
 
                          });

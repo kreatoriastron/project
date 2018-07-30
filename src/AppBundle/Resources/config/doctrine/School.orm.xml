@@ -3,6 +3,7 @@
   <entity name="AppBundle\Entity\School" table="school">
     <indexes>
       <index name="wojewodztwo" columns="wojewodztwo"/>
+      <index name="school_std" columns="std"/>
     </indexes>
     <unique-constraints>
       <unique-constraint name="UNIQUE_RSPO" columns="rspo"/>
@@ -99,6 +100,11 @@
         <option name="comment">am</option>
       </options>
     </field>
+    <many-to-one field="std" target-entity="SchoolToDr" fetch="LAZY">
+      <join-columns>
+        <join-column name="std" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="wojewodztwo" target-entity="Wojewodztwo" fetch="LAZY">
       <join-columns>
         <join-column name="wojewodztwo" referenced-column-name="id"/>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Presence" table="presence">
+    <indexes>
+      <index name="presence_group" columns="grouplist"/>
+      <index name="presence_child" columns="child"/>
+      <index name="presence_lesson" columns="lesson"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="presence" type="integer" column="presence" nullable="true">
+      <options>
+        <option name="unsigned"/>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <many-to-one field="child" target-entity="Child" fetch="LAZY">
+      <join-columns>
+        <join-column name="child" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="grouplist" target-entity="GroupList" fetch="LAZY">
+      <join-columns>
+        <join-column name="grouplist" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="lesson" target-entity="Lesson" fetch="LAZY">
+      <join-columns>
+        <join-column name="lesson" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

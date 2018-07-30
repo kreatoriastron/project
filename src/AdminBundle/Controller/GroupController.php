@@ -154,7 +154,7 @@ class GroupController extends Controller
                 'No group found for id '.$groupId
             );
         }
-echo ($data->get('school'));
+
         $school = $this->getDoctrine()
             ->getRepository(School::class)
             ->findOneById($data->get('school'));
@@ -206,7 +206,7 @@ echo ($data->get('school'));
         $cities = $this->getCities();
         $days = $this->getWeek();
         $lectors = $this->getLectors();
-        $childList = $this->getChildTogroup($groupId);
+        $childList = $this->getChildToGroup($groupId);
 
         return $this->render('AdminBundle:Group:edit.html.twig', array(
             'action_url' => 'update_group',
@@ -218,7 +218,7 @@ echo ($data->get('school'));
             'group_name' => $group->getName()));
     }
 
-    private function getChildTogroup($groupId)
+    private function getChildToGroup($groupId)
     {
         $ctgResult = $this->getDoctrine()
             ->getRepository(ChildToGroup::class)
@@ -227,8 +227,8 @@ echo ($data->get('school'));
         if(count($ctgResult) == 0) return 0;
 
         $childIds = array();
-        foreach($ctgResult as $id => $child){
-            $childIds[] = $child->getId();
+        foreach($ctgResult as $id => $ctg){
+            $childIds[] = $ctg->getChild()->getId();
         }
 
         $qb = $this->getDoctrine()
@@ -393,7 +393,7 @@ echo ($data->get('school'));
             $childGroup = $this->getDoctrine()
                 ->getRepository(ChildToGroup::class)
                 ->findOneByChild($row->getId());
-
+            $childGroupName = ($childGroup) ? $childGroup->getGroupList()->getName() : '-';
             $rows[] = array(
                 'id' => $row->getId(),
                 'name' => $row->getName(),
@@ -404,7 +404,7 @@ echo ($data->get('school'));
                 'parent_mail' => $row->getParent()->getUser()->getEmail(),
                 'class_digit' => $row->getClassDigit(),
                 'class_letter' => $row->getClassLetter(),
-                'group' => $childGroup->getGroupList()->getName(),
+                'group' => $childGroupName,
             );
         }
 
@@ -498,7 +498,7 @@ echo ($data->get('school'));
                     'parent_mail' => $row->getParent()->getUser()->getEmail(),
                     'class_digit' => $row->getClassDigit(),
                     'class_letter' => $row->getClassLetter(),
-                    'group' => '9',
+                    'group' => $group->getName(),
                 );
             }
             $jsonData = json_encode($rows);
@@ -512,8 +512,25 @@ echo ($data->get('school'));
 
             return new Response($e->getMessage());
         }
+    }
 
+    public function removeChildAction($groupId, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userId = $request->request->get('userId');
 
+        $childToGroup = $em->getRepository(ChildToGroup::class)
+            ->findOneBy(array('grouplist'=>$groupId,'child'=>$userId));
+
+        if (!$childToGroup) {
+            throw $this->createNotFoundException(
+                'No child found in group '.$groupId
+            );
+        }
+        $em->remove($childToGroup);
+        $em->flush();
+
+        return new Response('correct');
     }
 
 }

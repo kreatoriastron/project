@@ -38,11 +38,9 @@
                                      <div class="table-container" style="">
 
                                          <div id="datatable_ajax_wrapper" class="dataTables_wrapper dataTables_extended_wrapper no-footer">
-                                           <td rowspan="1" colspan="1">
-                                                     <div class="margin-bottom-5">
-                                                         <button class="btn btn-sm yellow filter-submit margin-bottom" id="search"><i class="fa fa-search"></i> Szukaj</button>
-                                                     </div>
-                                           </td>
+                                             <div class="margin-bottom-5">
+                                                 <button class="btn btn-sm yellow filter-submit margin-bottom" id="search"><i class="fa fa-search"></i>Szukaj</button>
+                                             </div>
 
                                          <div class="table-scrollable"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
                                                      <thead>
@@ -105,9 +103,9 @@
                                                              <td>{{ group.day }}</td>
                                                              <td>{{ group.hour }}</td>
                                                              <td>
-                                                                 <button class="btn btn-sm blue filter-submit margin-bottom edit" data-url="{{ path('edit_group', {'groupId': group.id}) }}">Edytuj</button>
-                                                                 <button class="btn btn-sm green filter-submit margin-bottom assignChild" data-url="{{ path('assign_child_to_group', {'groupId': group.id}) }}">Przypisz dzieci</button>
-                                                                 <button class="btn btn-sm yellow filter-submit margin-bottom lesson" data-url="{{ path('assign_child_to_group', {'groupId': group.id}) }}">Lekcje</button>
+                                                                 <button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="{{ path('edit_group', {'groupId': group.id}) }}">Edytuj</button>
+                                                                 <button class="btn btn-sm green filter-submit margin-bottom actionButton" data-url="{{ path('assign_child_to_group', {'groupId': group.id}) }}">Przypisz dzieci</button>
+                                                                 <button class="btn btn-sm yellow filter-submit margin-bottom actionButton" data-url="{{ path('lesson_schedule', {'groupId': group.id}) }}">Lekcje</button>
                                                              </td>
                                                          </tr>
                                                          {% endfor %}
@@ -149,9 +147,9 @@
                                     $('<td>').text(row.room),
                                     $('<td>').text(row.day),
                                     $('<td>').text(row.hour),
-                                    $('<td>').html('<button class="btn btn-sm blue filter-submit margin-bottom edit" data-url="/app_dev.php/group/edit/' + row.id + '">Edytuj</button>' +
-                                            '<button class="btn btn-sm green filter-submit margin-bottom edit" data-url="/app_dev.php/admin/group/assign_child/' + row.id + '">Przypisz dzieci</button>' +
-                                            '<button class="btn btn-sm green filter-submit margin-bottom edit" data-url="/app_dev.php/admin/group/assign_child/' + row.id + '">Lekcje</button>)
+                                    $('<td>').html('<button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="/app_dev.php/admin/group/edit/' + row.id + '">Edytuj</button>' +
+                                            '<button class="btn btn-sm green filter-submit margin-bottom actionButton" data-url="/app_dev.php/admin/group/assign_child/' + row.id + '">Przypisz dzieci</button>' +
+                                            '<button class="btn btn-sm yellow filter-submit margin-bottom actionButton" data-url="/app_dev.php/admin/group/' + row.id + '/lesson">Lekcje</button>')
                              ).appendTo('#datatable_ajax > tbody');
 
                          });
@@ -159,7 +157,7 @@
                      }
                  });
              });
-             $("#mainBox").on("click",".edit", function(){
+             $("#mainBox").on("click",".actionButton", function(){
                  var url = $(this).data('url');
                  window.location = url;
              });

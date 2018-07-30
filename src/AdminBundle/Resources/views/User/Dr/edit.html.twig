@@ -8,7 +8,7 @@
                  <div class="page-head">
                      <!-- BEGIN PAGE TITLE -->
                      <div class="page-title">
-                         <h1>Administracja <small>Lektorzy</small></h1>
+                         <h1>Administracja <small>Dr</small></h1>
                      </div>
                      <!-- END PAGE TITLE -->
                  </div>
@@ -19,7 +19,7 @@
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
                      <li class="active">
-                         Lektorzy
+                         Dr
                      </li>
                  </ul>
                  <!-- END PAGE BREADCRUMB -->
@@ -28,12 +28,12 @@
                      <div id="addUser" class="portlet box green">
                          <div class="portlet-title">
                              <div class="caption">
-                                 <i class="fa fa-user-plus"></i>Edycja lektora
+                                 <i class="fa fa-user-plus"></i>Edycja Dr'a
                              </div>
                          </div>
                          <div class="portlet-body form">
                              <!-- BEGIN FORM-->
-                             <form action="{{ path('update_lector') }}" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="edit">
+                             <form action="{{ path('update_dr') }}" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="edit">
                                  <div class="alert alert-danger display-hide">
                                      <button class="close" data-close="alert"></button>
                                      Proszę poprawić błędy w formularzu!
@@ -103,7 +103,7 @@
                                              </div>
                                          </div>
                                      </div>
-                                     {% if userArr.contract|length >0 %}
+                                     {% if userArr.contract|length >1 %}
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Aktualna umowa</label>
                                          <div class="col-md-4">

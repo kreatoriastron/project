@@ -51,7 +51,6 @@ class LectorController extends UserController
             $appUser->setPhone($data->get('phone'));
             $entityManager->persist($appUser);
             $entityManager->flush();
-            $newUserId = $appUser->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -65,7 +64,7 @@ class LectorController extends UserController
             $user->setUser($appUser);
             $user->setSalary($data->get('salary'));
             $user->setContract($data->get('contract'));
-            //$user->setBonus($data->get('bonus'));
+            $user->setBonus($data->get('bonus'));
             $user->setEmployeeType($data->get('employee_type'));
             $user->setLanguageLevel($data->get('language_level'));
             $user->setContractEndingDate($time);
@@ -73,6 +72,7 @@ class LectorController extends UserController
             $user->setContract($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
+            $newUserId = $user->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -90,10 +90,11 @@ class LectorController extends UserController
 
         $user = $this->getDoctrine()
             ->getRepository(UserLector::class)
-            ->findOneByUser($userId);
+            ->findOneById($userId);
+
         $appUser = $this->getDoctrine()
             ->getRepository(AppUsers::class)
-            ->findOneById($userId);
+            ->findOneById($user->getUser()->getId());
 
         if (!$user|| !$appUser) {
             throw $this->createNotFoundException(
@@ -118,13 +119,12 @@ class LectorController extends UserController
         try {
             $time = strtotime($data->get('ending_date'));
             $user->setSalary($data->get('salary'));
-            $user->setContract($data->get('contract'));
-            //$user->setBonus($data->get('bonus'));
+            $user->setBonus($data->get('bonus'));
             $user->setEmployeeType($data->get('employee_type'));
             $user->setLanguageLevel($data->get('language_level'));
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
-            if($newFileName) $user->setContract($newFileName);
+            if(strlen($newFileName) > 1) $user->setContract($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -140,25 +140,27 @@ class LectorController extends UserController
     {
         $lector = $this->getDoctrine()
             ->getRepository(UserLector::class)
-            ->findByUser($userId);
+            ->findOneById($userId);
+
         $user = $this->getDoctrine()
             ->getRepository(AppUsers::class)
-            ->findById($userId);
+            ->findOneById($lector->getUser());
 
-        $timestamp = $lector[0]->getContractEndingDate();
+        $timestamp = $lector->getContractEndingDate();
         $formManager = new FormManager();
         $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
-            'name' => $user[0]->getName(),
-            'surname' => $user[0]->getSurname(),
-            'email' => $user[0]->getEmail(),
-            'phone' => $user[0]->getPhone(),
-            'salary' => $lector[0]->getSalary(),
-            'type' => $lector[0]->getEmployeeType(),
-            'lanLevel' => $lector[0]->getLanguageLevel(),
+            'name' => $user->getName(),
+            'surname' => $user->getSurname(),
+            'email' => $user->getEmail(),
+            'phone' => $user->getPhone(),
+            'salary' => $lector->getSalary(),
+            'type' => $lector->getEmployeeType(),
+            'lanLevel' => $lector->getLanguageLevel(),
             'endDate' => $date,
-            'contract' => $lector[0]->getContract(),
-            'id' => $user[0]->getId(),
+            'contract' => $lector->getContract(),
+            'bonus' => $lector->getBonus(),
+            'id' => $lector->getId(),
         );
 
         return $this->render('AdminBundle:User\Lector:edit.html.twig', array(
@@ -170,25 +172,25 @@ class LectorController extends UserController
     {
         $lector = $this->getDoctrine()
             ->getRepository(UserLector::class)
-            ->findByUser($userId);
+            ->findOneById($userId);
         $user = $this->getDoctrine()
             ->getRepository(AppUsers::class)
-            ->findById($userId);
+            ->findOneById($lector->getId());
 
-        $timestamp = $lector[0]->getContractEndingDate();
+        $timestamp = $lector->getContractEndingDate();
         $formManager = new FormManager();
         $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
-            'name' => $user[0]->getName(),
-            'surname' => $user[0]->getSurname(),
-            'email' => $user[0]->getEmail(),
-            'phone' => $user[0]->getPhone(),
-            'salary' => $lector[0]->getSalary(),
-            'type' => $lector[0]->getEmployeeType(),
-            'lanLevel' => $lector[0]->getLanguageLevel(),
+            'name' => $user->getName(),
+            'surname' => $user->getSurname(),
+            'email' => $user->getEmail(),
+            'phone' => $user->getPhone(),
+            'salary' => $lector->getSalary(),
+            'type' => $lector->getEmployeeType(),
+            'lanLevel' => $lector->getLanguageLevel(),
             'endDate' => $date,
-            'contract' => $lector[0]->getContract(),
-            'id' => $user[0]->getId(),
+            'contract' => $lector->getContract(),
+            'id' => $user->getId(),
         );
 
         return $this->render('AdminBundle:User\Lector:showProfile.html.twig', array(
@@ -275,7 +277,7 @@ class LectorController extends UserController
         {
             $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
             $rows[] = array(
-                'id' => $row->getUser()->getId(),
+                'id' => $row->getId(),
                 'name' => $row->getUser()->getName(),
                 'surname' => $row->getUser()->getSurname(),
                 'email' => $row->getUser()->getEmail(),

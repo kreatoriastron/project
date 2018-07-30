@@ -19,7 +19,7 @@ use AppBundle\Service\DBManager\FilterManager;
 
 class SchoolController extends UserController
 {
-    const LIMIT_PER_PAGE = 30;
+    const LIMIT_PER_PAGE = 100;
 
     public function addAction(Request $request)
     {
@@ -51,6 +51,7 @@ class SchoolController extends UserController
             $school->setMail($data->get('mail'));
             $school->setChildName($data->get('child_name'));
             $school->setChildSurname($data->get('child_surname'));
+            $school->setStd(null);
             $entityManager->persist($school);
             $entityManager->flush();
             $newSchoolId = $school->getId();
@@ -69,24 +70,29 @@ class SchoolController extends UserController
         $data = $request->request;
         $schoolId = $data->get('schoolId');
 
-        $school = $this->getDoctrine()
-            ->getRepository(School::class)
-            ->findOneById($schoolId);
+        $std = $this->getDoctrine()
+            ->getRepository(SchoolToDr::class)
+            ->findOneBySchool($schoolId);
 
-        if (!$school) {
+        $userDr = $this->getDoctrine()
+            ->getRepository(UserDr::class)
+            ->findOneById($data->get('dr'));
+
+        if (!$std || !$userDr) {
             throw $this->createNotFoundException(
                 'No school found for id '.$schoolId
             );
         }
 
         try {
-            $school->setName($data->get('name'));
-            $school->setNameOwn($data->get('name_own'));
-            $school->setPhone($data->get('phone'));
-            $school->setWWW($data->get('www'));
-            $school->setStudentCount($data->get('student_count'));
-            $school->setClassCount($data->get('class_count'));
-            $entityManager->persist($school);
+            $std->getSchool()->setName($data->get('name'));
+            $std->getSchool()->setNameOwn($data->get('name_own'));
+            $std->getSchool()->setPhone($data->get('phone'));
+            $std->getSchool()->setWWW($data->get('www'));
+            $std->getSchool()->setStudentCount($data->get('student_count'));
+            $std->getSchool()->setClassCount($data->get('class_count'));
+            $std->setUserDr($userDr);
+            $entityManager->persist($std);
             $entityManager->flush();
         } catch (Exception $e)
         {
@@ -94,36 +100,40 @@ class SchoolController extends UserController
             return $e->getMessage();
         }
 
-        return new Response();
+        return new Response('correct');
     }
 
     public function editSchoolAction($schoolId = 0)
     {
-        $school = $this->getDoctrine()
-            ->getRepository(School::class)
-            ->findOneById($schoolId);
+        $std = $this->getDoctrine()
+            ->getRepository(SchoolToDr::class)
+            ->findOneBySchool($schoolId);
 
         $schoolArr = array(
-            'id' => $school->getId(),
-            'wojewodztwo' => $school->getWojewodztwo()->getName(),
-            'powiat' => $school->getPowiat(),
-            'gmina' => $school->getGmina(),
-            'city' => $school->getCity(),
-            'name' => $school->getName(),
-            'name_own' => $school->getNameOwn(),
-            'address' => $school->getAddress(),
-            'zipcode' => $school->getZipcode(),
-            'post' => $school->getPost(),
-            'phone' => $school->getPhone(),
-            'www' => $school->getWww(),
-            'publicznosc' => $school->getPublicznosc(),
-            'student_count' => $school->getStudentCount(),
-            'class_count' => $school->getClassCount()
+            'id' => $std->getSchool()->getId(),
+            'wojewodztwo' => $std->getSchool()->getWojewodztwo()->getName(),
+            'powiat' => $std->getSchool()->getPowiat(),
+            'gmina' => $std->getSchool()->getGmina(),
+            'city' => $std->getSchool()->getCity(),
+            'name' => $std->getSchool()->getName(),
+            'name_own' => $std->getSchool()->getNameOwn(),
+            'address' => $std->getSchool()->getAddress(),
+            'zipcode' => $std->getSchool()->getZipcode(),
+            'post' => $std->getSchool()->getPost(),
+            'phone' => $std->getSchool()->getPhone(),
+            'www' => $std->getSchool()->getWww(),
+            'publicznosc' => $std->getSchool()->getPublicznosc(),
+            'student_count' => $std->getSchool()->getStudentCount(),
+            'class_count' => $std->getSchool()->getClassCount(),
+            'dr_id' => $std->getUserDr()->getId()
         );
+
+        $drArr = $this->getDr();
 
         return $this->render('AdminBundle:School:edit.html.twig', array(
             'action_url' => 'update_school',
-            'schoolArr' => $schoolArr));
+            'schoolArr' => $schoolArr,
+            'drList' => $drArr));
     }
 
     public function showSchoolAction($schoolId)
@@ -181,6 +191,15 @@ class SchoolController extends UserController
         );
         foreach($result as $id => $row)
         {
+            $schoolToDr = $this->getDoctrine()
+                ->getRepository(SchoolToDr::class)
+                ->findOneBySchool($row);
+            if($schoolToDr) {
+                $dr = $schoolToDr->getUserDr()->getUser()->getName() . ' ' . $schoolToDr->getUserDr()->getUser()->getSurname();
+            } else {
+                $dr = '';
+            }
+
             $rows[] = array(
                 'id' => $row->getId(),
                 'wojewodztwo' => $row->getWojewodztwo()->getName(),
@@ -196,7 +215,8 @@ class SchoolController extends UserController
                 'www' => $row->getWww(),
                 'publicznosc' => $row->getPublicznosc(),
                 'student_count' => $row->getStudentCount(),
-                'class_count' => $row->getClassCount()
+                'class_count' => $row->getClassCount(),
+                'dr' => $dr
             );
         }
 
@@ -256,7 +276,14 @@ class SchoolController extends UserController
     {
         $data = $request->request->all();
         // only elementary school
+        unset($data['dr']);
         $data['type'] = '00003';
+        $dataUser['name_or_first'] = $request->request->get('dr');
+        $dataUser['surname_or_first'] = $request->request->get('dr');
+
+        $conditionTypeUser['name_or_first'] = 'OR';
+        $conditionTypeUser['surname_or_first'] = 'OR';
+
         $conditionType['wojewodztwo'] = 'EQUAL';
         $conditionType['studentCount_from'] = 'GREATER';
         $conditionType['studentCount_to'] = 'LESS';
@@ -267,14 +294,25 @@ class SchoolController extends UserController
         $filterManager->setTable(array(
             'fullName' =>'AppBundle\Entity\School',
             'shortName' => 'school'));
+        $filterManager->setJoin(array(
+            'school.std' => 'std'));
+        $filterManager->setJoin(array(
+            'std.userDr' => 'ud'));
+        $filterManager->setJoin(array(
+            'ud.user' => 'u'));
         $filterManager->setCondition($data, 'school', $conditionType);
-        $filterManager->setSelect(array('school'));
+        $filterManager->setCondition($dataUser, 'u', $conditionTypeUser);
+        $filterManager->setSelect(array('school, std, ud, u'));
         $filterManager->setLimit(SchoolController::LIMIT_PER_PAGE);
         $filteredData = $filterManager->getfilteredData();
-
         $rows = array();
         foreach($filteredData as $id => $row)
         {
+            if(is_object($row->getStd())) {
+                $name = $row->getStd()->getUserDr()->getUser()->getName() . ' ' . $row->getStd()->getUserDr()->getUser()->getSurname();
+            } else {
+                $name = '';
+            }
             $rows[] = array(
                 'id' => $row->getId(),
                 'wojewodztwo' => $row->getWojewodztwo()->getName(),
@@ -290,7 +328,8 @@ class SchoolController extends UserController
                 'www' => $row->getWww(),
                 'publicznosc' => $row->getPublicznosc(),
                 'student_count' => $row->getStudentCount(),
-                'class_count' => $row->getClassCount()
+                'class_count' => $row->getClassCount(),
+                'dr' => $name
             );
         }
         $jsonData = json_encode($rows);
@@ -323,6 +362,7 @@ class SchoolController extends UserController
                 $schoolToDr->setSchool($school);
                 $schoolToDr->setUserDr($userDr);
                 $em->persist($schoolToDr);
+                $school->setStd($schoolToDr);
             }
             $em->flush();
         }catch(Exception $e) {
@@ -334,13 +374,27 @@ class SchoolController extends UserController
 
     public function importAction(Request $request)
     {
-        $file = $request->request->get('file-upload');
+        $file = $this->uploadFile('school', 'school_file', array('document'));
 
         if ($file)
         {
-            $groupId = $this->save($request->request);
-            return $this->render('AdminBundle:School:success.html.twig', array(
-                'groupId' => $groupId));
+            $entityManager = $this->getDoctrine()->getManager();
+
+            try {
+                $import = new ImportFile();
+                $import->setDir('school');
+                $import->setFilename($file);
+                $import->setInProgress(0);
+                $import->setType(1);
+                $entityManager->persist($import);
+                $entityManager->flush();
+
+                return new Response('correct');
+            } catch (Exception $e)
+            {
+                throw new Exception($e->getMessage());
+                return $e->getMessage();
+            }
         }
         return $this->render('AdminBundle:School:import.html.twig', array(
             'action_url' => 'add_group'));

@@ -88,6 +88,11 @@ class School
     private $id;
 
     /**
+     * @var \AppBundle\Entity\SchoolToDr
+     */
+    private $std;
+
+    /**
      * @var \AppBundle\Entity\Wojewodztwo
      */
     private $wojewodztwo;
@@ -461,6 +466,30 @@ class School
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set std.
+     *
+     * @param \AppBundle\Entity\SchoolToDr|null $std
+     *
+     * @return School
+     */
+    public function setStd(\AppBundle\Entity\SchoolToDr $std = null)
+    {
+        $this->std = $std;
+
+        return $this;
+    }
+
+    /**
+     * Get std.
+     *
+     * @return \AppBundle\Entity\SchoolToDr|null
+     */
+    public function getStd()
+    {
+        return $this->std;
     }
 
     /**

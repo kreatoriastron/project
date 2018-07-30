@@ -1,3 +1,27 @@
 lessons_homepage:
     path:     /
     defaults: { _controller: LessonsBundle:Default:index }
+
+lesson_schedule:
+    path:     /admin/group/{groupId}/lesson
+    defaults: { _controller: LessonsBundle:Lesson:show}
+
+edit_lesson:
+    path:     /admin/group/{groupId}/lesson/{lessonId}/edit
+    defaults: { _controller: LessonsBundle:Lesson:edit}
+
+update_lesson:
+    path:     /admin/group/{groupId}/lesson/{lessonId}/update
+    defaults: { _controller: LessonsBundle:Lesson:update}
+
+lesson_presence:
+    path:     /admin/group/{groupId}/lesson/{lessonId}/presence/
+    defaults: { _controller: LessonsBundle:Presentes:show}
+
+lesson_add_presence:
+    path:     /admin/group/{groupId}/lesson/{lessonId}/presence/add
+    defaults: { _controller: LessonsBundle:Presentes:add}
+
+filter_lesson:
+    path:     /admin/lesson/filter
+    defaults: { _controller: LessonsBundle:Lesson:filter}

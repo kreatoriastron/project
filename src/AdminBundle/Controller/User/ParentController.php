@@ -81,7 +81,6 @@ class ParentController extends UserController
             $appUser->setPhone($data->get('phone'));
             $entityManager->persist($appUser);
             $entityManager->flush();
-            $newUserId = $appUser->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -97,6 +96,7 @@ class ParentController extends UserController
             $user->setContractFile($newFileName);
             $entityManager->persist($user);
             $entityManager->flush();
+            $newUserId = $user->getId();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -135,10 +135,10 @@ class ParentController extends UserController
 
         $user = $this->getDoctrine()
             ->getRepository(UserParent::class)
-            ->findOneByUser($userId);
+            ->findOneById($userId);
         $appUser = $this->getDoctrine()
             ->getRepository(AppUsers::class)
-            ->findOneById($userId);
+            ->findOneById($user->getUser()->getId());
 
         if (!$user|| !$appUser) {
             throw $this->createNotFoundException(
@@ -178,18 +178,18 @@ class ParentController extends UserController
     {
         $parent = $this->getDoctrine()
             ->getRepository(UserParent::class)
-            ->findByUser($userId);
+            ->findOneById($userId);
         $user = $this->getDoctrine()
             ->getRepository(AppUsers::class)
-            ->findById($userId);
+            ->findOneById($parent->getUser()->getId());
 
         $userArr = array(
-            'name' => $user[0]->getName(),
-            'surname' => $user[0]->getSurname(),
-            'email' => $user[0]->getEmail(),
-            'phone' => $user[0]->getPhone(),
-            'contract' => $parent[0]->getContractFile(),
-            'id' => $user[0]->getId(),
+            'name' => $user->getName(),
+            'surname' => $user->getSurname(),
+            'email' => $user->getEmail(),
+            'phone' => $user->getPhone(),
+            'contract' => $parent->getContractFile(),
+            'id' => $parent->getId(),
         );
 
         return $this->render('AdminBundle:User\Parent:edit.html.twig', array(
@@ -201,18 +201,15 @@ class ParentController extends UserController
     {
         $parent = $this->getDoctrine()
             ->getRepository(UserParent::class)
-            ->findByUser($userId);
-        $user = $this->getDoctrine()
-            ->getRepository(AppUsers::class)
-            ->findById($userId);
+            ->findOneById($userId);
 
         $userArr = array(
-            'name' => $user[0]->getName(),
-            'surname' => $user[0]->getSurname(),
-            'email' => $user[0]->getEmail(),
-            'phone' => $user[0]->getPhone(),
-            'contract' => $parent[0]->getContractFile(),
-            'id' => $user[0]->getId(),
+            'name' => $parent->getUser()->getName(),
+            'surname' => $parent->getUser()->getSurname(),
+            'email' => $parent->getUser()->getEmail(),
+            'phone' => $parent->getUser()->getPhone(),
+            'contract' => $parent->getContractFile(),
+            'id' => $parent->getId(),
         );
 
         return $this->render('AdminBundle:User\Parent:showProfile.html.twig', array(
@@ -240,7 +237,7 @@ class ParentController extends UserController
         {
             $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
             $rows[] = array(
-                'id' => $row->getUser()->getId(),
+                'id' => $row->getId(),
                 'name' => $row->getUser()->getName(),
                 'surname' => $row->getUser()->getSurname(),
                 'email' => $row->getUser()->getEmail(),
@@ -275,7 +272,7 @@ class ParentController extends UserController
         {
             $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
             $rows[] = array(
-                'id' => $row->getUser()->getId(),
+                'id' => $row->getId(),
                 'name' => $row->getUser()->getName(),
                 'surname' => $row->getUser()->getSurname(),
                 'email' => $row->getUser()->getEmail(),

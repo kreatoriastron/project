@@ -70,6 +70,9 @@
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Aktywny
                                                          </th>
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Akcje
+                                                         </th>
                                                      </tr>
                                                      <tr role="row" class="filter"><td rowspan="1" colspan="1">
                                                          </td><td rowspan="1" colspan="1">
@@ -103,6 +106,9 @@
                                                              <td>{{ user.email }}</td>
                                                              <td>{{ user.phone }}</td>
                                                              <td>{{ user.is_active }}</td>
+                                                             <td>
+                                                                 <button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="{{ path('edit_profile_lector', {'userId': user.id}) }}">Edytuj</button>
+                                                             </td>
                                                          </tr>
                                                          {% endfor %}
                                                      </tbody>
@@ -173,7 +179,8 @@
                                      $('<td>').text(row.surname),
                                      $('<td>').text(row.email),
                                      $('<td>').text(row.phone),
-                                     $('<td>').text(row.is_active)
+                                     $('<td>').text(row.is_active),
+                             $('<td>').html('<button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="/app_dev.php/admin/user/lector/edit/profile/' + row.id + '">Edytuj</button>')
                              ).appendTo('#datatable_ajax > tbody');
 
                          });
@@ -224,6 +231,10 @@
                          }
                      }
                  });
+             });
+             $("#mainBox").on("click",".actionButton", function(){
+                 var url = $(this).data('url');
+                 window.location = url;
              });
          })
      </script>

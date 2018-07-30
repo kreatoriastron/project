@@ -185,9 +185,9 @@ assign_child_to_group:
     path:     /admin/group/assign_child/{groupId}
     defaults: { _controller: AdminBundle:Group:assignChild}
 
-assign_lector_to_school:
-    path:     /admin/school/assign_lector
-    defaults: { _controller: AdminBundle:School:assignLector}
+remove_child_from_group:
+    path:     /admin/group/remove_child/{groupId}
+    defaults: { _controller: AdminBundle:Group:removeChild}
 
 assign_lector_to_school:
     path:     /admin/school/assign_lector

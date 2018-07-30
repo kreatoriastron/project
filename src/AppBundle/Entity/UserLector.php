@@ -15,6 +15,11 @@ class UserLector
     /**
      * @var string|null
      */
+    private $bonus;
+
+    /**
+     * @var string|null
+     */
     private $contract;
 
     /**
@@ -65,6 +70,30 @@ class UserLector
     public function getSalary()
     {
         return $this->salary;
+    }
+
+    /**
+     * Set bonus.
+     *
+     * @param string|null $bonus
+     *
+     * @return UserLector
+     */
+    public function setBonus($bonus = null)
+    {
+        $this->bonus = $bonus;
+
+        return $this;
+    }
+
+    /**
+     * Get bonus.
+     *
+     * @return string|null
+     */
+    public function getBonus()
+    {
+        return $this->bonus;
     }
 
     /**

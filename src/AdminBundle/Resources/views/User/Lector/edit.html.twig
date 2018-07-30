@@ -84,7 +84,6 @@
                                              </div>
                                          </div>
                                      </div>
-                                     <!--
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Premia</label>
                                          <div class="col-md-4">
@@ -92,11 +91,10 @@
                                                  <span class="input-group-addon input-circle-left">
                                                                 <i class="fa fa-plus-square"></i>
                                                  </span>
-                                                 <input type="text" class="form-control input-circle-right" name="bonus" placeholder="Premia">
+                                                 <input type="text" class="form-control input-circle-right" name="bonus" value="{{ userArr.bonus  }}" placeholder="Premia">
                                              </div>
                                          </div>
                                      </div>
-                                     -->
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Składki</label>
                                          <div class="col-md-4">
@@ -138,7 +136,7 @@
                                              </div>
                                          </div>
                                      </div>
-                                     {% if userArr.contract|length >0 %}
+                                     {% if userArr.contract|length >1 %}
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Aktualna umowa</label>
                                          <div class="col-md-4">

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Wojewodztwo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\ImportFile;
@@ -55,9 +56,16 @@ class DefaultController extends Controller
                         $entityManager->getConfiguration()
                     );
                 }
+
+                $wojewodztwo = $this->getDoctrine()
+                    ->getRepository(Wojewodztwo::class)
+                    ->findOneById($row['wojewodztwo']);
+
+                $wojewodztwo = ($wojewodztwo) ? $wojewodztwo : null;
+
                 $school = new School();
                 $school->setRspo($row['rspo']);
-                $school->setWojewodztwo($row['wojewodztwo']);
+                $school->setWojewodztwo($wojewodztwo);
                 $school->setPowiat($row['powiat']);
                 $school->setGmina($row['gmina']);
                 $school->setCity($row['city']);

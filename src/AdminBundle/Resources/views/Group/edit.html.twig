@@ -154,12 +154,15 @@
                                                              <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                                  Email
                                                              </th>
+                                                             <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                                 Akcje
+                                                             </th>
                                                          </tr>
                                                          </thead>
                                                          <tbody>
 
                                                          {% for child in childs %}
-                                                             <tr>
+                                                             <tr id="child-{{ child.id }}">
                                                                  <td><input type="checkbox" name="id[]" value="{{ child.id }}"></td>
                                                                  <td>{{ child.name }}</td>
                                                                  <td>{{ child.surname }}</td>
@@ -169,6 +172,7 @@
                                                                  <td>{{ child.parent_surname }}</td>
                                                                  <td>{{ child.parent_phone }}</td>
                                                                  <td>{{ child.parent_mail }}</td>
+                                                                 <td><button class="btn btn-sm red filter-submit margin-bottom remove" data-userId="{{ child.id }}" data-target="#removeChild" data-toggle="modal"><i></i>Usuń z grupy</button></td>
                                                              </tr>
                                                          {% endfor %}
                                                          </tbody>
@@ -207,6 +211,22 @@
                          <div class="modal-footer">
                              <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
                              <button type="button" data-dismiss="modal" id="selectSchoolSubmit" class="btn btn-primary">Wybierz</button>
+                         </div>
+                     </div>
+
+                     <div id="removeChild" class="modal fade" tabindex="-1" aria-hidden="true">
+                         <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                             <h4 class="modal-title">Usuwanie ucznia z klasy</h4>
+                         </div>
+                         <div class="modal-body">
+                             <p>
+                                Czy na pewno chcesz usunąć ucznia z klasy?
+                             </p>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
+                             <button type="button" data-dismiss="modal" id="removeChildSubmit" data-userId="0" class="btn red btn-primary">Usuń</button>
                          </div>
                      </div>
                  </div>
@@ -284,6 +304,46 @@
                  $('#school').val($selectedSchoolId);
                  $('#school_name').val($selectedSchoolName);
              });
+
+
+             $("#mainBox").on("click",".remove", function(){
+                 var userId = this.getAttribute('data-userId');
+                $('#removeChildSubmit').attr('data-userId',userId);
+             });
+
+             $("body").on("click","#removeChildSubmit", function(){
+                var value = $('#removeChildSubmit').attr('data-userId');
+                var data = {"userId": value}
+                     $.ajax({
+                         type: "POST",
+                         url: '{{ path('remove_child_from_group', {'groupId': groupArr.id}) }}',
+                         data: data,
+                         success: function ($response) {
+                             toastr.options = {
+                                 "closeButton": true,
+                                 "debug": false,
+                                 "positionClass": "toast-top-center",
+                                 "onclick": null,
+                                 "showDuration": "1000",
+                                 "hideDuration": "1000",
+                                 "timeOut": "5000",
+                                 "extendedTimeOut": "1000",
+                                 "showEasing": "swing",
+                                 "hideEasing": "linear",
+                                 "showMethod": "fadeIn",
+                                 "hideMethod": "fadeOut"
+                             }
+                             if($response == 'correct') {
+                                 $('#child-'+value).remove();
+                                 toastr['success']('Dziecko zostało usunięte z grupy', 'Usunięto dziecko');
+                             } else {
+                                 toastr['error']('Dziecko nie zostało usunięte', 'Wystąił błąd');
+                             }
+
+                         }
+                     });
+             });
+
              FormValidation.init('{{ path(action_url) }}');
              jQuery.extend(jQuery.validator.messages, {
                  required: "To pole jest wymagane",
