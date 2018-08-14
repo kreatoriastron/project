@@ -94,6 +94,16 @@ class ParentController extends UserController
             $user->setUser($appUser);
             $newFileName = $this->uploadFile('parent_contract', 'contract');
             $user->setContractFile($newFileName);
+            $user->setRaCity($data->get('ra_city'));
+            $user->setRaZipCode($data->get('ra_zip_code'));
+            $user->setRaStreet($data->get('ra_street'));
+            $user->setRaBuilding($data->get('ra_building'));
+            $user->setRaApartment($data->get('ra_apartment'));
+            $user->setCaCity($data->get('ca_city'));
+            $user->setCaZipCode($data->get('ca_zip_code'));
+            $user->setCaStreet($data->get('ca_street'));
+            $user->setCaBuilding($data->get('ca_building'));
+            $user->setCaApartment($data->get('ca_apartment'));
             $entityManager->persist($user);
             $entityManager->flush();
             $newUserId = $user->getId();
@@ -163,6 +173,16 @@ class ParentController extends UserController
         try {
             $newFileName = $this->uploadFile('parent_contract', 'contract');
             if($newFileName)  $user->setContractFile($newFileName);
+            $user->setRaCity($data->get('ra_city'));
+            $user->setRaZipCode($data->get('ra_zip_code'));
+            $user->setRaStreet($data->get('ra_street'));
+            $user->setRaBuilding($data->get('ra_building'));
+            $user->setRaApartment($data->get('ra_apartment'));
+            $user->setCaCity($data->get('ca_city'));
+            $user->setCaZipCode($data->get('ca_zip_code'));
+            $user->setCaStreet($data->get('ca_street'));
+            $user->setCaBuilding($data->get('ca_building'));
+            $user->setCaApartment($data->get('ca_apartment'));
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -190,6 +210,16 @@ class ParentController extends UserController
             'phone' => $user->getPhone(),
             'contract' => $parent->getContractFile(),
             'id' => $parent->getId(),
+            'ra_city' => $parent->getRaCity(),
+            'ra_zip_code' => $parent->getRaZipCode(),
+            'ra_street' => $parent->getRaStreet(),
+            'ra_building' => $parent->getRaBuilding(),
+            'ra_apartment' => $parent->getRaApartment(),
+            'ca_city' => $parent->getCaCity(),
+            'ca_zip_code' => $parent->getCaZipCode(),
+            'ca_street' => $parent->getCaStreet(),
+            'ca_building' => $parent->getCaBuilding(),
+            'ca_apartment' => $parent->getCaApartment(),
         );
 
         return $this->render('AdminBundle:User\Parent:edit.html.twig', array(
@@ -210,6 +240,16 @@ class ParentController extends UserController
             'phone' => $parent->getUser()->getPhone(),
             'contract' => $parent->getContractFile(),
             'id' => $parent->getId(),
+            'ra_city' => $parent->getRaCity(),
+            'ra_zip_code' => $parent->getRaZipCode(),
+            'ra_street' => $parent->getRaStreet(),
+            'ra_building' => $parent->getRaBuilding(),
+            'ra_apartment' => $parent->getRaApartment(),
+            'ca_city' => $parent->getCaCity(),
+            'ca_zip_code' => $parent->getCaZipCode(),
+            'ca_street' => $parent->getCaStreet(),
+            'ca_building' => $parent->getCaBuilding(),
+            'ca_apartment' => $parent->getCaApartment(),
         );
 
         return $this->render('AdminBundle:User\Parent:showProfile.html.twig', array(

@@ -1,9 +1,9 @@
-var FormWizard = function () {
+var FormWizard = function (url) {
 
 
     return {
         //main function to initiate the module
-        init: function () {
+        init: function (url) {
             if (!jQuery().bootstrapWizard) {
                 return;
             }
@@ -33,85 +33,16 @@ var FormWizard = function () {
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
                 rules: {
-                    //account
-                    username: {
-                        minlength: 5,
-                        required: true
-                    },
-                    password: {
-                        minlength: 5,
-                        required: true
-                    },
-                    rpassword: {
-                        minlength: 5,
-                        required: true,
-                        equalTo: "#submit_form_password"
-                    },
-                    //profile
-                    fullname: {
-                        required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    phone: {
-                        required: true
-                    },
-                    gender: {
-                        required: true
-                    },
-                    address: {
-                        required: true
-                    },
-                    city: {
-                        required: true
-                    },
-                    country: {
-                        required: true
-                    },
-                    //payment
-                    card_name: {
-                        required: true
-                    },
-                    card_number: {
-                        minlength: 16,
-                        maxlength: 16,
-                        required: true
-                    },
-                    card_cvc: {
-                        digits: true,
-                        required: true,
-                        minlength: 3,
-                        maxlength: 4
-                    },
-                    card_expiry_date: {
-                        required: true
-                    },
-                    'payment[]': {
+                    'selectedUser': {
                         required: true,
                         minlength: 1
                     }
                 },
 
-                messages: { // custom messages for radio buttons and checkboxes
-                    'payment[]': {
-                        required: "Please select at least one option",
-                        minlength: jQuery.validator.format("Please select at least one option")
-                    }
-                },
-
                 errorPlacement: function (error, element) { // render error placement for each input type
-                    if (element.attr("name") == "gender") { // for uniform radio buttons, insert the after the given container
-                        error.insertAfter("#form_gender_error");
-                    } else if (element.attr("name") == "payment[]") { // for uniform checkboxes, insert the after the given container
-                        error.insertAfter("#form_payment_error");
-                    } else {
-                        error.insertAfter(element); // for other inputs, just perform default behavior
-                    }
                 },
 
-                invalidHandler: function (event, validator) { //display error alert on form submit   
+                invalidHandler: function (event, validator) { //display error alert on form submit
                     success.hide();
                     error.show();
                     Metronic.scrollTo(error, -200);
@@ -128,7 +59,7 @@ var FormWizard = function () {
                 },
 
                 success: function (label) {
-                    if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                    if (label.attr("for") == "gender" || label.attr("for") == "id") { // for checkboxes and radio buttons, no need to show OK icon
                         label
                             .closest('.form-group').removeClass('has-error').addClass('has-success');
                         label.remove(); // remove error label here
@@ -159,12 +90,12 @@ var FormWizard = function () {
                         $(this).html(input.find('option:selected').text());
                     } else if (input.is(":radio") && input.is(":checked")) {
                         $(this).html(input.attr("data-title"));
-                    } else if ($(this).attr("data-display") == 'payment[]') {
-                        var payment = [];
-                        $('[name="payment[]"]:checked', form).each(function(){ 
-                            payment.push($(this).attr('data-title'));
+                    } else if ($(this).attr("data-display") == 'id') {
+                        var id = [];
+                        $('[name="id"]:checked', form).each(function(){
+                            id.push($(this).attr('data-title'));
                         });
-                        $(this).html(payment.join("<br>"));
+                        $(this).html(id.join("<br>"));
                     }
                 });
             }
@@ -173,7 +104,7 @@ var FormWizard = function () {
                 var total = navigation.find('li').length;
                 var current = index + 1;
                 // set wizard title
-                $('.step-title', $('#form_wizard_1')).text('Step ' + (index + 1) + ' of ' + total);
+                $('.step-title', $('#form_wizard_1')).text('Krok ' + (index + 1) + ' z ' + total);
                 // set done steps
                 jQuery('li', $('#form_wizard_1')).removeClass("done");
                 var li_list = navigation.find('li');
@@ -241,7 +172,26 @@ var FormWizard = function () {
 
             $('#form_wizard_1').find('.button-previous').hide();
             $('#form_wizard_1 .button-submit').click(function () {
-                alert('Finished! Hope you like it :)');
+                $('.step-title', $('#form_wizard_1')).text('Wiadomość zapisana');
+
+                var selectedUser = new Array();
+                $("input:checkbox[id=selectedUser]:checked").each(function(){
+                    selectedUser.push($(this).val());
+                });
+                var fd = new FormData($('#submit_form')[0]);
+                fd.append( 'id', JSON.stringify(selectedUser) );
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    enctype: 'multipart/form-data',
+                    processData: false,  // Important!
+                    contentType: false,
+                    cache: false,
+                    data: fd,
+                    success: function ($data) {
+                        $('.form-wizard').html($data);
+                    }
+                    });
             }).hide();
 
             //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.

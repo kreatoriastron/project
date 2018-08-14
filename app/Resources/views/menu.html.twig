@@ -19,6 +19,36 @@
                 <span class="title">Poczta</span>
                 <span class="arrow "></span>
             </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="layout_sidbar_reversed.html">
+                        <span class="title">Wyślij</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu" style="display: none;">
+                        <li>
+                            <a href="{{ path('messager_create_message_dr') }}"><i class="icon-list"></i>Do Pracowników</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('messager_create_message_lector') }}"><i class="icon-list"></i>Do Lektorów</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('messager_create_message_parent') }}"><i class="icon-list"></i>Do Rodziców</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="layout_sidbar_reversed.html">
+                        <span class="title">Zadania</span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="layout_sidbar_reversed.html">
+                        <span class="title">Szablony</span>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li>
             <a href="javascript:;">
@@ -28,32 +58,14 @@
             </a>
             <ul class="sub-menu">
                 <li>
-                    <a href="layout_sidbar_reversed.html">
+                    <a href="{{ path('show_lector') }}">
                         <span class="title">Lektorzy</span>
-                        <span class="arrow"></span>
                     </a>
-                    <ul class="sub-menu" style="display: none;">
-                        <li>
-                            <a href="{{ path('show_lector') }}"><i class="icon-list"></i> Lista lektorów</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('add_lector') }}"><i class="icon-plus"></i> Dodaj lektora</a>
-                        </li>
-                    </ul>
                 </li>
                 <li>
-                    <a href="layout_sidbar_reversed.html">
+                    <a href="{{ path('show_dr') }}">
                         <span class="title">Pracownicy</span>
-                        <span class="arrow"></span>
                     </a>
-                    <ul class="sub-menu" style="display: none;">
-                        <li>
-                            <a href="{{ path('show_dr') }}"><i class="icon-list"></i> Lista Dr</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('add_dr') }}"><i class="icon-plus"></i> Dodaj Dr</a>
-                        </li>
-                    </ul>
                 </li>
                 <li>
                     <a href="layout_sidbar_reversed.html">
@@ -79,13 +91,11 @@
                             <a href="{{ path('show_school') }}"><i class="icon-list"></i> Lista Szkół</a>
                         </li>
                         <li>
-                            <a href="{{ path('import_school') }}"><i class="icon-list"></i> Importuj Szkoły</a>
+                            <a href="{{ path('import_school') }}"><i class="icon-plus"></i> Importuj Szkoły</a>
                         </li>
-                        <!--
                         <li>
-                            <a href="{{ path('add_school') }}"><i class="icon-plus"></i> Dodaj Szkołę</a>
+                            <a href="{{ path('show_all_school') }}"><i class="icon-list"></i> Lista wszystkich Szkół</a>
                         </li>
-                        -->
                     </ul>
                 </li>
                 <li>

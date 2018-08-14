@@ -43,7 +43,10 @@
                                                    <button class="btn btn-sm yellow filter-submit margin-bottom" id="search" style="display: inline; float: left; margin-right: 15px;"><i class="fa fa-search"></i> Szukaj</button>
                                                </div>
                                                <div class="margin-bottom-5">
-                                                   <button class="btn btn-sm green filter-submit margin-bottom" data-target="#selectDr" data-toggle="modal" id="addToDR"><i class="fa fa-user"></i> Przypisz do DR</button>
+                                                   <button class="btn btn-sm green filter-submit margin-bottom" data-target="#selectDr" data-toggle="modal" id="addToDR" style="display: inline; float: left; margin-right: 15px;"><i class="fa fa-user"></i> Przypisz do DR</button>
+                                               </div>
+                                               <div class="margin-bottom-5">
+                                                   <button class="btn btn-sm blue filter-submit margin-bottom" data-toggle="modal" id="addLector"><i class="fa fa-plus"></i> Dodaj Lektora</button>
                                                </div>
                                            </td>
 
@@ -235,6 +238,10 @@
              $("#mainBox").on("click",".actionButton", function(){
                  var url = $(this).data('url');
                  window.location = url;
+             });
+
+             $("#addLector").click(function(){
+                 window.location = "{{ path('add_lector') }}";
              });
          })
      </script>

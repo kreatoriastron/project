@@ -12,6 +12,56 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="raCity" type="string" column="ra_city" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="raZipCode" type="string" column="ra_zip_code" length="5" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="raStreet" type="string" column="ra_street" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="raBuilding" type="string" column="ra_building" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="raApartment" type="string" column="ra_apartment" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="caCity" type="string" column="ca_city" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="caZipCode" type="string" column="ca_zip_code" length="5" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="caStreet" type="string" column="ca_street" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="caBuilding" type="string" column="ca_building" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="caApartment" type="string" column="ca_apartment" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
     <many-to-one field="user" target-entity="AppUsers" fetch="LAZY">
       <join-columns>
         <join-column name="user_id" referenced-column-name="id"/>

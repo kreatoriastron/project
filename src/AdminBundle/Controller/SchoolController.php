@@ -10,6 +10,7 @@ use AppBundle\Entity\Wojewodztwo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\AppUsers;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\School;
 use AppBundle\Entity\SchoolToDr;
@@ -160,7 +161,13 @@ class SchoolController extends UserController
             'schoolArr' => $schoolArr));
     }
 
-    public function showAction()
+    public function showAllAction()
+    {
+        $response = $this->forward('AdminBundle:School:show', array('onlyActive' => 0));
+        return $response;
+    }
+
+    public function showAction($onlyActive = 1)
     {
         $result = $this->getDoctrine()
             ->getRepository(School::class)
@@ -173,22 +180,6 @@ class SchoolController extends UserController
             ->getResult();
 
         $rows = array();
-        $columns = array(
-            'Id',
-            'Województwo',
-            'Powiat',
-            'Gmina',
-            'Miasto',
-            'Nazwa',
-            'Adres',
-            'Kod pocztowy',
-            'Poczta',
-            'Telefon',
-            'WWW',
-            'Publiczność',
-            'Liczba uczniów',
-            'Liczba klas'
-        );
         foreach($result as $id => $row)
         {
             $schoolToDr = $this->getDoctrine()
@@ -223,11 +214,21 @@ class SchoolController extends UserController
         $wojewodztwaArr = $this->getWojewodztwa();
         $drArr = $this->getDr();
 
+        $activeSchool = array();
+        if($onlyActive) {
+            foreach($rows as $id =>  $school) {
+                if($school['dr']) {
+                    $activeSchool[] = $school;
+                }
+            }
+            $rows = $activeSchool;
+        }
+
         return $this->render('AdminBundle:School:show.html.twig', array(
             'schools' => $rows,
-            'columns' => $columns,
             'wojewodztwa' => $wojewodztwaArr,
             'drList' => $drArr));
+
     }
 
     private function getWojewodztwa()

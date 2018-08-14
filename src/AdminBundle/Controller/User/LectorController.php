@@ -29,8 +29,10 @@ class LectorController extends UserController
             return $this->render('AdminBundle:User\Lector:success.html.twig', array(
                 'userId' => $userId));
         }
+        $drArr = $this->getDr();
         return $this->render('AdminBundle:User\Lector:add.html.twig', array(
-                'action_url' => 'add_lector'));
+                'action_url' => 'add_lector',
+                'drList' => $drArr));
     }
 
     private function save($data)
@@ -70,9 +72,27 @@ class LectorController extends UserController
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
             $user->setContract($newFileName);
+            $user->setBankNumber($data->get('bank_number'));
+            $user->setRaCity($data->get('ra_city'));
+            $user->setRaZipCode($data->get('ra_zip_code'));
+            $user->setRaStreet($data->get('ra_street'));
+            $user->setRaBuilding($data->get('ra_building'));
+            $user->setRaApartment($data->get('ra_apartment'));
+            $user->setCaCity($data->get('ca_city'));
+            $user->setCaZipCode($data->get('ca_zip_code'));
+            $user->setCaStreet($data->get('ca_street'));
+            $user->setCaBuilding($data->get('ca_building'));
+            $user->setCaApartment($data->get('ca_apartment'));
             $entityManager->persist($user);
             $entityManager->flush();
             $newUserId = $user->getId();
+
+            $userDr = $entityManager->getRepository(UserDr::class)->findOneById($data->get('dr'));
+            $lectorToDr = new LectorToDr();
+            $lectorToDr->setUserLector($user);
+            $lectorToDr->setUserDr($userDr);
+            $entityManager->persist($lectorToDr);
+            $entityManager->flush();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -125,6 +145,17 @@ class LectorController extends UserController
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
             if(strlen($newFileName) > 1) $user->setContract($newFileName);
+            $user->setBankNumber($data->get('bank_number'));
+            $user->setRaCity($data->get('ra_city'));
+            $user->setRaZipCode($data->get('ra_zip_code'));
+            $user->setRaStreet($data->get('ra_street'));
+            $user->setRaBuilding($data->get('ra_building'));
+            $user->setRaApartment($data->get('ra_apartment'));
+            $user->setCaCity($data->get('ca_city'));
+            $user->setCaZipCode($data->get('ca_zip_code'));
+            $user->setCaStreet($data->get('ca_street'));
+            $user->setCaBuilding($data->get('ca_building'));
+            $user->setCaApartment($data->get('ca_apartment'));
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -161,6 +192,17 @@ class LectorController extends UserController
             'contract' => $lector->getContract(),
             'bonus' => $lector->getBonus(),
             'id' => $lector->getId(),
+            'bank_number' => $lector->getBankNumber(),
+            'ra_city' => $lector->getRaCity(),
+            'ra_zip_code' => $lector->getRaZipCode(),
+            'ra_street' => $lector->getRaStreet(),
+            'ra_building' => $lector->getRaBuilding(),
+            'ra_apartment' => $lector->getRaApartment(),
+            'ca_city' => $lector->getCaCity(),
+            'ca_zip_code' => $lector->getCaZipCode(),
+            'ca_street' => $lector->getCaStreet(),
+            'ca_building' => $lector->getCaBuilding(),
+            'ca_apartment' => $lector->getCaApartment(),
         );
 
         return $this->render('AdminBundle:User\Lector:edit.html.twig', array(
@@ -173,24 +215,33 @@ class LectorController extends UserController
         $lector = $this->getDoctrine()
             ->getRepository(UserLector::class)
             ->findOneById($userId);
-        $user = $this->getDoctrine()
-            ->getRepository(AppUsers::class)
-            ->findOneById($lector->getId());
 
         $timestamp = $lector->getContractEndingDate();
         $formManager = new FormManager();
         $date = $formManager->timestampToDate($timestamp);
         $userArr = array(
-            'name' => $user->getName(),
-            'surname' => $user->getSurname(),
-            'email' => $user->getEmail(),
-            'phone' => $user->getPhone(),
+            'name' => $lector->getUser()->getName(),
+            'surname' => $lector->getUser()->getSurname(),
+            'email' => $lector->getUser()->getEmail(),
+            'phone' => $lector->getUser()->getPhone(),
             'salary' => $lector->getSalary(),
             'type' => $lector->getEmployeeType(),
             'lanLevel' => $lector->getLanguageLevel(),
             'endDate' => $date,
             'contract' => $lector->getContract(),
-            'id' => $user->getId(),
+            'bonus' => $lector->getBonus(),
+            'bank_number' => $lector->getBankNumber(),
+            'ra_city' => $lector->getRaCity(),
+            'ra_zip_code' => $lector->getRaZipCode(),
+            'ra_street' => $lector->getRaStreet(),
+            'ra_building' => $lector->getRaBuilding(),
+            'ra_apartment' => $lector->getRaApartment(),
+            'ca_city' => $lector->getCaCity(),
+            'ca_zip_code' => $lector->getCaZipCode(),
+            'ca_street' => $lector->getCaStreet(),
+            'ca_building' => $lector->getCaBuilding(),
+            'ca_apartment' => $lector->getCaApartment(),
+            'id' => $lector->getId(),
         );
 
         return $this->render('AdminBundle:User\Lector:showProfile.html.twig', array(

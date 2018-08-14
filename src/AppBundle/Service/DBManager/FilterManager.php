@@ -9,6 +9,7 @@
 namespace AppBundle\Service\DBManager;
 
 use AppBundle\Entity\AppUsers;
+use Doctrine\ORM\Query\Expr\Join;
 
 class FilterManager
 {
@@ -19,6 +20,7 @@ class FilterManager
     const GREATER = 'GREATER';
     const LESS = 'LESS';
     const OR = 'OR';
+    const IN = 'IN';
     const LIMIT_PER_PAGE = 30;
 
     private $doctrine;
@@ -59,7 +61,7 @@ class FilterManager
     public function setCondition($condition, $table, $conditionType = array())
     {
         foreach ($condition as $field => $value) {
-            if(!is_null($value) && strlen($value))
+            if($this->checkEmpty($value))
             {
                 $type = 'LIKE';
                 if(isset($conditionType[$field]))
@@ -72,6 +74,20 @@ class FilterManager
                     'type' => $type
                 );
             }
+        }
+    }
+
+    private function checkEmpty($data)
+    {
+        if(is_array($data))
+        {
+            return count($data);
+        } else {
+            return strlen($data);
+        }
+
+        if(is_null($data) || strlen($data) == 0) {
+            return 0;
         }
     }
 
@@ -121,6 +137,9 @@ class FilterManager
                 case FilterManager::LESS:
                     $field = str_replace('_to','',$condition['field']);
                     $this->query->andWhere($field . " <= " . $condition['value']);
+                    break;
+                case FilterManager::IN:
+                    $this->query->andWhere($condition['field'] . ' IN(' . implode(',',$condition['value']).')');
                     break;
                 case FilterManager::OR:
                     $con = '';

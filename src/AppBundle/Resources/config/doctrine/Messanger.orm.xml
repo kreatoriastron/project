@@ -4,12 +4,12 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="from" type="string" column="from" length="40" nullable="true">
+    <field name="fromUser" type="string" column="from_user" length="40" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="to" type="string" column="to" length="40" nullable="true">
+    <field name="toUser" type="string" column="to_user" length="40" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
@@ -19,8 +19,13 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="date" type="date" column="date" nullable="true"/>
-    <field name="read" type="integer" column="read" nullable="true">
+    <field name="sendDate" type="date" column="send_date" nullable="true"/>
+    <field name="type" type="integer" column="type" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="status" type="integer" column="status" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>

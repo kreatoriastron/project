@@ -10,12 +10,12 @@ class Messanger
     /**
      * @var string|null
      */
-    private $from;
+    private $fromUser;
 
     /**
      * @var string|null
      */
-    private $to;
+    private $toUser;
 
     /**
      * @var string|null
@@ -25,12 +25,17 @@ class Messanger
     /**
      * @var \DateTime|null
      */
-    private $date;
+    private $sendDate;
 
     /**
      * @var int|null
      */
-    private $read;
+    private $type;
+
+    /**
+     * @var int|null
+     */
+    private $status;
 
     /**
      * @var int
@@ -39,51 +44,51 @@ class Messanger
 
 
     /**
-     * Set from.
+     * Set fromUser.
      *
-     * @param string|null $from
+     * @param string|null $fromUser
      *
      * @return Messanger
      */
-    public function setFrom($from = null)
+    public function setFromUser($fromUser = null)
     {
-        $this->from = $from;
+        $this->fromUser = $fromUser;
 
         return $this;
     }
 
     /**
-     * Get from.
+     * Get fromUser.
      *
      * @return string|null
      */
-    public function getFrom()
+    public function getFromUser()
     {
-        return $this->from;
+        return $this->fromUser;
     }
 
     /**
-     * Set to.
+     * Set toUser.
      *
-     * @param string|null $to
+     * @param string|null $toUser
      *
      * @return Messanger
      */
-    public function setTo($to = null)
+    public function setToUser($toUser = null)
     {
-        $this->to = $to;
+        $this->toUser = $toUser;
 
         return $this;
     }
 
     /**
-     * Get to.
+     * Get toUser.
      *
      * @return string|null
      */
-    public function getTo()
+    public function getToUser()
     {
-        return $this->to;
+        return $this->toUser;
     }
 
     /**
@@ -111,51 +116,75 @@ class Messanger
     }
 
     /**
-     * Set date.
+     * Set sendDate.
      *
-     * @param \DateTime|null $date
+     * @param \DateTime|null $sendDate
      *
      * @return Messanger
      */
-    public function setDate($date = null)
+    public function setSendDate($sendDate = null)
     {
-        $this->date = $date;
+        $this->sendDate = $sendDate;
 
         return $this;
     }
 
     /**
-     * Get date.
+     * Get sendDate.
      *
      * @return \DateTime|null
      */
-    public function getDate()
+    public function getSendDate()
     {
-        return $this->date;
+        return $this->sendDate;
     }
 
     /**
-     * Set read.
+     * Set type.
      *
-     * @param int|null $read
+     * @param int|null $type
      *
      * @return Messanger
      */
-    public function setRead($read = null)
+    public function setType($type = null)
     {
-        $this->read = $read;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get read.
+     * Get type.
      *
      * @return int|null
      */
-    public function getRead()
+    public function getType()
     {
-        return $this->read;
+        return $this->type;
+    }
+
+    /**
+     * Set status.
+     *
+     * @param int|null $status
+     *
+     * @return Messanger
+     */
+    public function setStatus($status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return int|null
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**

@@ -63,6 +63,17 @@ class DrController extends UserController
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
             $user->setContract($newFileName);
+            $user->setBankNumber($data->get('bank_number'));
+            $user->setRaCity($data->get('ra_city'));
+            $user->setRaZipCode($data->get('ra_zip_code'));
+            $user->setRaStreet($data->get('ra_street'));
+            $user->setRaBuilding($data->get('ra_building'));
+            $user->setRaApartment($data->get('ra_apartment'));
+            $user->setCaCity($data->get('ca_city'));
+            $user->setCaZipCode($data->get('ca_zip_code'));
+            $user->setCaStreet($data->get('ca_street'));
+            $user->setCaBuilding($data->get('ca_building'));
+            $user->setCaApartment($data->get('ca_apartment'));
             $entityManager->persist($user);
             $entityManager->flush();
             $newUserId = $user->getId();
@@ -114,6 +125,17 @@ class DrController extends UserController
             $user->setContractEndingDate($time);
             $newFileName = $this->uploadFile('contract', 'contract');
             if($newFileName != 0) $user->setContract($newFileName);
+            $user->setBankNumber($data->get('bank_number'));
+            $user->setRaCity($data->get('ra_city'));
+            $user->setRaZipCode($data->get('ra_zip_code'));
+            $user->setRaStreet($data->get('ra_street'));
+            $user->setRaBuilding($data->get('ra_building'));
+            $user->setRaApartment($data->get('ra_apartment'));
+            $user->setCaCity($data->get('ca_city'));
+            $user->setCaZipCode($data->get('ca_zip_code'));
+            $user->setCaStreet($data->get('ca_street'));
+            $user->setCaBuilding($data->get('ca_building'));
+            $user->setCaApartment($data->get('ca_apartment'));
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (Exception $e)
@@ -152,6 +174,17 @@ class DrController extends UserController
             'endDate' => $date,
             'contract' => $dr->getContract(),
             'id' => $user->getId(),
+            'bank_number' => $dr->getBankNumber(),
+            'ra_city' => $dr->getRaCity(),
+            'ra_zip_code' => $dr->getRaZipCode(),
+            'ra_street' => $dr->getRaStreet(),
+            'ra_building' => $dr->getRaBuilding(),
+            'ra_apartment' => $dr->getRaApartment(),
+            'ca_city' => $dr->getCaCity(),
+            'ca_zip_code' => $dr->getCaZipCode(),
+            'ca_street' => $dr->getCaStreet(),
+            'ca_building' => $dr->getCaBuilding(),
+            'ca_apartment' => $dr->getCaApartment(),
         );
 
         return $this->render('AdminBundle:User\Dr:edit.html.twig', array(
@@ -177,6 +210,17 @@ class DrController extends UserController
             'contract' => $dr->getContract(),
             'id' => $dr->getId(),
             'type' => $dr->getEmployeeType(),
+            'bank_number' => $dr->getBankNumber(),
+            'ra_city' => $dr->getRaCity(),
+            'ra_zip_code' => $dr->getRaZipCode(),
+            'ra_street' => $dr->getRaStreet(),
+            'ra_building' => $dr->getRaBuilding(),
+            'ra_apartment' => $dr->getRaApartment(),
+            'ca_city' => $dr->getCaCity(),
+            'ca_zip_code' => $dr->getCaZipCode(),
+            'ca_street' => $dr->getCaStreet(),
+            'ca_building' => $dr->getCaBuilding(),
+            'ca_apartment' => $dr->getCaApartment(),
         );
 
         return $this->render('AdminBundle:User\Dr:showProfile.html.twig', array(

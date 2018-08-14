@@ -1,3 +1,31 @@
 messager_homepage:
     path:     /messager
     defaults: { _controller: MessagerBundle:Default:index }
+
+messager_create_message_lector:
+    path:     /messager/create/lector
+    defaults: { _controller: MessagerBundle:MessageLector:create }
+
+messager_filter_lector:
+    path:     /messager/lector/filter
+    defaults: { _controller: MessagerBundle:MessageLector:filter }
+
+messager_create_message_dr:
+    path:     /messager/create/dr
+    defaults: { _controller: MessagerBundle:MessageDr:create }
+
+messager_filter_dr:
+    path:     /messager/dr/filter
+    defaults: { _controller: MessagerBundle:MessageDr:filter }
+
+messager_create_message_parent:
+    path:     /messager/create/parent
+    defaults: { _controller: MessagerBundle:MessageParent:create }
+
+save_message:
+    path:     /messager/save
+    defaults: { _controller: MessagerBundle:Message:save }
+
+send_from_queue:
+    path:     /messager/sendFromQueue
+    defaults: { _controller: MessagerBundle:Message:sendFromQueue }

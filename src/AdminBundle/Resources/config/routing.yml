@@ -127,6 +127,11 @@ show_school:
     path:     /admin/school/show
     defaults: { _controller: AdminBundle:School:show}
 
+show_all_school:
+    path:     /admin/all_school/show
+    defaults: { _controller: AdminBundle:School:showAll}
+
+
 show_profile_school:
     path:     /admin/school/show/profile/{schoolId}
     defaults: { _controller: AdminBundle:School:showProfile}

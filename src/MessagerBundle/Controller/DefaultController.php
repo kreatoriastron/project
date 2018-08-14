@@ -2,7 +2,9 @@
 
 namespace MessagerBundle\Controller;
 
+use AppBundle\Entity\Messanger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -36,4 +38,5 @@ class DefaultController extends Controller
     {
         return $this->render('MessagerBundle:Default:index.html.twig');
     }
+
 }
