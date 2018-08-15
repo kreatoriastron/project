@@ -1,0 +1,13 @@
+user_panel:
+    path:     /userPanel
+    defaults: { _controller: LoginBundle:Login:userPanel }    
+
+login:
+    path:     /login
+    defaults: { _controller: LoginBundle:Security:login }
+    
+login_check:
+    path: /login_check
+
+logout:
+       path:   /logout

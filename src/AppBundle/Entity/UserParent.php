@@ -18,6 +18,11 @@ class UserParent
     private $cost;
 
     /**
+     * @var int|null
+     */
+    private $sumCost;
+
+    /**
      * @var string|null
      */
     private $raZipCode;
@@ -61,11 +66,6 @@ class UserParent
      * @var string|null
      */
     private $caApartment;
-
-    /**
-     * @var int|null
-     */
-    private $sumCost;
 
     /**
      * @var string|null
@@ -129,6 +129,30 @@ class UserParent
     public function getCost()
     {
         return $this->cost;
+    }
+
+    /**
+     * Set sumCost.
+     *
+     * @param int|null $sumCost
+     *
+     * @return UserParent
+     */
+    public function setSumCost($sumCost = null)
+    {
+        $this->sumCost = $sumCost;
+
+        return $this;
+    }
+
+    /**
+     * Get sumCost.
+     *
+     * @return int|null
+     */
+    public function getSumCost()
+    {
+        return $this->sumCost;
     }
 
     /**
@@ -345,30 +369,6 @@ class UserParent
     public function getCaApartment()
     {
         return $this->caApartment;
-    }
-
-    /**
-     * Set sumCost.
-     *
-     * @param int|null $sumCost
-     *
-     * @return UserParent
-     */
-    public function setSumCost($sumCost = null)
-    {
-        $this->sumCost = $sumCost;
-
-        return $this;
-    }
-
-    /**
-     * Get sumCost.
-     *
-     * @return int|null
-     */
-    public function getSumCost()
-    {
-        return $this->sumCost;
     }
 
     /**

@@ -1,25 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="AppBundle\Entity\UserParent" table="user_parent">
+  <entity name="LoginBundle\Entity\UserLector" table="user_lector">
     <indexes>
-      <index name="parent_user_id" columns="user_id"/>
+      <index name="user_id" columns="user_id"/>
+      <index name="ltd" columns="ltd"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="contractFile" type="string" column="contract_file" length="30" nullable="true">
+    <field name="salary" type="integer" column="salary" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="bonus" type="string" column="bonus" length="11" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="cost" type="integer" column="cost" nullable="true">
+    <field name="contract" type="string" column="contract" length="40" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="employeeType" type="integer" column="employee_type" nullable="true">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">student, zdrowotne, wszystie stawki</option>
+      </options>
+    </field>
+    <field name="languageLevel" type="integer" column="language_level" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="sumCost" type="integer" column="sum_cost" nullable="true">
+    <field name="contractEndingDate" type="float" column="contract_ending_date" precision="10" scale="0" nullable="true"/>
+    <field name="bankNumber" type="string" column="bank_number" length="30" nullable="true">
       <options>
-        <option name="unsigned"/>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="raCity" type="string" column="ra_city" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
       </options>
     </field>
     <field name="raZipCode" type="string" column="ra_zip_code" length="5" nullable="true">
@@ -67,11 +90,11 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="raCity" type="string" column="ra_city" length="30" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
+    <many-to-one field="ltd" target-entity="LectorToDr" fetch="LAZY">
+      <join-columns>
+        <join-column name="ltd" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="user" target-entity="AppUsers" fetch="LAZY">
       <join-columns>
         <join-column name="user_id" referenced-column-name="id"/>

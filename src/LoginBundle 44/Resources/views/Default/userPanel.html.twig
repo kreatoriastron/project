@@ -1,0 +1,138 @@
+{% extends '::base.html.twig' %}
+{% set sumLessonAmount = 0 %}
+{% set sumCost = 0 %}
+{% block title %}Tablica Rodzica - Logowanie{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('assets/panel.css') }}" id="style_components" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<div class="logo2 col-xs-12">
+	<div class="col-md-2 col-md-offset-1 col-xs-4 col-xs-offset-4 text-center">
+		<a href="/">
+			<img src="{{ asset('assets/admin/pages/media/bg/logo_atut.png') }}" alt="">
+		</a>
+	</div>
+</div>
+<!-- BEGIN LOGIN -->
+<div class="content">
+	<div id="panel-title" class="col-xs-12 text-center">
+		<h1><img class="hidden-sm hidden-xs" src="{{ asset('assets/images/beam.png') }}" style="margin-right:3%;">TABLICA RODZICA<img class="hidden-sm hidden-xs" src="{{ asset('assets/images/beam.png') }}" style="margin-left:3%;"></h1>
+	</div>
+	<div id="blackboard" class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+		<div id="bb-title" class="text-center">
+			<h1>PLAN LEKCJI</h1>
+		</div>
+		<div id="bb-text" class="text-center">
+			{% for lesson in lessons %}
+					<div>
+						<h2>{{ lesson.day|upper }} {{ lesson.hour }}</h2> <h3>(sala nr {{ lesson.room }})</h3>
+					</div>
+			{% endfor %}		
+		</div>	
+	</div>
+		
+	<div id="timetable" class="col-md-10 col-md-offset-1  text-center">
+		<div id="div-title" class="col-md-6 col-md-offset-3 text-center">
+			<h1>HARMONOGRAM ZAJĘĆ I WPŁAT</h1>
+			<img src="{{ asset('assets/images/beam.png') }}">
+		</div>
+		<div id="div-text" class="col-md-6 col-md-offset-3 text-left">
+			<table id="timetable" border="1">
+				<thead class="text-center">
+					<tr>
+					   <th>Miesiąc</th>
+					   <th>Przewidywana ilość zajęć</th>
+					   <th>Zryczałtowane wpłaty miesięczne</th>
+					</tr>
+				</thead>				
+				<tbody>
+				{% for month in timetable %}	
+					{% set sumLessonAmount = sumLessonAmount + month.lessonAmount %}
+					{% set sumCost = sumCost + month.cost %}
+				  <tr>
+					 <td width="20%">{{ month.month }}</td>
+					 <td width="30%">{{ month.lessonAmount }}</td>
+					 <td width="45%">{{ month.cost }} zł (do {{ month.paymentDay }})</td>
+				  </tr>
+				{% endfor %}
+				 </tbody>
+			</table>
+			<div class="col-md-10 col-md-offset-1 text-center">
+				<div><h4>Rozliczenie całego semestru od lutego do czerwca:</h4></div>
+				<div><h3>{{ sumLessonAmount }} zajęcia x 15 zł = {{ sumCost }} zł</h3></div>
+			</div>
+		</div>
+	</div>
+		
+	<div id="payment" class="col-md-10 col-md-offset-1  text-center">
+		<div id="div-title" class="col-md-2 col-md-offset-5  text-center">
+			<h1>PŁATNOŚCI</h1>
+			<img src="{{ asset('assets/images/beam.png') }}">
+		</div>
+		<div id="div-text" class="col-md-8 col-md-offset-2">
+			<h3>
+				Wpłaty za zajęcia w wysokości 100zł prosimy dokonywać do 15 dnia każdego miesiąca na konto (pierwsza wpłata wyjątkowo do 28 lutego – 50zł):
+			</h3>
+			<h3 class="cinzelBold">
+				BZ WBK o/oława 98 1090 2428 0000 0001 1993 8398
+			</h3>
+			<h3 class="cinzelBold">
+				TYTUŁ PRZELEWU
+			</h3>
+			<h3 class="cinzelDecorativeRegular">
+				IMIĘ I NAZWISKO DZIECKA  SP2 Bochnia
+			</h3>				
+		</div>
+	</div>
+	<div id="contact" class="col-md-10 col-md-offset-1  text-center">
+		<div id="div-title" class="col-md-2 col-md-offset-5  text-center">
+			<h1>KONTAKT</h1>
+			<img src="{{ asset('assets/images/beam.png') }}">
+		</div>
+		<div id="div-text" class="col-md-8 col-md-offset-2 text-left">
+			<div id="contact-rows" class="col-md-12">
+				<div id="contact-box" class="col-sm-4">
+					<div id="position">Biuro obsługi klienta</div>
+					<div id="phone">Tel.: 661 933 901</div>
+					<div id ="mail">email: bok@ceatut.pl</div>
+				</div>
+				<div id="contact-box" class="col-sm-4">
+					<div id="position">DYREKTOR REGIONALNY</div>
+					<div id="name">SŁAWOMIR KANIK</div>
+					<div id="phone">Tel.: 781 933 936</div>
+					<div id ="mail">email: s.kanik@ceatut.pl</div>
+				</div>
+				<div id="contact-box" class="col-sm-4">
+					<div id="position">Lektor</div>
+					<div id="name">Anna Kucharska</div>
+					<div id="phone">Tel.: 505 279 527</div>
+				</div>
+			</div>
+			<div id="contact-form" class="col-md-12">
+				<div class="col-md-4">
+					<input type="text" class="form-control" placeholder="Imię i Nazwisko">
+				</div>	
+				<div class="col-md-4">
+					<input type="text" class="form-control" placeholder="Telefon">
+				</div>	
+				<div class="col-md-4">
+					<input type="text" class="form-control" placeholder="Adres mailowy">
+				</div>
+				<div id="textarea" class="col-md-12">
+					<textarea class="form-control" rows="6" placeholder="Wiadomość"></textarea>	
+				</div>	
+				<div id="textarea" class="col-md-12 text-center">
+					<button type="submit" class="btn btn-primary btn-md">Wyślij</button>	
+				</div>				
+				
+			</div>
+		</div>
+	</div>	
+</div>
+<div id="footer" class="col-md-12">
+<img src="{{ asset('assets/images/logo-footer.jpg') }}">
+</div>
+{% endblock %}

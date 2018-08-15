@@ -1,12 +1,12 @@
 security:
     encoders:
-        LoginBundle\Entity\Parents:
+        LoginBundle\Entity\AppUsers:
             algorithm: bcrypt
 
     providers:
         our_db_provider:
             entity:
-                class: LoginBundle:Parents
+                class: LoginBundle:AppUsers
                 property: username
                 # if you're using multiple entity managers
                 # manager_name: customer

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="LoginBundle\Entity\GroupList" table="group_list">
+    <indexes>
+      <index name="group_list_school" columns="school"/>
+      <index name="group_list_lector" columns="user_lector"/>
+      <index name="gtoup_list_day" columns="sum_cost"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="cost" type="string" column="cost" length="11" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="sumCost" type="string" column="sum_cost" length="11" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="userLector" target-entity="UserLector" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_lector" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="school" target-entity="School" fetch="LAZY">
+      <join-columns>
+        <join-column name="school" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
