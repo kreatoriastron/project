@@ -1,0 +1,135 @@
+
+
+  
+  
+  
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Platforma Edwings</title>
+    <meta name="description" content="Platforma Edwings">
+    
+    <link href="https://fonts.googleapis.com/css?family=Exo:100,200,300,400,500,600,700,800&amp;subset=latin-ext" rel="stylesheet"> 
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="./styles/main.css">
+    
+
+  </head>
+  <body style="background:url(images/karta-rodzica-bg.jpg) top center / cover">
+    <!--[if lt IE 11]>
+    <p class="browsehappy">
+      You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+    </p>
+    <![endif]-->
+
+    
+
+<div class="header login">
+  <div class="logo">
+  <img src="images/logo.png" class="img-fluid" alt="EdWings language school">
+  </div>
+</div>
+<form action="" method="POST">
+  <div class="parents-form">
+      <h1 class="h3 mt-4 mb-4 text-uppercase">Karta rodzica</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            
+            <label for="fullname"> <i class="fa fa-user"></i> Login</label>
+            
+            <input type="email" id="fullname" class="form-control" required autofocus>
+            
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            
+            <label for="phone"> <i class="fa fa-phone"></i> Telefon</label>
+            
+            <input id="phone" name="phone" class="form-control" required>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-md-5">
+          <label class="mb-md-0" for="email">
+            <i class="fa fa-at"></i> Adres mail'owy</label></div>
+          
+          <div class="col-md-7">
+            <input type="email" id="email" name="email" class="form-control" required>
+          </div>
+      </div>
+      
+      <div class="row form-group">
+        <div class="col-md-5">
+          <label class="mb-md-0" for="address">
+            <i class="fa fa-map-marker"></i> Adres zameldowania</label></div>
+          
+          <div class="col-md-7">
+            <input id="address" name="address" class="form-control" required>
+          </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-md-5">
+          <label class="mb-md-0" for="corespondence_address">
+            <i class="fa fa-envelope"></i> Adres do korespondecji</label></div>
+          
+          <div class="col-md-7">
+            <input id="corespondence_address" name="corespondence_address" class="form-control" required>
+          </div>
+      </div>
+
+      <div class="children">
+      <div class="child form-group">
+        <h3>Dziecko <span class="count">1</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <input name="child_name[]" class="form-control" placeholder="Podaj imię i nazwisko dziecka">
+          </div>
+          <div class="col-md-6">
+            <input name="child_school[]" class="form-control" placeholder="Szkoła podstawowa nr 2">
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">
+          <i class="fa fa-plus"></i> <a href="#" class="btn btn-outline-primary js-clone-child">Dodaj kolejne dziecko</a>
+          </label>
+        </div>
+      </div>
+
+
+      
+      </div>
+    <div class="parents-info text-center mb-4">
+      <div class="pt-4 pb-3">
+        <div class="checkbox mb-3">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="agreement1">
+          <label class="custom-control-label" for="agreement1">Akceptuję warunki umowy</label>
+        </div>
+      </div>
+      </div>
+      <button class="btn btn-primary" type="submit">ZAPISZ</button>
+    </div>
+  </form>
+
+
+    <script src="./scripts/jquery.min.js"></script>
+    <script src="./scripts/bootstrap.bundle.min.js"></script>
+    <script src="./scripts/main.js"></script>
+    
+  </body>
+</html>

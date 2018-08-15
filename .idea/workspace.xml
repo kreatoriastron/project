@@ -5,72 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="673460f5-3f22-4a11-b14d-e654db192a8f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Controller/User/ChildController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/public/js/User/Child/validation/add-validation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/public/js/User/Child/validation/edit-validation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Child/add.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Child/edit.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Child/show.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Child/showProfile.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Child/success.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/views/Errors/500.html.twig" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/EmployeeToRegion.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Fiche.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/LessonSchedule.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/LessonTimetable.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/RegionToDr.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/EmployeeToRegion.orm.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Fiche.orm.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/LessonSchedule.orm.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/LessonTimetable.orm.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/RegionToDr.orm.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/2c714f934726965.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/39b99b51d663e12.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/3a1c6cf7be051c6.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/6f2ca469f5508e8.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/90e2ec2d25fe3a8.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/9a5548af9f8cbdd.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/b7b9988f78a5740.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/bbd025497ed044d.xls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/upload/school/d594671c1902796.xls" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login2.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/menu.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/menu.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Controller/GroupController.php" afterPath="$PROJECT_DIR$/src/AdminBundle/Controller/GroupController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Controller/SchoolController.php" afterPath="$PROJECT_DIR$/src/AdminBundle/Controller/SchoolController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Controller/User/DrController.php" afterPath="$PROJECT_DIR$/src/AdminBundle/Controller/User/DrController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Controller/User/LectorController.php" afterPath="$PROJECT_DIR$/src/AdminBundle/Controller/User/LectorController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Controller/User/ParentController.php" afterPath="$PROJECT_DIR$/src/AdminBundle/Controller/User/ParentController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/config/routing.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/add.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/add.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/assignChild.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/assignChild.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/edit.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/edit.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/show.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/show.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/showGroup.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/Group/showGroup.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/School/edit.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/School/edit.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/School/import.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/School/import.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Dr/add.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Dr/add.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Dr/edit.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Dr/edit.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Dr/showProfile.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Dr/showProfile.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/add.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/add.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/edit.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/edit.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/add.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/add.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/edit.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/edit.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/show.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/show.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/showProfile.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/showProfile.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/success.html.twig" afterPath="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Parent/success.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/GroupList.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/GroupList.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/UserParent.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/UserParent.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/AppUsers.orm.xml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/AppUsers.orm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/GroupList.orm.xml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/GroupList.orm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/UserParent.orm.xml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/UserParent.orm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Service/FormManager/FormManager.php" afterPath="$PROJECT_DIR$/src/AppBundle/Service/FormManager/FormManager.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LessonsBundle/Controller/PresentesController.php" afterPath="$PROJECT_DIR$/src/LessonsBundle/Controller/PresentesController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LessonsBundle/Resources/views/Lesson/show.html.twig" afterPath="$PROJECT_DIR$/src/LessonsBundle/Resources/views/Lesson/show.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LessonsBundle/Resources/views/Presentes/presences.html.twig" afterPath="$PROJECT_DIR$/src/LessonsBundle/Resources/views/Presentes/presences.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessagerBundle/Controller/MessageController.php" afterPath="$PROJECT_DIR$/src/MessagerBundle/Controller/MessageController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessagerBundle/Controller/MessageLectorController.php" afterPath="$PROJECT_DIR$/src/MessagerBundle/Controller/MessageLectorController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessagerBundle/Resources/views/Message/lector_create.html.twig" afterPath="$PROJECT_DIR$/src/MessagerBundle/Resources/views/Message/lector_create.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessagerBundle/Service/SMSManager.php" afterPath="$PROJECT_DIR$/src/MessagerBundle/Service/SMSManager.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login.html.twig" afterPath="$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login.html.twig" />
     </list>
     <ignored path="interSchool.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -129,11 +66,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lector_create.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lector_create.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MessagerBundle/Resources/views/Message/lector_create.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="438">
               <caret line="271" column="14" selection-start-line="271" selection-start-column="14" selection-end-line="271" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+              <folding>
+                <marker date="1534351258279" expanded="true" signature="691:845" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login2.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login2.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="57" column="137" selection-start-line="57" selection-start-column="122" selection-end-line="57" selection-end-column="137" />
               <folding />
             </state>
           </provider>
@@ -164,7 +123,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/showProfile.html.twig" />
         <option value="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/show.html.twig" />
         <option value="$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Dr/show.html.twig" />
         <option value="$PROJECT_DIR$/src/AdminBundle/Resources/views/School/show.html.twig" />
@@ -215,6 +173,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Service/DBManager/FilterManager.php" />
         <option value="$PROJECT_DIR$/src/MessagerBundle/Controller/MessageLectorController.php" />
         <option value="$PROJECT_DIR$/src/MessagerBundle/Resources/views/Message/lector_create.html.twig" />
+        <option value="$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login.html.twig" />
       </list>
     </option>
   </component>
@@ -498,7 +457,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MessagerBundle" />
+              <option name="myItemId" value="LoginBundle" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -516,7 +475,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MessagerBundle" />
+              <option name="myItemId" value="LoginBundle" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -528,7 +487,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Message" />
+              <option name="myItemId" value="Security" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -546,95 +505,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MessagerBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MessagerBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MessagerBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LessonsBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LessonsBundle" />
+              <option name="myItemId" value="LoginBundle" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -660,349 +531,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="LessonsBundle" />
+              <option name="myItemId" value="LoginBundle" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Lesson" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LessonsBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AppBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AppBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="User" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Parent" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="User" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="User" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Child" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Group" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intraSchool_old" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdminBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="User" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -1039,6 +572,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="intraSchool_old" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="intraSchool_old" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -1062,11 +621,11 @@
       <recent name="C:\xampp\htdocs\intraSchool_old\src\MessagerBundle\Resources\views\Message\Lector" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\intraSchool_old\src\LoginBundle\Resources\views\Security" />
       <recent name="C:\xampp\htdocs\intraSchool_old\src\AppBundle\Resources\views" />
       <recent name="C:\xampp\htdocs\intraSchool_old\web\bundles\admin\js\User" />
       <recent name="C:\xampp\htdocs\intraSchool_old\src\AdminBundle\Resources\public\js\User\" />
       <recent name="C:\xampp\htdocs\intraSchool_old\src\AdminBundle\Resources\views\User" />
-      <recent name="C:\xampp\htdocs\intraSchool_old\src\AdminBundle\Resources\views\User\Parent" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.php">
@@ -1161,12 +720,12 @@
       <workItem from="1532690627127" duration="97569000" />
       <workItem from="1533234222219" duration="9868000" />
       <workItem from="1533486205997" duration="20842000" />
-      <workItem from="1534054322444" duration="97793000" />
+      <workItem from="1534054322444" duration="99623000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="537233000" />
+    <option name="totallyTimeSpent" value="539063000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1267,22 +826,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/add.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="654">
-          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AdminBundle/Resources/views/School/edit.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="25" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AdminBundle/Resources/views/User/Lector/showProfile.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="431">
@@ -1668,6 +1211,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/MessagerBundle/Resources/views/Message/lector_create.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="271" column="14" selection-start-line="271" selection-start-column="14" selection-end-line="271" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AdminBundle/Controller/User/ChildController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="365">
@@ -1676,11 +1227,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MessagerBundle/Resources/views/Message/lector_create.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login2.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="271" column="14" selection-start-line="271" selection-start-column="14" selection-end-line="271" selection-end-column="14" />
+        <state relative-caret-position="330">
+          <caret line="57" column="137" selection-start-line="57" selection-start-column="122" selection-end-line="57" selection-end-column="137" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LoginBundle/Resources/views/Security/login.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <folding>
+            <marker date="1534351258279" expanded="true" signature="691:845" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
