@@ -19,10 +19,10 @@
                 <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
             </li>
             <li>
-                <a href="javascript:;">Grupy</a><i class="fa fa-circle"></i>
+                <a href="{{ path('show_group') }}">Grupy</a><i class="fa fa-circle"></i>
             </li>
             <li>
-                <a href="javascript:;">{{ group.name }}</a><i class="fa fa-circle"></i>
+                <a href="{{ path('show_profile_group', {'groupId': group.id}) }}">{{ group.name }}</a><i class="fa fa-circle"></i>
             </li>
             <li class="active">
                 Lekcje
@@ -56,16 +56,16 @@
                                                 <th width="2%" class="sorting_disabled" rowspan="1" colspan="1">
                                                     <div class="checker"><span><input type="checkbox" class="group-checkable"></span></div>
                                                 </th>
-                                                <th width="20%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                     Lp.
                                                 </th>
-                                                <th width="20%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                <th width="40%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                     Temat
                                                 </th>
-                                                <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                     Data
                                                 </th>
-                                                <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                <th width="40%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                     Akcje
                                                 </th>
                                             </tr>

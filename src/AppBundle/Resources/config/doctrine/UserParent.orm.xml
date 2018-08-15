@@ -12,9 +12,9 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="raCity" type="string" column="ra_city" length="30" nullable="true">
+    <field name="cost" type="integer" column="cost" nullable="true">
       <options>
-        <option name="fixed"/>
+        <option name="unsigned"/>
       </options>
     </field>
     <field name="raZipCode" type="string" column="ra_zip_code" length="5" nullable="true">
@@ -58,6 +58,16 @@
       </options>
     </field>
     <field name="caApartment" type="string" column="ca_apartment" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="sumCost" type="integer" column="sum_cost" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="raCity" type="string" column="ra_city" length="30" nullable="true">
       <options>
         <option name="fixed"/>
       </options>

@@ -68,18 +68,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="layout_sidbar_reversed.html">
+                    <a href="{{ path('show_parent') }}">
                         <span class="title">Rodzice</span>
-                        <span class="arrow"></span>
                     </a>
-                    <ul class="sub-menu" style="display: none;">
-                        <li>
-                            <a href="{{ path('show_parent') }}"><i class="icon-list"></i> Lista Rodziców</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('add_parent') }}"><i class="icon-plus"></i> Dodaj Rodzica</a>
-                        </li>
-                    </ul>
+                </li>
+                <li>
+                    <a href="{{ path('show_child') }}">
+                        <span class="title">Dzieci</span>
+                    </a>
                 </li>
                 <li>
                     <a href="layout_sidbar_reversed.html">
@@ -99,18 +95,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="layout_sidbar_reversed.html">
+                    <a href="{{ path('show_group') }}">
                         <span class="title">Grupy</span>
-                        <span class="arrow"></span>
                     </a>
-                    <ul class="sub-menu" style="display: none;">
-                        <li>
-                            <a href="{{ path('show_group') }}"><i class="icon-list"></i> Lista Grup</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('add_group') }}"><i class="icon-plus"></i> Dodaj Grupę</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         </li>

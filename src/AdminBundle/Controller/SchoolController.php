@@ -71,28 +71,37 @@ class SchoolController extends UserController
         $data = $request->request;
         $schoolId = $data->get('schoolId');
 
-        $std = $this->getDoctrine()
-            ->getRepository(SchoolToDr::class)
-            ->findOneBySchool($schoolId);
+        $school = $this->getDoctrine()
+            ->getRepository(School::class)
+            ->findOneById($schoolId);
 
         $userDr = $this->getDoctrine()
             ->getRepository(UserDr::class)
             ->findOneById($data->get('dr'));
 
-        if (!$std || !$userDr) {
+        if (!$school || !$userDr) {
             throw $this->createNotFoundException(
                 'No school found for id '.$schoolId
             );
         }
 
+        $std = $this->getStd($schoolId);
+
+        if(!$std && $userDr)
+        {
+            $std = new SchoolToDr();
+            $std->setSchool($school);
+        }
+
         try {
-            $std->getSchool()->setName($data->get('name'));
-            $std->getSchool()->setNameOwn($data->get('name_own'));
-            $std->getSchool()->setPhone($data->get('phone'));
-            $std->getSchool()->setWWW($data->get('www'));
-            $std->getSchool()->setStudentCount($data->get('student_count'));
-            $std->getSchool()->setClassCount($data->get('class_count'));
+            $school->setName($data->get('name'));
+            $school->setNameOwn($data->get('name_own'));
+            $school->setPhone($data->get('phone'));
+            $school->setWWW($data->get('www'));
+            $school->setStudentCount($data->get('student_count'));
+            $school->setClassCount($data->get('class_count'));
             $std->setUserDr($userDr);
+            $entityManager->persist($school);
             $entityManager->persist($std);
             $entityManager->flush();
         } catch (Exception $e)
@@ -106,35 +115,63 @@ class SchoolController extends UserController
 
     public function editSchoolAction($schoolId = 0)
     {
-        $std = $this->getDoctrine()
-            ->getRepository(SchoolToDr::class)
-            ->findOneBySchool($schoolId);
+        $school = $this->getDoctrine()
+            ->getRepository(School::class)
+            ->findOneById($schoolId);
+
+        $dr = $this->getDr($schoolId);
+        $drId = (is_object($dr)) ? $dr->getId() : '0';
 
         $schoolArr = array(
-            'id' => $std->getSchool()->getId(),
-            'wojewodztwo' => $std->getSchool()->getWojewodztwo()->getName(),
-            'powiat' => $std->getSchool()->getPowiat(),
-            'gmina' => $std->getSchool()->getGmina(),
-            'city' => $std->getSchool()->getCity(),
-            'name' => $std->getSchool()->getName(),
-            'name_own' => $std->getSchool()->getNameOwn(),
-            'address' => $std->getSchool()->getAddress(),
-            'zipcode' => $std->getSchool()->getZipcode(),
-            'post' => $std->getSchool()->getPost(),
-            'phone' => $std->getSchool()->getPhone(),
-            'www' => $std->getSchool()->getWww(),
-            'publicznosc' => $std->getSchool()->getPublicznosc(),
-            'student_count' => $std->getSchool()->getStudentCount(),
-            'class_count' => $std->getSchool()->getClassCount(),
-            'dr_id' => $std->getUserDr()->getId()
+            'id' => $school->getId(),
+            'wojewodztwo' => $school->getWojewodztwo()->getName(),
+            'powiat' => $school->getPowiat(),
+            'gmina' => $school->getGmina(),
+            'city' => $school->getCity(),
+            'name' => $school->getName(),
+            'name_own' => $school->getNameOwn(),
+            'address' => $school->getAddress(),
+            'zipcode' => $school->getZipcode(),
+            'post' => $school->getPost(),
+            'phone' => $school->getPhone(),
+            'www' => $school->getWww(),
+            'publicznosc' => $school->getPublicznosc(),
+            'student_count' => $school->getStudentCount(),
+            'class_count' => $school->getClassCount(),
+            'dr_id' => $drId
         );
 
-        $drArr = $this->getDr();
+        $drArr = $this->getDrList();
 
         return $this->render('AdminBundle:School:edit.html.twig', array(
             'action_url' => 'update_school',
             'schoolArr' => $schoolArr,
             'drList' => $drArr));
+    }
+
+    private function getStd($schoolId)
+    {
+        $std = $this->getDoctrine()
+            ->getRepository(SchoolToDr::class)
+            ->findOneBySchool($schoolId);
+        if(is_object($std))
+        {
+            return $std;
+        }
+
+        return 0;
+    }
+
+    private function getDr($schoolId)
+    {
+        $std = $this->getStd($schoolId);
+        if(is_object($std))
+        {
+            return $std->getUserDr();
+        }
+
+        return 0;
+
     }
 
     public function showSchoolAction($schoolId)
@@ -212,7 +249,7 @@ class SchoolController extends UserController
         }
 
         $wojewodztwaArr = $this->getWojewodztwa();
-        $drArr = $this->getDr();
+        $drArr = $this->getDrList();
 
         $activeSchool = array();
         if($onlyActive) {
@@ -251,7 +288,7 @@ class SchoolController extends UserController
         return $wojewodztwaArr;
     }
 
-    private function getDr()
+    private function getDrList()
     {
         $drs = $this->getDoctrine()
             ->getRepository(UserDr::class)
@@ -333,6 +370,7 @@ class SchoolController extends UserController
                 'dr' => $name
             );
         }
+
         $jsonData = json_encode($rows);
 
         return new Response($jsonData);

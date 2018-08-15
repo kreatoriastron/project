@@ -3,7 +3,6 @@
   <entity name="AppBundle\Entity\AppUsers" table="app_users">
     <unique-constraints>
       <unique-constraint name="UNIQ_C2502824F85E0677" columns="username"/>
-      <unique-constraint name="UNIQ_C2502824E7927C74" columns="email"/>
     </unique-constraints>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>

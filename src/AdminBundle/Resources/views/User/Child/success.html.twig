@@ -33,9 +33,8 @@
     });
 
     $('#addNextUser').click(function(){
-        $('#addUser input').not('#school, #school_name').val('');
+        $('#addUser input').not('#school').val('');
         $('#addUser').show();
         $('#resultBox').remove();
-        $('html,body').scrollTop(0);
     });
 </script>

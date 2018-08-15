@@ -52,11 +52,14 @@ class PresentesController extends Controller
             ->getRepository(ChildToGroup::class)
             ->findByGrouplist($groupId);
 
-        if(count($groupChildArr) == 0) return 0;
+        if(count($groupChildArr) == 0) {
+            return $this->render('AppBundle:Errors:500.html.twig', array(
+                'information' => 'Brak dzieci przypisanych do grupy'));
+        }
 
         $childIds = array();
-        foreach($groupChildArr as $id => $child){
-            $childIds[] = $child->getId();
+        foreach($groupChildArr as $id => $row){
+            $childIds[] = $row->getChild()->getId();
         }
 
         $qb = $this->getDoctrine()

@@ -24,4 +24,14 @@ class FormManager
         return $date->format('d-m-Y');
     }
 
+    public function getValueInGrosz($value)
+    {
+        return $value * 100;
+    }
+
+    public function getValueInZloty($value)
+    {
+        return $value / 100;
+    }
+
 }

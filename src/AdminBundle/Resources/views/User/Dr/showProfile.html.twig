@@ -18,8 +18,11 @@
                  <li>
                      <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                  </li>
+                 <li>
+                     <a href="{{ path('show_dr') }}">Pracownicy</a><i class="fa fa-circle"></i>
+                 </li>
                  <li class="active">
-                     Pracownicy
+                     {{ userArr.name  }} {{ userArr.surname  }}
                  </li>
              </ul>
              <!-- END PAGE BREADCRUMB -->

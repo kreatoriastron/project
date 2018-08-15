@@ -18,8 +18,11 @@
                      <li>
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
+                     <li>
+                         <a href="{{ path('show_parent') }}">Rodzice</a><i class="fa fa-circle"></i>
+                     </li>
                      <li class="active">
-                         Rodzice
+                         {{ userArr.name  }} {{ userArr.surname  }}
                      </li>
                  </ul>
                  <!-- END PAGE BREADCRUMB -->
@@ -71,6 +74,32 @@
                                                  </span>
                                                  <input type="text" value="{{ userArr.phone  }}" class="form-control input-circle-right" name="phone" placeholder="Telefon">
                                              </div>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Stawka za zajęcia</label>
+                                         <div class="col-md-4">
+                                             <input type="text" id="cost" name="cost" value="{{ userArr.cost }}" class="form-control input-circle" placeholder="Stawka za zajęcia">
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Stawka zryczałtowana</label>
+                                         <div class="col-md-4">
+                                             <input type="text" id="sum_cost" name="sum_cost" value="{{ userArr.sumCost }}" class="form-control input-circle" placeholder="Stawka zryczałtowana">
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Szkoła</label>
+                                         <div class="col-md-4">
+                                             <input id="school_name" type="text" value="{{ userArr.school_name  }}" class="form-control input-circle" placeholder="Wprowadź Szkołę" disabled>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label"></label>
+                                         <div class="col-md-4">
+                                             <a class="btn default" data-target="#selectSchool" data-toggle="modal">
+                                                 Zmień szkołę </a>
+                                             <input type="hidden" value="{{ userArr.school_id  }}" id="school" name="school" >
                                          </div>
                                      </div>
                                      <div class="form-group">
@@ -162,6 +191,62 @@
                                              </div>
                                          </div>
                                      </div>
+                                     <div id="registered_address">
+                                         <div>
+                                             <h3>Dzieci</h3>
+                                         </div>
+                                         {% for child in childs %}
+                                             <div class="form-group">
+                                                 <label class="col-md-3 control-label">Imię dziecka</label>
+                                                 <div class="col-md-4">
+                                                     <input type="text" class="form-control input-circle" name="child_name-{{ child.id }}" value="{{ child.name }}" placeholder="Imię dziecka">
+                                                 </div>
+                                             </div>
+                                             <div class="form-group">
+                                                 <label class="col-md-3 control-label">Nazwisko dziecka</label>
+                                                 <div class="col-md-4">
+                                                     <input type="text" class="form-control input-circle" name="child_surname-{{ child.id }}" value="{{ child.surname }}" placeholder="Nazwisko dziecka">
+                                                 </div>
+                                             </div>
+                                             <div class="form-group">
+                                                 <label class="col-md-3 control-label">Klasa cyfra</label>
+                                                 <div class="col-md-4">
+                                                     <input type="text" class="form-control input-circle" name="class_digit-{{ child.id }}" value="{{ child.class_digit }}" placeholder="Klasa cyfra">
+                                                 </div>
+                                             </div>
+                                             <div class="form-group">
+                                                 <label class="col-md-3 control-label">Klasa litera</label>
+                                                 <div class="col-md-4">
+                                                     <input type="text" class="form-control input-circle" name="class_letter-{{ child.id }}" value="{{ child.class_letter }}" placeholder="Klasa litera">
+                                                 </div>
+                                             </div>
+                                             <hr>
+                                         {%  endfor %}
+                                         <div class="form-group">
+                                             <label class="col-md-3 control-label">Imię kolejnego dziecka</label>
+                                             <div class="col-md-4">
+                                                 <input type="text" class="form-control input-circle" name="child_name"  placeholder="Imię dziecka">
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="col-md-3 control-label">Nazwisko kolejnego dziecka</label>
+                                             <div class="col-md-4">
+                                                 <input type="text" class="form-control input-circle" name="child_surname"  placeholder="Nazwisko dziecka">
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="col-md-3 control-label">Klasa cyfra</label>
+                                             <div class="col-md-4">
+                                                 <input type="text" class="form-control input-circle" name="class_digit"  placeholder="Klasa cyfra">
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="col-md-3 control-label">Klasa litera</label>
+                                             <div class="col-md-4">
+                                                 <input type="text" class="form-control input-circle" name="class_letter" placeholder="Klasa litera">
+                                             </div>
+                                         </div>
+                                     </div>
                                      <div>
                                          <div class="row">
                                              <div class="col-md-offset-3 col-md-9">
@@ -170,12 +255,46 @@
                                              </div>
                                           </div>
                                      </div>
+                                 </div>
                              </form>
+                         </div>
+                     </div>
+                 </div>
+                 <div id="modalContainer">
+                     <div id="selectSchool" class="modal fade" tabindex="-1" aria-hidden="true">
+                         <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                             <h4 class="modal-title">Wybór szkoły</h4>
+                         </div>
+                         <div class="modal-body">
+                             <label>Wybierz miasto</label>
+                             <p>
+                                 <select id="select_city" name="city" placeholder="Miasto">
+                                     <option></option>
+                                     {% for city in cities %}
+                                         <option value="{{ city.id }}">{{ city.city  }} <small>[{{ city.wojewodztwo  }}]</small></option>
+                                     {%  endfor %}
+                                 </select>
+                             </p>
+                             <label>Wybierz szkołę</label>
+                             <p>
+                                 <select id="select_school" placeholder="Wybierz szkołę..."></select>
+                             </p>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
+                             <button type="button" data-dismiss="modal" id="selectSchoolSubmit" class="btn btn-primary">Wybierz</button>
                          </div>
                      </div>
                  </div>
              </div>
          </div>
+ {% endblock %}
+ {%  block stylesheets %}
+     {{  parent () }}
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/selectize/selectize.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}">
  {% endblock %}
  {% block javascripts %}
      {{  parent() }}
@@ -183,8 +302,55 @@
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
      <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
      <script src="{{ asset('bundles/admin/js/User/Parent/validation/edit-validation.js') }}" type="text/javascript"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/selectize/selectize.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') }}"></script>
      <script>
          $(document).ready(function(){
+             var xhr;
+             var select_city, $select_city;
+             var select_school, $select_school;
+
+             $select_city = $('#select_city').selectize({
+                 onChange: function(value) {
+                     if (!value.length) return;
+                     select_school.disable();
+                     select_school.clearOptions();
+                     select_school.load(function(callback) {
+                         xhr && xhr.abort();
+                         xhr = $.ajax({
+                             type: "POST",
+                             url: '{{ path('get_school_by_city') }}',
+                             data: $( "#select_city" ).serialize(),
+                             success: function($data) {
+                                 select_school.enable();
+                                 var response= JSON.parse($data);
+                                 var collection = [];
+                                 $.each(response, function(i, row) {
+                                     collection.push({
+                                         text : row.name,
+                                         value: row.id
+                                     });
+                                 });
+                                 callback(collection);
+                             },
+                             error: function() {
+                                 callback();
+                             }
+                         })
+                     });
+                 }
+             });
+             $select_school = $('#select_school').selectize();
+             select_school  = $select_school[0].selectize;
+             select_school.disable();
+
+             $('#selectSchoolSubmit').click(function(){
+                 $selectedSchool = $('#select_school').val();
+                 $selectedSchoolName = $('#select_school').text();
+                 $('#school').val($selectedSchool);
+                 $('#school_name').val($selectedSchoolName);
+             });
          FormValidation.init('{{ path(action_url) }}');
 
              jQuery.extend(jQuery.validator.messages, {

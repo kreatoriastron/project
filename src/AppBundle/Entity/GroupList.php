@@ -15,12 +15,12 @@ class GroupList
     /**
      * @var string|null
      */
-    private $room;
+    private $cost;
 
     /**
      * @var string|null
      */
-    private $hour;
+    private $sumCost;
 
     /**
      * @var int
@@ -36,11 +36,6 @@ class GroupList
      * @var \AppBundle\Entity\School
      */
     private $school;
-
-    /**
-     * @var \AppBundle\Entity\Week
-     */
-    private $day;
 
 
     /**
@@ -68,51 +63,51 @@ class GroupList
     }
 
     /**
-     * Set room.
+     * Set cost.
      *
-     * @param string|null $room
+     * @param string|null $cost
      *
      * @return GroupList
      */
-    public function setRoom($room = null)
+    public function setCost($cost = null)
     {
-        $this->room = $room;
+        $this->cost = $cost;
 
         return $this;
     }
 
     /**
-     * Get room.
+     * Get cost.
      *
      * @return string|null
      */
-    public function getRoom()
+    public function getCost()
     {
-        return $this->room;
+        return $this->cost;
     }
 
     /**
-     * Set hour.
+     * Set sumCost.
      *
-     * @param string|null $hour
+     * @param string|null $sumCost
      *
      * @return GroupList
      */
-    public function setHour($hour = null)
+    public function setSumCost($sumCost = null)
     {
-        $this->hour = $hour;
+        $this->sumCost = $sumCost;
 
         return $this;
     }
 
     /**
-     * Get hour.
+     * Get sumCost.
      *
      * @return string|null
      */
-    public function getHour()
+    public function getSumCost()
     {
-        return $this->hour;
+        return $this->sumCost;
     }
 
     /**
@@ -171,29 +166,5 @@ class GroupList
     public function getSchool()
     {
         return $this->school;
-    }
-
-    /**
-     * Set day.
-     *
-     * @param \AppBundle\Entity\Week|null $day
-     *
-     * @return GroupList
-     */
-    public function setDay(\AppBundle\Entity\Week $day = null)
-    {
-        $this->day = $day;
-
-        return $this;
-    }
-
-    /**
-     * Get day.
-     *
-     * @return \AppBundle\Entity\Week|null
-     */
-    public function getDay()
-    {
-        return $this->day;
     }
 }

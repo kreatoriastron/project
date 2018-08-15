@@ -5,7 +5,10 @@ namespace AdminBundle\Controller\User;
 use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\AppUsers;
 use AppBundle\Entity\Child;
+use AppBundle\Entity\ChildToGroup;
 use AppBundle\Entity\City;
+use AppBundle\Entity\GroupList;
+use AppBundle\Entity\LessonSelectedToChild;
 use AppBundle\Entity\Messanger;
 use AppBundle\Entity\School;
 use AppBundle\Entity\UserLector;
@@ -20,7 +23,7 @@ use AppBundle\Service\FormManager\FormManager;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Service\DBManager\FilterManager;
 
-class ParentController extends UserController
+class ChildController extends UserController
 {
     public function addAction(Request $request)
     {
@@ -66,7 +69,6 @@ class ParentController extends UserController
 
     private function save($data)
     {
-        $formManager = new FormManager();
         $entityManager = $this->getDoctrine()->getManager();
 
         try {
@@ -97,8 +99,6 @@ class ParentController extends UserController
             $user->setUser($appUser);
             $newFileName = $this->uploadFile('parent_contract', 'contract');
             $user->setContractFile($newFileName);
-            $user->setCost($formManager->getValueInGrosz($data->get('cost')));
-            $user->setSumCost($formManager->getValueInGrosz($data->get('sum_cost')));
             $user->setRaCity($data->get('ra_city'));
             $user->setRaZipCode($data->get('ra_zip_code'));
             $user->setRaStreet($data->get('ra_street'));
@@ -153,162 +153,91 @@ class ParentController extends UserController
 
     public function updateAction(Request $request)
     {
-        $formManager = new FormManager();
         $entityManager = $this->getDoctrine()->getManager();
         $data = $request->request;
-        $allData = $data->all();
         $userId = $data->get('userId');
 
-        $user = $this->getDoctrine()
-            ->getRepository(UserParent::class)
+        $child = $this->getDoctrine()
+            ->getRepository(Child::class)
             ->findOneById($userId);
-        $appUser = $this->getDoctrine()
-            ->getRepository(AppUsers::class)
-            ->findOneById($user->getUser()->getId());
 
-        if (!$user|| !$appUser) {
+        if (!$child) {
             throw $this->createNotFoundException(
                 'No user found for id '.$userId
             );
         }
 
         try {
-            $appUser->setUsername($data->get('phone'));
-            $appUser->setEmail($data->get('email'));
-            $appUser->setName($data->get('name'));
-            $appUser->setSurname($data->get('surname'));
-            $appUser->setPhone($data->get('phone'));
-            $entityManager->persist($appUser);
-            $entityManager->flush();
-        } catch (Exception $e)
-        {
-            throw new Exception($e->getMessage());
-            return $e->getMessage();
-        }
-
-        try {
-            $newFileName = $this->uploadFile('parent_contract', 'contract');
-            if($newFileName)  $user->setContractFile($newFileName);
-            $user->setCost($formManager->getValueInGrosz($data->get('cost')));
-            $user->setSumCost($formManager->getValueInGrosz($data->get('sum_cost')));
-            $user->setRaCity($data->get('ra_city'));
-            $user->setRaZipCode($data->get('ra_zip_code'));
-            $user->setRaStreet($data->get('ra_street'));
-            $user->setRaBuilding($data->get('ra_building'));
-            $user->setRaApartment($data->get('ra_apartment'));
-            $user->setCaCity($data->get('ca_city'));
-            $user->setCaZipCode($data->get('ca_zip_code'));
-            $user->setCaStreet($data->get('ca_street'));
-            $user->setCaBuilding($data->get('ca_building'));
-            $user->setCaApartment($data->get('ca_apartment'));
-            $entityManager->persist($user);
-            $entityManager->flush();
-        } catch (Exception $e)
-        {
-            throw new Exception($e->getMessage());
-            return $e->getMessage();
-        }
-
-
-        $schoolId = $data->get('school');
-        $school = $this->getDoctrine()
-            ->getRepository(School::class)
-            ->findOneById($schoolId);
-
-        $em = $this->getDoctrine()->getManager();
-        $childs = $em->getRepository(Child::class)
-            ->findByParent($userId);
-
-        foreach($childs as $id => $child){
-            $childId = $child->getId();
-            $child->setName($allData['child_name-'.$childId]);
-            $child->setSurname($allData['child_surname-'.$childId]);
-            $child->setClassDigit($allData['class_digit-'.$childId]);
-            $child->setClassLetter($allData['class_letter-'.$childId]);
-            $child->setSchool($school);
-            $entityManager->persist($child);
-            $entityManager->flush();
-        }
-
-        if(!empty($data->get('child_name')))
-        {
-            $child = new Child();
-            $child->setName($data->get('child_name'));
-            $child->setSurname($data->get('child_surname'));
-            $child->setParent($user);
-            $child->setSchool($school);
+            $child->setName($data->get('name'));
+            $child->setSurname($data->get('surname'));
             $child->setClassDigit($data->get('class_digit'));
             $child->setClassLetter($data->get('class_letter'));
             $entityManager->persist($child);
             $entityManager->flush();
+        } catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+            return $e->getMessage();
         }
-        return new Response();
+
+        return new Response('correct');
     }
 
     public function editProfileAction($userId)
     {
-        $formManager = new FormManager();
-        $parent = $this->getDoctrine()
-            ->getRepository(UserParent::class)
-            ->findOneById($userId);
-        $user = $this->getDoctrine()
-            ->getRepository(AppUsers::class)
-            ->findOneById($parent->getUser()->getId());
-
-        $childArr = $this->getDoctrine()
+        $child = $this->getDoctrine()
             ->getRepository(Child::class)
-            ->findByParent($userId);
+            ->findOneById($userId);
 
-        $childList = array();
         $schoolData = array('name' => '', 'id' => '');
-        foreach($childArr as $id => $child)
+        if($child instanceof Child)
         {
             $schoolData['name'] = $child->getSchool()->getName();
             $schoolData['id'] = $child->getSchool()->getId();
-            $childList[] = array(
-                'id' => $child->getId(),
-                'name' => $child->getName(),
-                'surname' => $child->getSurname(),
-                'class_digit' => $child->getClassDigit(),
-                'class_letter' => $child->getClassLetter(),
-            );
+        }
+
+        $group = $this->getGroup($child->getId());
+        $groupData = array('name' => '', 'id' => '');
+        if($group instanceof GroupList)
+        {
+            $groupData['name'] = $group->getName();
+            $groupData['id'] = $group->getId();
         }
 
         $userArr = array(
-            'name' => $user->getName(),
-            'surname' => $user->getSurname(),
-            'email' => $user->getEmail(),
-            'phone' => $user->getPhone(),
-            'cost' => $formManager->getValueInZloty($parent->getCost()),
-            'sumCost' => $formManager->getValueInZloty($parent->getSumCost()),
-            'contract' => $parent->getContractFile(),
-            'id' => $parent->getId(),
-            'ra_city' => $parent->getRaCity(),
-            'ra_zip_code' => $parent->getRaZipCode(),
-            'ra_street' => $parent->getRaStreet(),
-            'ra_building' => $parent->getRaBuilding(),
-            'ra_apartment' => $parent->getRaApartment(),
-            'ca_city' => $parent->getCaCity(),
-            'ca_zip_code' => $parent->getCaZipCode(),
-            'ca_street' => $parent->getCaStreet(),
-            'ca_building' => $parent->getCaBuilding(),
-            'ca_apartment' => $parent->getCaApartment(),
-            'school_name' => $schoolData['name'],
-            'school_id' => $schoolData['id'],
+            'id' => $child->getId(),
+            'name' => $child->getName(),
+            'surname' => $child->getSurname(),
+            'parentName' => $child->getParent()->getUser()->getName(),
+            'parentSurname' => $child->getParent()->getUser()->getSurname(),
+            'parentId' => $child->getParent()->getUser()->getId(),
+            'class_digit' => $child->getClassDigit(),
+            'class_letter' => $child->getClassLetter(),
         );
 
-        $cities = $this->getCities();
+        $lstc = $this->getDoctrine()
+            ->getRepository(LessonSelectedToChild::class)
+            ->findByChild($child);
 
-        return $this->render('AdminBundle:User\Parent:edit.html.twig', array(
-            'action_url' => 'update_parent',
+        $lessonList = array();
+        foreach($lstc as $id => $row)
+        {
+            $lessonList[$id]['day'] = $row->getGroupLesson()->getDay()->getName();
+            $lessonList[$id]['hour'] = $row->getGroupLesson()->getHour();
+            $lessonList[$id]['status'] = $row->getStatus();
+            $lessonList[$id]['id'] = $row->getId();
+        }
+
+        return $this->render('AdminBundle:User\Child:edit.html.twig', array(
+            'action_url' => 'update_child',
             'userArr' => $userArr,
-            'cities' => $cities,
-            'childs' => $childList));
+            'school' => $schoolData,
+            'group' => $groupData,
+            'lstc' => $lessonList));
     }
 
     public function showProfileAction($userId)
     {
-        $formManager = new FormManager();
         $parent = $this->getDoctrine()
             ->getRepository(UserParent::class)
             ->findOneById($userId);
@@ -319,8 +248,6 @@ class ParentController extends UserController
             'email' => $parent->getUser()->getEmail(),
             'phone' => $parent->getUser()->getPhone(),
             'contract' => $parent->getContractFile(),
-            'cost' => $formManager->getValueInZloty($parent->getCost()),
-            'sumCost' => $formManager->getValueInZloty($parent->getSumCost()),
             'id' => $parent->getId(),
             'ra_city' => $parent->getRaCity(),
             'ra_zip_code' => $parent->getRaZipCode(),
@@ -341,7 +268,7 @@ class ParentController extends UserController
     public function showAction()
     {
         $result = $this->getDoctrine()
-            ->getRepository(UserParent::class)
+            ->getRepository(Child::class)
             ->createQueryBuilder('u')
             ->select('u')
             ->getQuery()
@@ -350,52 +277,174 @@ class ParentController extends UserController
         $rows = array();
         foreach($result as $id => $row)
         {
-            $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
+            $group = $this->getGroup($row->getId());
+            $groupName = $this->getGroupName($group);
+
             $rows[] = array(
                 'id' => $row->getId(),
-                'name' => $row->getUser()->getName(),
-                'surname' => $row->getUser()->getSurname(),
-                'email' => $row->getUser()->getEmail(),
-                'is_active' => $is_active,
-                'phone' => $row->getUser()->getPhone(),
+                'name' => $row->getName(),
+                'surname' => $row->getSurname(),
+                'parentName' => $row->getParent()->getUser()->getName(),
+                'parentSurname' => $row->getParent()->getUser()->getSurname(),
+                'parentId' => $row->getParent()->getId(),
+                'school' => $row->getSchool()->getName(),
+                'schoolId' => $row->getSchool()->getId(),
+                'class' => $row->getClassDigit() . $row->getClassLetter(),
+                'group' => $groupName,
             );
         }
 
-        return $this->render('AdminBundle:User\Parent:show.html.twig', array(
+        return $this->render('AdminBundle:User\Child:show.html.twig', array(
             'users' => $rows));
+    }
+
+    private function getGroup($childId)
+    {
+        $ctg = $this->getDoctrine()
+            ->getRepository(ChildToGroup::class)
+            ->findOneByChild($childId);
+
+        if(is_object($ctg)) {
+            return $ctg->getGrouplist();
+        }
+
+        return 0;
+    }
+    private function getGroupName($group)
+    {
+        if($group instanceof GroupList)
+        {
+            return $group->getName();
+        }
+
+        return '';
     }
 
     public function filterAction(Request $request)
     {
         $data = $request->request->all();
 
-        $condition['isActive'] = 'EQUAL';
+        $dataChild = array(
+            'name' => $data['name'],
+            'surname' => $data['surname'],
+            'classDigit_or_first' => $data['class'],
+            'classLetter_or_first' => $data['class']
+        );
 
+        $conditionClass['classDigit_or_first'] = 'OR';
+        $conditionClass['classLetter_or_first'] = 'OR';
+
+        $dataParent = array(
+            'name' => $data['parent_name'],
+            'surname' => $data['parent_surname']
+        );
+        $dataSchool = array(
+            'name' => $data['school']
+        );
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
-            'fullName' =>'AppBundle\Entity\UserParent',
-            'shortName' => 'ul'));
+            'fullName' =>'AppBundle\Entity\Child',
+            'shortName' => 'c'));
         $filterManager->setJoin(array(
-            'ul.user' => 'au'));
-        $filterManager->setCondition($data, 'au', $condition);
-        $filterManager->setSelect(array('ul'));
+            'c.parent' => 'p'));
+        $filterManager->setJoin(array(
+            'p.user' => 'u'));
+        $filterManager->setJoin(array(
+            'c.school' => 's'));
+        $filterManager->setCondition($dataChild, 'c', $conditionClass);
+        $filterManager->setCondition($dataParent, 'u');
+        $filterManager->setCondition($dataSchool, 's');
+        $filterManager->setSelect(array('c'));
         $filteredData = $filterManager->getfilteredData();
 
         $rows = array();
         foreach($filteredData as $id => $row)
         {
-            $is_active = ($row->getUser()->getIsActive()) ?  'TAK' : 'NIE';
-            $rows[] = array(
+            $rows[$row->getId()] = array(
                 'id' => $row->getId(),
-                'name' => $row->getUser()->getName(),
-                'surname' => $row->getUser()->getSurname(),
-                'email' => $row->getUser()->getEmail(),
-                'is_active' => $is_active,
-                'phone' => $row->getUser()->getPhone(),
+                'name' => $row->getName(),
+                'surname' => $row->getSurname(),
+                'parentName' => $row->getParent()->getUser()->getName(),
+                'parentSurname' => $row->getParent()->getUser()->getSurname(),
+                'school' => $row->getSchool()->getName(),
+                'class' => $row->getClassDigit() . $row->getClassLetter()
             );
         }
-        $jsonData = json_encode($rows);
+
+        if(strlen($data['group']))
+        {
+            $searchByGroup = array(
+                'child' => array_keys($rows),
+                'group' => $request->request->get('group'),
+            );
+            $filteredByGroup = $this->filterByGroup($searchByGroup);
+
+            $filteredData = array();
+            foreach ($filteredByGroup as $id => $groupData) {
+                $data = $rows[$id];
+                $data['group'] = $groupData;
+                $filteredData[] = $data;
+            }
+
+            $jsonData = json_encode($filteredData);
+        } else {
+            $jsonData = json_encode($rows);
+        }
 
         return new Response($jsonData);
+    }
+
+    private function filterByGroup($data)
+    {
+        $dataGroupList = array(
+            'name' => $data['group']);
+
+        $dataChildToGroup = array(
+            'child' => $data['child']
+        );
+        $condition['child'] = 'IN';
+
+        $filterManager = new FilterManager($this->getDoctrine());
+        $filterManager->setTable(array(
+            'fullName' =>'AppBundle\Entity\ChildToGroup',
+            'shortName' => 'ctg'));
+        $filterManager->setJoin(array(
+            'ctg.grouplist' => 'gl'));
+        $filterManager->setCondition($dataChildToGroup, 'ctg', $condition);
+        $filterManager->setCondition($dataGroupList, 'gl');
+        $filterManager->setSelect(array('IDENTITY(ctg.child) as child, gl.name as group'));
+        $filteredData = $filterManager->getfilteredData();
+
+        $output = array();
+        foreach($filteredData as $id => $data)
+        {
+            $output[$data['child']] = $data['group'];
+        }
+
+        return $output;
+    }
+
+    public function changeLstcAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $request->request->all();
+
+        foreach($data as $id => $value)
+        {
+            $lstc =  $this->getDoctrine()
+                ->getRepository(LessonSelectedToChild::class)
+                ->findOneById($id);
+
+            if($lstc instanceof LessonSelectedToChild)
+            {
+                $value = ($value == 'on') ? 1 : 0;
+
+                $lstc->setStatus($value);
+                $em ->persist($lstc);
+            }
+        }
+        $em->flush();
+
+        return new Response('correct');
     }
 }

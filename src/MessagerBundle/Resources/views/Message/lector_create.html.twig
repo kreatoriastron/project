@@ -154,7 +154,7 @@
 
                                                                                      {% for user in users %}
                                                                                          <tr>
-                                                                                             <td><input type="checkbox" name="selectedUser" id="selectedUser" value="{{ user.id }}"></td>
+                                                                                             <td><input type="checkbox" name="selectedUser" id="selectedUser" value="{{ user.id }}" onchange="addUser(this)"></td>
                                                                                              <td>{{ user.name }}</td>
                                                                                              <td>{{ user.surname }}</td>
                                                                                              <td>{{ user.email }}</td>
@@ -190,6 +190,7 @@
                                              <div class="tab-pane" id="tab3">
                                              </div>
                                              <div class="tab-pane" id="tab4">
+                                                 <div id="userList"></div>
                                              </div>
                                          </div>
                                      </div>
@@ -241,7 +242,7 @@
                          $('#datatable_ajax > tbody tr').remove();
                          $.each(response, function(i, row) {
                              $('<tr>').append(
-                                     $('<td>').html('<input type="checkbox" id="selectedUser" value="' + row.id + '">'),
+                                     $('<td>').html('<input type="checkbox" id="selectedUser" data-name="' + row.name + row.surname +'" value="' + row.id + '" onchange="addUser(this)">'),
                                      $('<td>').text(row.name),
                                      $('<td>').text(row.surname),
                                      $('<td>').text(row.email),
@@ -251,9 +252,9 @@
                                      $('<td>').text(row.groups)
                              ).appendTo('#datatable_ajax > tbody');
                          });
-
                      }
                  });
+                 return false;
              });
 
              $("#mainBox").on("click",".group-checkable", function(){
@@ -264,6 +265,12 @@
                  }
              });
          })
+
+         function addUser(element)
+         {
+             //$(element).data('name');
+            //alert($(element).data('name'));
+         }
      </script>
  {% endblock %}
 

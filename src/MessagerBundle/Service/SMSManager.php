@@ -30,8 +30,8 @@ class SMSManager
         try {
             $actionSend = $this->smsapi->actionSend();
 
-            $actionSend->setTo('884606421');
-            $actionSend->setText('Ty sabaczy synu Jaremo');
+            $actionSend->setTo($number);
+            $actionSend->setText($text);
             $actionSend->setSender('EdWings'); //Pole nadawcy, lub typ wiadomości: 'ECO', '2Way'
 
             $response = $actionSend->execute();

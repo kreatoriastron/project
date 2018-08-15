@@ -4,7 +4,7 @@
     <indexes>
       <index name="group_list_school" columns="school"/>
       <index name="group_list_lector" columns="user_lector"/>
-      <index name="gtoup_list_day" columns="day"/>
+      <index name="gtoup_list_day" columns="sum_cost"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -14,12 +14,12 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="room" type="string" column="room" length="11" nullable="true">
+    <field name="cost" type="string" column="cost" length="11" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="hour" type="string" column="hour" length="11" nullable="true">
+    <field name="sumCost" type="string" column="sum_cost" length="11" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
@@ -32,11 +32,6 @@
     <many-to-one field="school" target-entity="School" fetch="LAZY">
       <join-columns>
         <join-column name="school" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="day" target-entity="Week" fetch="LAZY">
-      <join-columns>
-        <join-column name="day" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

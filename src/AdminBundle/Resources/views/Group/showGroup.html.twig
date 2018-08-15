@@ -18,8 +18,11 @@
                  <li>
                      <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                  </li>
+                 <li>
+                     <a href="{{ path('show_group') }}">Grupy</a><i class="fa fa-circle"></i>
+                 </li>
                  <li class="active">
-                     Grupy
+                     {{ groupArr.name  }}
                  </li>
              </ul>
              <!-- END PAGE BREADCRUMB -->
@@ -57,24 +60,27 @@
                                          <input type="text" value="{{ groupArr.lector  }}" class="form-control input-circle" name="lector" placeholder="Wprowadź Lektora" disabled>
                                      </div>
                                  </div>
-                                 <div class="form-group">
-                                     <label class="col-md-3 control-label">Klasa</label>
-                                     <div class="col-md-4">
-                                         <input type="text" value="{{ groupArr.room }}" class="form-control input-circle" name="room" placeholder="Wprowadź Salę" disabled>
+                                 {%  for lesson in groupArr.lessonList %}
+                                     <hr>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Klasa</label>
+                                         <div class="col-md-4">
+                                             <input type="text" value="{{ lesson.class }}" class="form-control input-circle" name="room" placeholder="Wprowadź Salę" disabled>
+                                         </div>
                                      </div>
-                                 </div>
-                                 <div class="form-group">
-                                     <label class="col-md-3 control-label">Dzień</label>
-                                     <div class="col-md-4">
-                                         <input type="text" value="{{ groupArr.day }}" class="form-control input-circle" name="day" placeholder="Wprowadź Dzień" disabled>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Dzień</label>
+                                         <div class="col-md-4">
+                                             <input type="text" value="{{ lesson.day }}" class="form-control input-circle" name="day" placeholder="Wprowadź Dzień" disabled>
+                                         </div>
                                      </div>
-                                 </div>
-                                 <div class="form-group">
-                                     <label class="col-md-3 control-label">Godzina</label>
-                                     <div class="col-md-4">
-                                         <input type="text" value="{{ groupArr.hour }}" class="form-control input-circle" name="hour" placeholder="Wprowadź Godzinę" disabled>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Godzina</label>
+                                         <div class="col-md-4">
+                                             <input type="text" value="{{ lesson.hour }}" class="form-control input-circle" name="hour" placeholder="Wprowadź Godzinę" disabled>
+                                         </div>
                                      </div>
-                                 </div>
+                                 {% endfor %}
                                  <div>
                                      <div class="row">
                                          <div class="col-md-offset-3 col-md-9">

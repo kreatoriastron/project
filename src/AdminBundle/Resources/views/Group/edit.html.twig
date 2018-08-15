@@ -19,7 +19,7 @@
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
                      <li>
-                         <a href="javascript:;">Grupy</a><i class="fa fa-circle"></i>
+                         <a href="{{ path('show_group') }}">Grupy</a><i class="fa fa-circle"></i>
                      </li>
                      <li class="active">
                          {{ group_name }}
@@ -45,7 +45,12 @@
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Nazwa</label>
                                          <div class="col-md-4">
-                                             <input type="text" value="{{ groupArr.name  }}" class="form-control input-circle" name="name" placeholder="Wprowadź nazwę" >
+                                             <select id="group_name" name="name" class="form-control input-circle">
+                                                 <option></option>
+                                                 {% for i in 1..15 %}
+                                                     <option value="{{ i }}">{{ i  }}</option>
+                                                 {%  endfor %}
+                                             </select>
                                          </div>
                                      </div>
                                      <div class="form-group">
@@ -74,18 +79,58 @@
                                          </div>
                                      </div>
                                      <div class="form-group">
+                                         <label class="col-md-3 control-label">Stawka za zajęcia</label>
+                                         <div class="col-md-4">
+                                             <input type="text" id="cost" name="cost" value="{{ groupArr.cost }}" class="form-control input-circle" placeholder="Stawka za zajęcia">
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Stawka zryczałtowana</label>
+                                         <div class="col-md-4">
+                                             <input type="text" id="sum_cost" name="sum_cost" value="{{ groupArr.sumCost }}" class="form-control input-circle" placeholder="Stawka zryczałtowana">
+                                         </div>
+                                     </div>
+                                     {%  for key, lesson in groupArr.lessonList %}
+                                         <hr>
+                                         <input type="hidden" value="{{ lesson.id }}"  name="groupLessonId[]" >
+                                         <div class="form-group">
+                                             <label class="col-md-3 control-label">Klasa</label>
+                                             <div class="col-md-4">
+                                                 <input type="text" value="{{ lesson.class }}" class="form-control input-circle" name="class[]" placeholder="Wprowadź Salę" >
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="col-md-3 control-label">Dzień</label>
+                                             <div class="col-md-4">
+                                                 <select id="select_day-{{ key }}" name="day[]" placeholder="Dzień">
+                                                     <option></option>
+                                                     {% for day in days %}
+                                                         <option value="{{ day.id }}">{{ day.name }}</option>
+                                                     {%  endfor %}
+                                                 </select>
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="col-md-3 control-label">Godzina</label>
+                                             <div class="col-md-4">
+                                                 <input type="text" value="{{ lesson.hour }}" class="form-control input-circle" name="hour[]" placeholder="Wprowadź Godzinę" >
+                                             </div>
+                                         </div>
+                                     {% endfor %}
+                                     <hr>
+                                     <div class="form-group">
                                          <label class="col-md-3 control-label">Klasa</label>
                                          <div class="col-md-4">
-                                             <input type="text" value="{{ groupArr.room }}" class="form-control input-circle" name="room" placeholder="Wprowadź Salę" >
+                                             <input type="text" value="" class="form-control input-circle" name="new_class" placeholder="Wprowadź Salę" >
                                          </div>
                                      </div>
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Dzień</label>
                                          <div class="col-md-4">
-                                             <select id="select_day" name="day" placeholder="Dzień">
+                                             <select id="select_day" name="new_day" placeholder="Dzień">
                                                  <option></option>
                                                  {% for day in days %}
-                                                     <option value="{{ day.id }}">{{ day.name  }}</option>
+                                                     <option value="{{ day.id }}">{{ day.name }}</option>
                                                  {%  endfor %}
                                              </select>
                                          </div>
@@ -93,7 +138,7 @@
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Godzina</label>
                                          <div class="col-md-4">
-                                             <input type="text" value="{{ groupArr.hour }}" class="form-control input-circle" name="hour" placeholder="Wprowadź Godzinę" >
+                                             <input type="text" value="" class="form-control input-circle" name="new_hour" placeholder="Wprowadź Godzinę" >
                                          </div>
                                      </div>
                                      <div>
@@ -255,6 +300,9 @@
              var select_school, $select_school;
              var select_lector, $select_lector;
              var select_day, $select_day;
+             {%  for key, lesson in groupArr.lessonList %}
+                var select_day_{{ key }}, $select_day_{{ key }};
+             {%  endfor %}
 
              $select_city = $('#select_city').selectize({
                  onChange: function(value) {
@@ -288,7 +336,11 @@
              });
              $select_day = $('#select_day').selectize();
              select_day  = $select_day[0].selectize;
-             select_day.setValue('{{ groupArr.day }}', false);
+             {%  for key, lesson in groupArr.lessonList %}
+                $select_day_{{ key }} = $('#select_day-{{ key }}').selectize();
+                select_day_{{ key }}  = $select_day_{{ key }}[0].selectize;
+                select_day_{{ key }}.setValue('{{ lesson.dayId }}', false);
+             {%  endfor %}
 
              $select_lector = $('#select_lector').selectize();
              select_lector  = $select_lector[0].selectize;
@@ -305,7 +357,7 @@
                  $('#school_name').val($selectedSchoolName);
              });
 
-
+             $('#group_name').val({{ groupArr.name }});
              $("#mainBox").on("click",".remove", function(){
                  var userId = this.getAttribute('data-userId');
                 $('#removeChildSubmit').attr('data-userId',userId);

@@ -4,6 +4,8 @@ namespace AdminBundle\Controller;
 
 use AppBundle\Entity\Child;
 use AppBundle\Entity\ChildToGroup;
+use AppBundle\Entity\GroupLesson;
+use AppBundle\Entity\LessonSelectedToChild;
 use AppBundle\Entity\School;
 use AppBundle\Entity\Week;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -108,6 +110,7 @@ class GroupController extends Controller
 
     private function save($data)
     {
+        $formManager = new FormManager();
         $entityManager = $this->getDoctrine()->getManager();
         $school = $this->getDoctrine()
             ->getRepository(School::class)
@@ -115,21 +118,33 @@ class GroupController extends Controller
         $lector = $this->getDoctrine()
             ->getRepository(UserLector::class)
             ->findOneById($data->get('lector'));
-        $day = $this->getDoctrine()
-            ->getRepository(Week::class)
-            ->findOneById($data->get('day'));
 
         try {
             $group = new GroupList();
             $group->setName($data->get('name'));
             $group->setSchool($school);
             $group->setUserLector($lector);
-            $group->setRoom($data->get('room'));
-            $group->setDay($day);
-            $group->setHour($data->get('hour'));
+            $group->setCost($formManager->getValueInGrosz($data->get('cost')));
+            $group->setSumCost($formManager->getValueInGrosz($data->get('sum_cost')));
             $entityManager->persist($group);
             $entityManager->flush();
             $newGroupId = $group->getId();
+
+            $days = $data->get('day');
+            $hours = $data->get('hour');
+            $classes = $data->get('class');
+            foreach($days as $id => $row) {
+                $day = $this->getDoctrine()
+                    ->getRepository(Week::class)
+                    ->findOneById($days[$id]);
+                $groupLesson = new GroupLesson();
+                $groupLesson->setGroup($group);
+                $groupLesson->setClass($classes[$id]);
+                $groupLesson->setDay($day);
+                $groupLesson->setHour($hours[$id]);
+                $entityManager->persist($groupLesson);
+            }
+            $entityManager->flush();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -141,6 +156,7 @@ class GroupController extends Controller
 
     public function updateAction(Request $request)
     {
+        $formManager = new FormManager();
         $entityManager = $this->getDoctrine()->getManager();
         $data = $request->request;
         $groupId = $data->get('groupId');
@@ -161,20 +177,52 @@ class GroupController extends Controller
         $lector = $this->getDoctrine()
             ->getRepository(UserLector::class)
             ->findOneById($data->get('lector'));
-        $day = $this->getDoctrine()
-            ->getRepository(Week::class)
-            ->findOneById($data->get('day'));
 
         try {
-            $group->setName($data->get('name'));
             $group->setSchool($school);
             $group->setUserLector($lector);
-            $group->setRoom($data->get('room'));
-            $group->setDay($day);
-            $group->setHour($data->get('hour'));
+            $group->setName($data->get('name'));
+            $group->setCost($formManager->getValueInGrosz($data->get('cost')));
+            $group->setSumCost($formManager->getValueInGrosz($data->get('sum_cost')));
             $entityManager->persist($group);
             $entityManager->flush();
             $groupId = $group->getId();
+
+            $days = $data->get('day');
+            $hours = $data->get('hour');
+            $classes = $data->get('class');
+            $glId = $data->get('groupLessonId');
+            foreach($days as $id => $row) {
+                $day = $this->getDoctrine()
+                    ->getRepository(Week::class)
+                    ->findOneById($days[$id]);
+
+                $groupLesson = $this->getDoctrine()
+                    ->getRepository(GroupLesson::class)
+                    ->findOneById($glId[$id]);
+
+                $groupLesson->setGroup($group);
+                $groupLesson->setClass($classes[$id]);
+                $groupLesson->setDay($day);
+                $groupLesson->setHour($hours[$id]);
+                $entityManager->persist($groupLesson);
+            }
+            $entityManager->flush();
+
+            if(!empty($data->get('new_day')))
+            {
+                $day = $this->getDoctrine()
+                    ->getRepository(Week::class)
+                    ->findOneById($data->get('new_day'));
+                $groupLesson = new GroupLesson();
+                $groupLesson->setGroup($group);
+                $groupLesson->setClass($data->get('new_class'));
+                $groupLesson->setDay($day);
+                $groupLesson->setHour($data->get('new_hour'));
+                $entityManager->persist($groupLesson);
+                $entityManager->flush();
+            }
+
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -186,21 +234,24 @@ class GroupController extends Controller
 
     public function editGroupAction($groupId)
     {
+        $formManager = new FormManager();
         $group = $this->getDoctrine()
             ->getRepository(GroupList::class)
             ->findOneById($groupId);
 
         $name = $group->getUserLector()->getUser()->getName() . ' ' . $group->getUserLector()->getUser()->getSurname();
+        $lessonList = $this->getGroupLesson($groupId);
         $groupArr = array(
             'name' => $group->getName(),
             'school' => $group->getSchool()->getName(),
             'school_id' => $group->getSchool()->getId(),
             'lector' => $name,
             'lector_id' => $group->getUserLector()->getId(),
-            'room' => $group->getRoom(),
-            'day' => $group->getDay()->getId(),
-            'hour' => $group->getHour(),
             'id' => $group->getId(),
+            'cost' => $formManager->getValueInZloty($group->getCost()),
+            'sumCost' => $formManager->getValueInZloty($group->getSumCost()),
+            'lessonList' => $lessonList
+
         );
 
         $cities = $this->getCities();
@@ -265,16 +316,15 @@ class GroupController extends Controller
         $group = $this->getDoctrine()
             ->getRepository(GroupList::class)
             ->findOneById($groupId);
+        $lessonList = $this->getGroupLesson($groupId);
 
         $name = $group->getUserLector()->getUser()->getName() . ' ' . $group->getUserLector()->getUser()->getSurname();
         $groupArr = array(
             'name' => $group->getName(),
             'school' => $group->getSchool()->getName(),
             'lector' => $name,
-            'room' => $group->getRoom(),
-            'day' => $group->getDay()->getName(),
-            'hour' => $group->getHour(),
-            'id' => $group->getId(),
+            'lessonList' => $lessonList,
+            'id' => $group->getId()
         );
 
         return $this->render('AdminBundle:Group:showGroup.html.twig', array(
@@ -299,15 +349,33 @@ class GroupController extends Controller
                 'id' => $row->getId(),
                 'name' => $row->getName(),
                 'school' => $row->getSchool()->getName(),
-                'lector' => $lectorName,
-                'room' => $row->getRoom(),
-                'day' => $row->getDay()->getName(),
-                'hour' => $row->getHour()
+                'lector' => $lectorName
             );
         }
 
         return $this->render('AdminBundle:Group:show.html.twig', array(
             'groups' => $rows));
+    }
+
+    private function getGroupLesson($groupId)
+    {
+        $groupLesson = $this->getDoctrine()
+            ->getRepository(GroupLesson::class)
+            ->findByGroup($groupId);
+
+        $lessonList = array();
+        foreach($groupLesson as $id => $lesson)
+        {
+            $lessonList[] = array(
+                'id' => $lesson->getId(),
+                'class' => $lesson->getClass(),
+                'day' => $lesson->getDay()->getName(),
+                'dayId' => $lesson->getDay()->getId(),
+                'hour' => $lesson->getHour()
+            );
+        }
+
+        return $lessonList;
     }
 
     public function filterAction(Request $request)
@@ -418,6 +486,7 @@ class GroupController extends Controller
     private function addChild($childs, $groupId)
     {
         $entityManager = $this->getDoctrine()->getManager();
+
         foreach ($childs as $id => $childId)
         {
             try {
@@ -425,11 +494,12 @@ class GroupController extends Controller
                     ->getRepository(ChildToGroup::class)
                     ->findOneById($childId);
 
+                $child = $this->getDoctrine()
+                    ->getRepository(Child::class)
+                    ->findOneById($childId);
+
                 if($childToGroup === null) {
                     $childToGroup = new ChildToGroup();
-                    $child = $this->getDoctrine()
-                        ->getRepository(Child::class)
-                        ->findOneById($childId);
                     $childToGroup->setChild($child);
                 }
 
@@ -440,12 +510,46 @@ class GroupController extends Controller
                 $childToGroup->setGrouplist($group);
                 $entityManager->persist($childToGroup);
                 $entityManager->flush();
+
+                $this->setLstc($child, $groupId, $entityManager);
+
             } catch (Exception $e)
             {
                 throw new Exception($e->getMessage());
                 return new Response($e->getMessage());
             }
         }
+        return 1;
+    }
+
+    private function setLstc($child, $groupId, $em)
+    {
+        $lstg = $this->getDoctrine()
+            ->getRepository(LessonSelectedToChild::class)
+            ->findByChild($child->getId());
+
+        foreach($lstg as  $id => $record)
+        {
+            $em->remove($record);
+        }
+
+        $em->flush();
+
+        $groupLesson = $this->getDoctrine()
+            ->getRepository(GroupLesson::class)
+            ->findByGroup($groupId);
+
+        foreach($groupLesson as $id => $lesson)
+        {
+            $lstg = new LessonSelectedToChild();
+            $lstg->setChild($child);
+            $lstg->setGroupLesson($lesson);
+            $em->persist($lstg);
+
+        }
+        $em->flush();
+
+        return true;
     }
 
     public function filterChildToGroupAction($groupId, Request $request)

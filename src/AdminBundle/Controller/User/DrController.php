@@ -4,6 +4,7 @@ namespace AdminBundle\Controller\User;
 
 use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\AppUsers;
+use AppBundle\Entity\Messanger;
 use FOS\UserBundle\Model\User;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,8 @@ class DrController extends UserController
         $entityManager = $this->getDoctrine()->getManager();
 
         try {
-            $pass = password_hash('ThePassword', PASSWORD_BCRYPT);
+            $plainPass = $rand = substr(md5(microtime()),rand(0,26),7);
+            $pass = password_hash($plainPass, PASSWORD_BCRYPT);
 
             $appUser = new AppUsers();
             $appUser->setUsername($data->get('phone'));
@@ -77,6 +79,16 @@ class DrController extends UserController
             $entityManager->persist($user);
             $entityManager->flush();
             $newUserId = $user->getId();
+
+            $messenger = new Messanger();
+            $messenger->setFromUser('csatut');
+            $messenger->setToUser($appUser->getId());
+            $messenger->setMessage('Wiadomość powitalna. Twoje hasło to: ' . $plainPass);
+            $messenger->setSendDate(new \DateTime('NOW'));
+            $messenger->setStatus('0');
+            $messenger->setType('1');
+            $entityManager->persist($messenger);
+            $entityManager->flush();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());

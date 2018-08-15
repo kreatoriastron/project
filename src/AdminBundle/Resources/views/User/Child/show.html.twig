@@ -8,7 +8,7 @@
                  <div class="page-head">
                      <!-- BEGIN PAGE TITLE -->
                      <div class="page-title">
-                         <h1>Administracja <small>Rodzice</small></h1>
+                         <h1>Administracja <small>Dzieci</small></h1>
                      </div>
                      <!-- END PAGE TITLE -->
                  </div>
@@ -19,7 +19,7 @@
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
                      <li class="active">
-                         Rodzice
+                         Dzieci
                      </li>
                  </ul>
                  <!-- END PAGE BREADCRUMB -->
@@ -31,7 +31,7 @@
                                  <div class="portlet-title">
                                      <div class="caption">
                                          <i class="fa fa-gift font-green-sharp"></i>
-                                         <span class="caption-subject font-green-sharp bold uppercase">Lista Rodziców</span>
+                                         <span class="caption-subject font-green-sharp bold uppercase">Lista Dzieci</span>
                                      </div>
                                  </div>
                                  <div class="portlet-body">
@@ -40,11 +40,8 @@
                                          <div id="datatable_ajax_wrapper" class="dataTables_wrapper dataTables_extended_wrapper no-footer">
                                            <td rowspan="1" colspan="1">
                                                      <div class="margin-bottom-5">
-                                                         <button class="btn btn-sm yellow filter-submit margin-bottom" id="search" style="display: inline; float: left; margin-right: 15px;"><i class="fa fa-search"></i> Szukaj</button>
+                                                         <button class="btn btn-sm yellow filter-submit margin-bottom" id="search"><i class="fa fa-search"></i> Szukaj</button>
                                                      </div>
-                                                    <div class="margin-bottom-5">
-                                                        <button class="btn btn-sm blue filter-submit margin-bottom" data-toggle="modal" id="addParent"><i class="fa fa-plus"></i> Dodaj Rodzica</button>
-                                                    </div>
                                            </td>
 
                                          <div class="table-scrollable"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
@@ -56,17 +53,23 @@
                                                          <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Imię
                                                          </th>
-                                                         <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Nazwisko
                                                          </th>
-                                                         <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
-                                                             Email
+                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Imię rodzica
                                                          </th>
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
-                                                             Telefon
+                                                             Nazwisko rodzica
                                                          </th>
-                                                         <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
-                                                             Aktywny
+                                                         <th width="45%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Szkoła
+                                                         </th>
+                                                         <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Klasa
+                                                         </th>
+                                                         <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                             Grupa
                                                          </th>
                                                          <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
                                                              Akcje
@@ -80,17 +83,19 @@
                                                              <input type="text" class="form-control form-filter input-sm" name="surname">
                                                          </td>
                                                          <td rowspan="1" colspan="1">
-                                                             <input type="text" class="form-control form-filter input-sm" name="email">
+                                                             <input type="text" class="form-control form-filter input-sm" name="parent_name">
                                                          </td>
                                                          <td rowspan="1" colspan="1">
-                                                             <input type="text" class="form-control form-filter input-sm" name="phone">
+                                                             <input type="text" class="form-control form-filter input-sm" name="parent_surname">
                                                          </td>
                                                          <td rowspan="1" colspan="1">
-                                                             <select name="isActive" class="form-control form-filter input-sm">
-                                                                 <option value=""></option>
-                                                                 <option value="0">NIE</option>
-                                                                 <option value="1">TAK</option>
-                                                             </select>
+                                                             <input type="text" class="form-control form-filter input-sm" name="school">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="class">
+                                                         </td>
+                                                         <td rowspan="1" colspan="1">
+                                                             <input type="text" class="form-control form-filter input-sm" name="group">
                                                          </td>
                                                      </tr>
                                                      </thead>
@@ -101,11 +106,25 @@
                                                              <td><input type="checkbox" name="id[]" value="{{ user.id }}"></td>
                                                              <td>{{ user.name }}</td>
                                                              <td>{{ user.surname }}</td>
-                                                             <td>{{ user.email }}</td>
-                                                             <td>{{ user.phone }}</td>
-                                                             <td>{{ user.is_active }}</td>
                                                              <td>
-                                                                 <button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="{{ path('edit_profile_parent', {'userId': user.id}) }}">Edytuj</button>
+                                                                 <a href="{{ path('show_profile_parent', {'userId':user.parentId}) }}" target="_blank">
+                                                                     {{ user.parentName }}
+                                                                 </a>
+                                                             </td>
+                                                             <td>
+                                                                 <a href="{{ path('show_profile_parent', {'userId':user.parentId}) }}" target="_blank">
+                                                                     {{ user.parentSurname }}
+                                                                 </a>
+                                                             </td>
+                                                             <td>
+                                                                 <a href="{{ path('edit_school', {'schoolId':user.schoolId}) }}" target="_blank">
+                                                                    {{ user.school }}
+                                                                </a>
+                                                             </td>
+                                                             <td>{{ user.class }}</td>
+                                                             <td>{{ user.group }}</td>
+                                                             <td>
+                                                                 <button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="{{ path('edit_profile_child', {'userId': user.id}) }}">Edytuj</button>
                                                              </td>
                                                          </tr>
                                                          {% endfor %}
@@ -130,7 +149,7 @@
              $('#search').click(function() {
                  $.ajax({
                      type: "POST",
-                     url: '{{ path('filter_parent') }}',
+                     url: '{{ path('filter_child') }}',
                      data: $( ".form-filter" ).serialize(),
                      success: function ($data) {
                          var response= JSON.parse($data);
@@ -140,10 +159,12 @@
                                      $('<td>').html('<input type="checkbox" name="id[]" value="' + row.id + '">'),
                                      $('<td>').text(row.name),
                                      $('<td>').text(row.surname),
-                                     $('<td>').text(row.email),
-                                     $('<td>').text(row.phone),
-                                     $('<td>').text(row.is_active),
-                                     $('<td>').html('<button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="/app_dev.php/admin/parent/edit/profile/' + row.id + '">Edytuj</button>')
+                                     $('<td>').text(row.parentName),
+                                     $('<td>').text(row.parentSurname),
+                                     $('<td>').text(row.school),
+                                     $('<td>').text(row.class),
+                                     $('<td>').text(row.group),
+                                     $('<td>').html('<button class="btn btn-sm blue filter-submit margin-bottom actionButton" data-url="/app_dev.php/admin/child/edit/profile/' + row.id + '">Edytuj</button>')
                              ).appendTo('#datatable_ajax > tbody');
 
                          });

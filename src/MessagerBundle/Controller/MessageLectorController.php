@@ -93,6 +93,13 @@ class MessageLectorController extends MessageController
         $filterBygroup = $this->checkFilterByGroup($data['school'], $data['group']);
         unset($data['group']);
         unset($data['school']);
+        $data['name_or_first'] = $data['dr'];
+        $data['surname_or_first'] = $data['dr'];
+        unset($data['dr']);
+
+        $condition['name_or_first'] = 'OR';
+        $condition['surname_or_first'] = 'OR';
+
         $filterManager = new FilterManager($this->getDoctrine());
         $filterManager->setTable(array(
             'fullName' =>'AppBundle\Entity\UserLector',
@@ -101,7 +108,11 @@ class MessageLectorController extends MessageController
             'ul.user' => 'au'));
         $filterManager->setJoin(array(
             'ul.ltd' => 'ltd'));
-        $filterManager->setCondition($data, 'au');
+        $filterManager->setJoin(array(
+            'ltd.userDr' => 'ud'));
+        $filterManager->setJoin(array(
+            'ud.user' => 'au2'));
+        $filterManager->setCondition($data, 'au2', $condition);
         $filterManager->setSelect(array('ul'));
         $filteredData = $filterManager->getfilteredData();
 
@@ -111,9 +122,12 @@ class MessageLectorController extends MessageController
             $this->setSchoolAndGroup($row->getId());
             $drName = '';
             $drSurname = '';
-            if(is_object($row->getLtd())) {
-                $drName = $row->getLtd()->getUserDr()->getUser()->getName();
-                $drSurname = $row->getLtd()->getUserDr()->getUser()->getSurname();
+            $ltd = $this->getDoctrine()
+                ->getRepository(LectorToDr::class)
+                ->findOneByUserLector($row);
+            if(is_object($ltd)) {
+                $drName = $ltd->getUserDr()->getUser()->getName();
+                $drSurname = $ltd->getUserDr()->getUser()->getSurname();
             }
 
             $this->setSchoolAndGroup($row->getId());

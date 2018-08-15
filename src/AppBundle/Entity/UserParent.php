@@ -13,9 +13,9 @@ class UserParent
     private $contractFile;
 
     /**
-     * @var string|null
+     * @var int|null
      */
-    private $raCity;
+    private $cost;
 
     /**
      * @var string|null
@@ -63,6 +63,16 @@ class UserParent
     private $caApartment;
 
     /**
+     * @var int|null
+     */
+    private $sumCost;
+
+    /**
+     * @var string|null
+     */
+    private $raCity;
+
+    /**
      * @var int
      */
     private $id;
@@ -98,27 +108,27 @@ class UserParent
     }
 
     /**
-     * Set raCity.
+     * Set cost.
      *
-     * @param string|null $raCity
+     * @param int|null $cost
      *
      * @return UserParent
      */
-    public function setRaCity($raCity = null)
+    public function setCost($cost = null)
     {
-        $this->raCity = $raCity;
+        $this->cost = $cost;
 
         return $this;
     }
 
     /**
-     * Get raCity.
+     * Get cost.
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getRaCity()
+    public function getCost()
     {
-        return $this->raCity;
+        return $this->cost;
     }
 
     /**
@@ -335,6 +345,54 @@ class UserParent
     public function getCaApartment()
     {
         return $this->caApartment;
+    }
+
+    /**
+     * Set sumCost.
+     *
+     * @param int|null $sumCost
+     *
+     * @return UserParent
+     */
+    public function setSumCost($sumCost = null)
+    {
+        $this->sumCost = $sumCost;
+
+        return $this;
+    }
+
+    /**
+     * Get sumCost.
+     *
+     * @return int|null
+     */
+    public function getSumCost()
+    {
+        return $this->sumCost;
+    }
+
+    /**
+     * Set raCity.
+     *
+     * @param string|null $raCity
+     *
+     * @return UserParent
+     */
+    public function setRaCity($raCity = null)
+    {
+        $this->raCity = $raCity;
+
+        return $this;
+    }
+
+    /**
+     * Get raCity.
+     *
+     * @return string|null
+     */
+    public function getRaCity()
+    {
+        return $this->raCity;
     }
 
     /**

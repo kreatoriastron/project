@@ -4,6 +4,7 @@ namespace AdminBundle\Controller\User;
 
 use AdminBundle\Controller\User\UserController;
 use AppBundle\Entity\AppUsers;
+use AppBundle\Entity\Messanger;
 use FOS\UserBundle\Model\User;
 use AppBundle\Entity\UserDr;
 use AppBundle\Entity\UserLector;
@@ -37,10 +38,12 @@ class LectorController extends UserController
 
     private function save($data)
     {
+        $formManager = new FormManager();
         $entityManager = $this->getDoctrine()->getManager();
 
         try {
-            $pass = password_hash('ThePassword', PASSWORD_BCRYPT);
+            $plainPass = $rand = substr(md5(microtime()),rand(0,26),7);
+            $pass = password_hash($plainPass, PASSWORD_BCRYPT);
 
             $appUser = new AppUsers();
             $appUser->setUsername($data->get('phone'));
@@ -64,9 +67,9 @@ class LectorController extends UserController
 
             $user = new UserLector();
             $user->setUser($appUser);
-            $user->setSalary($data->get('salary'));
+            $user->setSalary($formManager->getValueInGrosz($data->get('salary')));
             $user->setContract($data->get('contract'));
-            $user->setBonus($data->get('bonus'));
+            $user->setBonus($formManager->getValueInGrosz($data->get('bonus')));
             $user->setEmployeeType($data->get('employee_type'));
             $user->setLanguageLevel($data->get('language_level'));
             $user->setContractEndingDate($time);
@@ -93,6 +96,16 @@ class LectorController extends UserController
             $lectorToDr->setUserDr($userDr);
             $entityManager->persist($lectorToDr);
             $entityManager->flush();
+
+            $messenger = new Messanger();
+            $messenger->setFromUser('csatut');
+            $messenger->setToUser($appUser->getId());
+            $messenger->setMessage('Wiadomość powitalna. Twoje hasło to: ' . $plainPass);
+            $messenger->setSendDate(new \DateTime('NOW'));
+            $messenger->setStatus('0');
+            $messenger->setType('1');
+            $entityManager->persist($messenger);
+            $entityManager->flush();
         } catch (Exception $e)
         {
             throw new Exception($e->getMessage());
@@ -104,6 +117,7 @@ class LectorController extends UserController
 
     public function updateAction(Request $request)
     {
+        $formManager = new FormManager();
         $entityManager = $this->getDoctrine()->getManager();
         $data = $request->request;
         $userId = $data->get('userId');
@@ -138,8 +152,8 @@ class LectorController extends UserController
 
         try {
             $time = strtotime($data->get('ending_date'));
-            $user->setSalary($data->get('salary'));
-            $user->setBonus($data->get('bonus'));
+            $user->setSalary($formManager->getValueInGrosz($data->get('salary')));
+            $user->setBonus($formManager->getValueInGrosz($data->get('bonus')));
             $user->setEmployeeType($data->get('employee_type'));
             $user->setLanguageLevel($data->get('language_level'));
             $user->setContractEndingDate($time);
@@ -169,6 +183,7 @@ class LectorController extends UserController
 
     public function editProfileAction($userId)
     {
+        $formManager = new FormManager();
         $lector = $this->getDoctrine()
             ->getRepository(UserLector::class)
             ->findOneById($userId);
@@ -185,12 +200,12 @@ class LectorController extends UserController
             'surname' => $user->getSurname(),
             'email' => $user->getEmail(),
             'phone' => $user->getPhone(),
-            'salary' => $lector->getSalary(),
+            'salary' => $formManager->getValueInZloty($lector->getSalary()),
             'type' => $lector->getEmployeeType(),
             'lanLevel' => $lector->getLanguageLevel(),
             'endDate' => $date,
             'contract' => $lector->getContract(),
-            'bonus' => $lector->getBonus(),
+            'bonus' => $formManager->getValueInZloty($lector->getBonus()),
             'id' => $lector->getId(),
             'bank_number' => $lector->getBankNumber(),
             'ra_city' => $lector->getRaCity(),
@@ -366,6 +381,8 @@ class LectorController extends UserController
                 $lectorToDr->setUserLector($lector);
                 $lectorToDr->setUserDr($userDr);
                 $em->persist($lectorToDr);
+
+                $lector->setLtd($lectorToDr);
             }
             $em->flush();
         }catch(Exception $e) {

@@ -1,0 +1,233 @@
+{% extends "base.html.twig" %}
+ {% block body %}
+     {{ parent() }}
+         <!-- BEGIN CONTENT -->
+         <div class="page-content-wrapper">
+             <div class="page-content">
+                 <!-- BEGIN PAGE HEAD -->
+                 <div class="page-head">
+                     <!-- BEGIN PAGE TITLE -->
+                     <div class="page-title">
+                         <h1>Administracja <small>Dzieci</small></h1>
+                     </div>
+                     <!-- END PAGE TITLE -->
+                 </div>
+                 <!-- END PAGE HEAD -->
+                 <!-- BEGIN PAGE BREADCRUMB -->
+                 <ul class="page-breadcrumb breadcrumb">
+                     <li>
+                         <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
+                     </li>
+                     <li>
+                         <a href="{{ path('show_child') }}">Dzieci</a><i class="fa fa-circle"></i>
+                     </li>
+                     <li class="active">
+                         {{ userArr.name  }} {{ userArr.surname  }}
+                     </li>
+                 </ul>
+                 <!-- END PAGE BREADCRUMB -->
+                 <!-- BEGIN PAGE CONTENT INNER -->
+                 <div id="mainBox">
+                     <div id="addUser" class="portlet box green">
+                         <div class="portlet-title">
+                             <div class="caption">
+                                 <i class="fa fa-user-plus"></i>Edycja Dziecka
+                             </div>
+                         </div>
+                         <div class="portlet-body form">
+                             <!-- BEGIN FORM-->
+                             <form action="{{ path('update_child') }}" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="novalidate" id="edit">
+                                 <div class="alert alert-danger display-hide">
+                                     <button class="close" data-close="alert"></button>
+                                     Proszę poprawić błędy w formularzu!
+                                 </div>
+                                 <div class="form-body">
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Imię</label>
+                                         <div class="col-md-4">
+                                             <input type="text" value="{{ userArr.name  }}" class="form-control input-circle" name="name" placeholder="Wprowadź imię">
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Nazwisko</label>
+                                         <div class="col-md-4">
+                                             <input type="text" value="{{ userArr.surname  }}" class="form-control input-circle" name="surname" placeholder="Wprowadź Nazwisko">
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Profil Rodzica</label>
+                                         <div class="col-md-4">
+                                             <div class="input-group" style="padding-top:8px;">
+                                                 Otwórz profil
+                                                 <a href="{{ path('show_profile_parent', {'userId':userArr.parentId}) }}" target="_blank">
+                                                     {{ userArr.parentName  }} {{ userArr.parentSurname  }}
+                                                 </a>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Szkoła</label>
+                                         <div class="col-md-4">
+                                             <input type="text" class="form-control input-circle" name="school" value="{{ school.name }}" disabled>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Grupa</label>
+                                         <div class="col-md-4">
+                                             <input type="text" class="form-control input-circle" name="group" value="{{ group.name }}" placeholder="Grupa" disabled>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Klasa cyfra</label>
+                                         <div class="col-md-4">
+                                             <input type="text" class="form-control input-circle" name="class_digit" value="{{ userArr.class_digit }}" placeholder="Klasa cyfra">
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="col-md-3 control-label">Klasa litera</label>
+                                         <div class="col-md-4">
+                                             <input type="text" class="form-control input-circle" name="class_letter" value="{{ userArr.class_letter }}" placeholder="Klasa litera">
+                                         </div>
+                                     </div>
+                                     <div>
+                                         <div class="row">
+                                             <div class="col-md-offset-3 col-md-9">
+                                                 <input type="hidden"  name="userId" value="{{ userArr.id }}">
+                                                 <button type="submit" class="btn btn-circle blue" id="add_user">Edytuj Dziecko</button>
+                                             </div>
+                                          </div>
+                                     </div>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+                     <div class="col-md-12">
+                         <div class="portlet light">
+                             <div class="portlet-title">
+                                 <div class="caption">
+                                     <i class="fa fa-gift font-green-sharp"></i>
+                                     <span class="caption-subject font-green-sharp bold uppercase">Wybrane zajęcia z grupy</span>
+                                 </div>
+                             </div>
+                             <div class="portlet-body">
+                                 <div class="table-container" style="">
+                                     <div id="datatable_ajax_wrapper" class="dataTables_wrapper dataTables_extended_wrapper no-footer">
+                                         <div class="table-scrollable"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="datatable_ajax" aria-describedby="datatable_ajax_info" role="grid">
+                                                 <thead>
+                                                 <tr role="row" class="heading">
+                                                     <th width="20%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         Lp.
+                                                     </th>
+                                                     <th width="20%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         Dzień zajęć
+                                                     </th>
+                                                     <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         Godzina zajęć
+                                                     </th>
+                                                     <th width="15%" class="sorting" tabindex="0" aria-controls="datatable_ajax" rowspan="1" colspan="1">
+                                                         Będzie uczestniczył
+                                                     </th>
+                                                 </tr>
+                                                 </thead>
+                                                 <tbody>
+                                                 {% for key, row in lstc %}
+                                                 <tr>
+                                                     <td style="line-height: 35px;">{{ key+1 }}</td>
+                                                     <td style="line-height: 35px;">{{ row.day }}</td>
+                                                     <td style="line-height: 35px;">{{ row.hour }}</td>
+                                                     <td>
+                                                         <input type="checkbox" class="presenceCheckbox" name="{{ row.id }}" style="margin-right:0;"  {% if row.status %}checked {%  endif %}>
+                                                     </td>
+                                                 </tr>
+                                                 {% endfor %}
+                                                 </tbody>
+                                             </table>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="modal-footer">
+                                     <button type="button" class="btn btn-default" id="returnButton" data-url="/app_dev.php/admin/group/1/lesson">Wróć</button>
+                                     <button type="button" class="btn btn-primary" id="setPresenceSubmit">Zapisz</button>
+                                 </div>
+                             </div>
+                             <!-- End: life time stats -->
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+ {% endblock %}
+ {%  block stylesheets %}
+     {{  parent () }}
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/bootstrap-toggle/css/bootstrap2-toggle.min.css') }}">
+ {% endblock %}
+ {% block javascripts %}
+     {{  parent() }}
+     <script src="{{ asset('assets/global/plugins/bootstrap-toggle/js/bootstrap2-toggle.min.js') }}" type="text/javascript"></script>
+     <script type="text/javascript" src="{{ asset('assets/global/plugins/select2/select2.min.js') }}"></script>
+     <script src="{{ asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+     <script src="{{ asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+     <script src="{{ asset('bundles/admin/js/User/Child/validation/edit-validation.js') }}" type="text/javascript"></script><script>
+         $(document).ready(function(){
+            FormValidation.init('{{ path(action_url) }}');
+
+             $('#setPresenceSubmit').click(function() {
+                 /* Get input values from form */
+                 var values = jQuery(".presenceCheckbox").serializeArray();
+
+                 /* Because serializeArray() ignores unset checkboxes and radio buttons: */
+                 values = values.concat(
+                         jQuery('.presenceCheckbox:not(:checked)').map(
+                                 function() {
+                                     return {"name": this.name, "value": 'off'}
+                                 }).get()
+                 );
+                 $.ajax({
+                     type: "POST",
+                     url: '{{ path('change_lstc') }}',
+                     data: values,
+                     success: function ($response) {
+                         toastr.options = {
+                             "closeButton": true,
+                             "debug": false,
+                             "positionClass": "toast-top-center",
+                             "onclick": null,
+                             "showDuration": "1000",
+                             "hideDuration": "1000",
+                             "timeOut": "5000",
+                             "extendedTimeOut": "1000",
+                             "showEasing": "swing",
+                             "hideEasing": "linear",
+                             "showMethod": "fadeIn",
+                             "hideMethod": "fadeOut"
+                         }
+                         if($response == 'correct') {
+                             toastr['success']('Zaktualizowano wybrane zajęcia', 'Zapisano zmiany');
+                         } else {
+                             toastr['error']('Nie zaktualizowano danych', 'Wystąił błąd');
+                         }
+
+                     }
+                 });
+             });
+
+             $(function() {
+                 $('.presenceCheckbox').bootstrapToggle({
+                     on: 'Tak',
+                     off: 'Nie',
+                     width:150,
+                     height:35
+                 });
+             });
+
+             jQuery.extend(jQuery.validator.messages, {
+                 required: "To pole jest wymagane",
+                 email: "Proszę podać poprawny adres mailowy",
+                 number: "Proszę podać poprawny numer telefonu",
+                 digits: "Proszę podać cyfrę",
+                 lettersonly: "Prosze podać literę"
+             });
+         })
+     </script>
+ {% endblock %}
+

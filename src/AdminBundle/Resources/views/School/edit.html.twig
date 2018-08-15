@@ -18,8 +18,11 @@
                      <li>
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
+                     <li>
+                         <a href="{{ path('show_school') }}">Szkoły</a><i class="fa fa-circle"></i>
+                     </li>
                      <li class="active">
-                         Szkoły
+                         Dodaj pracownika
                      </li>
                  </ul>
                  <!-- END PAGE BREADCRUMB -->
@@ -114,8 +117,8 @@
                                      <div class="form-group">
                                          <label class="col-md-3 control-label">Dr</label>
                                          <div class="col-md-4">
-                                             <select id="select_dr" name="dr" placeholder="DR">
-                                                 <option></option>
+                                             <select id="select_dr" name="dr">
+                                                 <option id="0"></option>
                                                  {% for DR in drList %}
                                                      <option value="{{ DR.id }}">{{ DR.surname }} {{ DR.name }}</option>
                                                  {%  endfor %}
@@ -130,6 +133,7 @@
                                              </div>
                                           </div>
                                      </div>
+                                 </div>
                              </form>
                          </div>
                      </div>
@@ -155,7 +159,9 @@
              var select_dr, $select_dr;
              $select_dr = $('#select_dr').selectize();
              select_dr  = $select_dr[0].selectize;
-             select_dr.setValue({{ schoolArr.dr_id }}, false);
+             {% if schoolArr.dr_id %}
+                select_dr.setValue({{ schoolArr.dr_id }}, false);
+             {%  endif %}
 
              jQuery.extend(jQuery.validator.messages, {
                  required: "To pole jest wymagane",

@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+ {% block body %}
+     {{ parent() }}
+         <!-- BEGIN CONTENT -->
+         <div class="page-content-wrapper">
+             <div class="page-content">
+                 <!-- BEGIN PAGE HEAD -->
+                 <div class="page-head">
+                     <!-- BEGIN PAGE TITLE -->
+                     <div class="page-title">
+                         <h1>Administracja</h1>
+                     </div>
+                     <!-- END PAGE TITLE -->
+                 </div>
+                 <!-- END PAGE HEAD -->
+                 <!-- BEGIN PAGE BREADCRUMB -->
+                 <ul class="page-breadcrumb breadcrumb">
+                     <li>
+                         <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
+                     </li>
+                 </ul>
+                 <!-- END PAGE BREADCRUMB -->
+                 <!-- BEGIN PAGE CONTENT INNER -->
+                 <div id="mainBox">
+                     <div class="row">
+                         <div class="col-md-12">
+                             <div class="portlet light">
+                                 <div class="portlet-title">
+                                     <div class="caption">
+                                         <i class="fa fa-gift font-green-sharp"></i>
+                                         <span class="caption-subject font-green-sharp bold uppercase">Wystąpił błąd</span>
+                                     </div>
+                                 </div>
+                                 <div class="portlet-body">
+                                    {{ information }}
+                                     <button onclick="window.history.back();" class="btn btn-sm yellow filter-submit margin-bottom">Powrót</button>
+
+                                 </div>
+                             <!-- End: life time stats -->
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+ {% endblock %}

@@ -18,8 +18,11 @@
                      <li>
                          <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                      </li>
+                     <li>
+                         <a href="{{ path('show_lector') }}">Lektorzy</a><i class="fa fa-circle"></i>
+                     </li>
                      <li class="active">
-                         Lektorzy
+                         {{ userArr.name  }} {{ userArr.surname  }}
                      </li>
                  </ul>
                  <!-- END PAGE BREADCRUMB -->

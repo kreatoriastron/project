@@ -18,8 +18,11 @@
                  <li>
                      <a href="javascript:;">Administracja</a><i class="fa fa-circle"></i>
                  </li>
+                 <li>
+                     <a href="{{ path('show_group') }}">Grupy</a><i class="fa fa-circle"></i>
+                 </li>
                  <li class="active">
-                     Grupy
+                     Dodaj grupę
                  </li>
              </ul>
              <!-- END PAGE BREADCRUMB -->
@@ -42,7 +45,12 @@
                                  <div class="form-group">
                                      <label class="col-md-3 control-label">Nazwa</label>
                                      <div class="col-md-4">
-                                         <input type="text" class="form-control input-circle" name="name" placeholder="Nazwa grupy">
+                                         <select name="name" class="form-control input-circle">
+                                             <option></option>
+                                             {% for i in 1..15 %}
+                                                 <option value="{{ i }}">{{ i  }}</option>
+                                             {%  endfor %}
+                                         </select>
                                      </div>
                                  </div>
                                  <div class="form-group">
@@ -51,6 +59,14 @@
                                          <a class="btn default" data-target="#selectSchool" data-toggle="modal">
                                              Wybierz szkołę </a>
                                          <input type="hidden" class="form-control input-circle" id="school" name="school" placeholder="Szkoła">
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-3 control-label">Zajęcia</label>
+                                     <div class="col-md-4">
+                                         <a class="btn default" data-target="#addLesson" data-toggle="modal">
+                                             Dodaj zajęcia
+                                         </a>
                                      </div>
                                  </div>
                                  <div class="form-group">
@@ -65,26 +81,22 @@
                                      </div>
                                  </div>
                                  <div class="form-group">
-                                     <label class="col-md-3 control-label">Numer Sali</label>
+                                     <label class="col-md-3 control-label">Stawka za zajęcia</label>
                                      <div class="col-md-4">
-                                         <input type="text" class="form-control input-circle" name="room" placeholder="Sala">
+                                         <input type="text" id="cost" name="cost" class="form-control input-circle" placeholder="Stawka za zajęcia">
                                      </div>
                                  </div>
                                  <div class="form-group">
-                                     <label class="col-md-3 control-label">Dzień</label>
+                                     <label class="col-md-3 control-label">Stawka zryczałtowana</label>
                                      <div class="col-md-4">
-                                         <select id="select_day" name="day" placeholder="Dzień">
-                                             <option></option>
-                                             {% for day in days %}
-                                                 <option value="{{ day.id }}">{{ day.name  }}</option>
-                                             {%  endfor %}
-                                         </select>
+                                         <input type="text" id="sum_cost" name="sum_cost" class="form-control input-circle" placeholder="Stawka zryczałtowana">
                                      </div>
                                  </div>
-                                 <div class="form-group">
-                                     <label class="col-md-3 control-label">Godzina</label>
-                                     <div class="col-md-4">
-                                         <input type="text" class="form-control input-circle" name="hour" placeholder="Godzina">
+                                 <div>
+                                     <div>
+                                         <h3>Aktualne Zajęcia</h3>
+                                     </div>
+                                     <div id="lessons_list">
                                      </div>
                                  </div>
                              <div>
@@ -123,6 +135,31 @@
                      <div class="modal-footer">
                          <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
                          <button type="button" data-dismiss="modal" id="selectSchoolSubmit" class="btn btn-primary">Wybierz</button>
+                     </div>
+                 </div>
+
+                 <div id="addLesson" class="modal fade" tabindex="-1" aria-hidden="true">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                         <h4 class="modal-title">Dodaj zajęcia</h4>
+                     </div>
+                     <div class="modal-body">
+                             <label class="col-md-3 control-label">Dzień</label>
+                             <select id="select_day" placeholder="Dzień">
+                                 <option></option>
+                                 {% for day in days %}
+                                     <option value="{{ day.id }}">{{ day.name  }}</option>
+                                 {%  endfor %}
+                             </select>
+                             <label class="col-md-3 control-label" style="margin-top:10px;">Godzina</label>
+                             <input type="text" id="select_hour" class="form-control input-circle" name="hour" placeholder="Godzina">
+
+                             <label class="col-md-3 control-label" style="margin-top:10px;">Numer Sali</label>
+                             <input type="text" id="select_room" class="form-control input-circle" placeholder="Sala">
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" data-dismiss="modal" class="btn btn-default">Anuluj</button>
+                         <button type="button" data-dismiss="modal" id="addLessonSubmit" class="btn btn-primary">Wybierz</button>
                      </div>
                  </div>
              </div>
@@ -190,6 +227,19 @@
                  $selectedSchool = $('#select_school').val();
                  $('#school').val($selectedSchool);
              });
+
+             $('#addLessonSubmit').click(function(){
+                 $day = $('#select_day').text();
+                 $dayId = $('#select_day').val();
+                 $hour = $('#select_hour').val();
+                 $class = $('#select_room').val();
+                 $('#lessons_list').append('' +
+                         '<div class="form-group"><label class="col-md-3 control-label">Dzień</label><div class="col-md-4"><input type="text" class="form-control input-circle" data-day_id="' + $dayId + '" name="day[]" value="' + $day + '" disabled></div></div>' +
+                         '<div class="form-group"><label class="col-md-3 control-label">Godzina</label><div class="col-md-4"><input type="text" class="form-control input-circle" name="hour[]" value="' + $hour + '" disabled></div></div>' +
+                         '<div class="form-group"><label class="col-md-3 control-label">Numer Sali</label><div class="col-md-4"><input type="text" class="form-control input-circle" name="class[]" value="' + $class + '" disabled></div></div>' +
+                         '<hr>');
+             });
+
              FormValidation.init('{{ path('add_group') }}');
              jQuery.extend(jQuery.validator.messages, {
                  required: "To pole jest wymagane",

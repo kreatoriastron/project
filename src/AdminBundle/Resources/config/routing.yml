@@ -107,6 +107,35 @@ filter_parent:
     path:     /admin/parent/filter
     defaults: { _controller: AdminBundle:User\Parent:filter}
 
+add_child:
+    path:     /admin/child/add
+    defaults: { _controller: AdminBundle:User\Child:add }
+
+update_child:
+    path:     /admin/child/update/profile
+    defaults: { _controller: AdminBundle:User\Child:update}
+
+show_child:
+    path:     /admin/child/show
+    defaults: { _controller: AdminBundle:User\Child:show}
+
+show_profile_child:
+    path:     /admin/child/show/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Child:showProfile}
+
+edit_profile_child:
+    path:     /admin/child/edit/profile/{userId}
+    defaults: { _controller: AdminBundle:User\Child:editProfile}
+
+filter_child:
+    path:     /admin/child/filter
+    defaults: { _controller: AdminBundle:User\Child:filter}
+
+change_lstc:
+    path:     /admin/child/change_lstc
+    defaults: { _controller: AdminBundle:User\Child:changeLstc}
+
+
 add_school:
     path:     /admin/school/add
     defaults: { _controller: AdminBundle:School:add }

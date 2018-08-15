@@ -41,13 +41,15 @@ class MessageController extends Controller
     public function sendFromQueueAction()
     {
         $smsManager = new SMSManager();
-        $unsent = $this->getDoctrine()
-            ->getRepository(Messanger::class)
+        $em = $this->getDoctrine()->getManager();
+        $unsent = $em->getRepository(Messanger::class)
         ->findByStatus(0);
 
         foreach($unsent as $id => $message){
             $number = $this->getUserNumber($message->getToUser());
             $smsManager->send($number, $message->getMessage());
+            $message->setStatus(1);
+            $em->flush();
         }
 
         return new Response('Prawidłowo zakończono wysyłkę');

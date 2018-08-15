@@ -103,7 +103,6 @@
              $('#setPresenceSubmit').click(function() {
                  /* Get input values from form */
                  var values = jQuery(".presenceCheckbox").serializeArray();
-                 console.log(values);
 
                  /* Because serializeArray() ignores unset checkboxes and radio buttons: */
                  values = values.concat(
